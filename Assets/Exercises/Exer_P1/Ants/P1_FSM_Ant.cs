@@ -3,10 +3,10 @@ using Steerings;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FSM_P1_ANT", menuName = "Finite State Machines/FSM_P1_ANT", order = 1)]
-public class FSM_P1_ANT : FiniteStateMachine {
+public class P1_FSM_Ant : FiniteStateMachine {
 
     Arrive arrive;
-    P1_ANT_Blackboard blackboard;
+    P1_Ant_Blackboard blackboard;
     FlockingAround flockingAround;
 
     GameObject theFood;
@@ -15,7 +15,7 @@ public class FSM_P1_ANT : FiniteStateMachine {
 
     public override void OnEnter() {
         arrive = GetComponent<Arrive>();
-        blackboard = GetComponent<P1_ANT_Blackboard>();
+        blackboard = GetComponent<P1_Ant_Blackboard>();
         flockingAround = GetComponent<FlockingAround>();
 
         elapsedTime = 0.0f;

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6235339366004685740}
   - component: {fileID: 6235339366004685712}
   m_Layer: 0
-  m_Name: ANT
+  m_Name: P1_Ant_Prefab
   m_TagString: ANT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Steerings {
 
-    public class P1_AntGroupManager : Steerings.GroupManager {
+    public class P1_Ant_GroupManager : Steerings.GroupManager {
 
         public int numInstances = 20;
         public float delay = 0.5f;
