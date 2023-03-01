@@ -1,70 +1,125 @@
 using FSMs;
-using UnityEngine;
 using Steerings;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "P1_FSM_Worker_Chef", menuName = "Finite State Machines/P1_FSM_Worker_Chef", order = 1)]
-public class P1_FSM_Worker_Chef : FiniteStateMachine
-{
-    /* Declare here, as attributes, all the variables that need to be shared among
-     * states and transitions and/or set in OnEnter or used in OnExit 
-     * For instance: steering behaviours, blackboard, ...*/
+public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
-    public override void OnEnter()
-    {
-        
-        /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
-         * It's equivalent to the on enter action of any state 
-         * Usually this code includes .GetComponent<...> invocations */
-        base.OnEnter(); // do not remove
+    /** Variables */
+    private Arrive arrive;
+    private P1_Worker_Blackboard blackboard;
+    private float elapsedTime;
+
+    /** OnEnter */
+    public override void OnEnter() {
+
+        /** GetComponent */
+        arrive = GetComponent<Arrive>();
+        blackboard = GetComponent<P1_Worker_Blackboard>();
+
+        /** OnEnter */
+        base.OnEnter();
     }
 
-    public override void OnExit()
-    {
-        /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
-         * It's equivalent to the on exit action of any state 
-         * Usually this code turns off behaviours that shouldn't be on when one the FSM has
-         * been exited. */
+    /** OnExit */
+    public override void OnExit() {
+
+        /** DisableSteerings */
+        base.DisableAllSteerings();
+
+        /** OnExit */
         base.OnExit();
     }
 
-    public override void OnConstruction()
-    {
-     
-        State varName = new State("StateName",
-            () => { }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
-        );
+    public override void OnConstruction() {
+        
+        /** FSM's */
+        FiniteStateMachine ChefAssistant = ScriptableObject.CreateInstance<P1_FSM_Worker_ChefAssistant>();
+        ChefAssistant.Name = "chefAssistant";
 
-         
+        FiniteStateMachine FoodBuyer = ScriptableObject.CreateInstance<P1_FSM_Worker_FoodBuyer>();
+        FoodBuyer.Name = "foodBuyer";
+
+        /** States */
+        State reachCleanPlate = new State("reachCleanPlate",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theCleanDishPile;
+            },
+            () => { },
+            () => {
+                arrive.enabled = false;
+            });
+
+        State reachFood = new State("reachFood",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theFridge;
+            },
+            () => {
+            },
+            () => {
+                arrive.enabled = false;
+            });
+
+        State cookFood = new State("cookFood",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theCook;
+                elapsedTime = 0.0f;
+            },
+            () => {
+                elapsedTime += Time.deltaTime;
+            },
+            () => {
+                arrive.enabled = false;
+                blackboard.haveCookedFood = true;
+                blackboard.totalPlatesInUse++;
+                blackboard.totalCleanPlates--;
+                blackboard.totalFood--;
+            });
+
+        /** Transitions */
+        Transition havePlates = new Transition("havePlates",
+            () => {
+                return blackboard.totalCleanPlates > 0 && SensingUtils.DistanceToTarget(gameObject, blackboard.theCleanDishPile) < blackboard.pointReachRadius;
+            }, () => { });
+
+        Transition haveNoPlates = new Transition("haveNoPlates",
+            () => {
+                return blackboard.totalCleanPlates <= 0;
+            }, () => { });
+
+        Transition haveFood = new Transition("haveFood",
+            () => {
+                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, blackboard.theFridge) < blackboard.pointReachRadius;
+            }, () => { });
+
+        Transition haveNoFood = new Transition("haveNoFood",
+            () => {
+                return blackboard.totalFood <= 0;
+            }, () => { });
+
+        Transition foodCooked = new Transition("foodCooked",
+            () => {
+                return elapsedTime >= blackboard.cookFoodTime;
+            }, () => { });
 
 
-        /* STAGE 2: create the transitions with their logic(s)
-         * ---------------------------------------------------
+        /** FSM Set Up */
+        AddStates(reachCleanPlate, reachFood, cookFood, ChefAssistant, FoodBuyer);
 
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
+        AddTransition(reachCleanPlate, havePlates, reachFood);
+        AddTransition(reachCleanPlate, haveNoPlates, ChefAssistant);
+        AddTransition(ChefAssistant, havePlates, reachFood);
 
-        */
+        AddTransition(reachFood, haveFood, cookFood);
+        AddTransition(reachFood, haveNoFood, FoodBuyer);
+        AddTransition(FoodBuyer, haveFood, cookFood);
 
+        AddTransition(cookFood, foodCooked, reachCleanPlate);
 
-        /* STAGE 3: add states and transitions to the FSM 
-         * ----------------------------------------------
-        */    
-        AddStates(varName);
-        /**
-        AddTransition(sourceState, transition, destinationState);
-
-         */
-
-
-        /* STAGE 4: set the initial state
-        */
-        initialState = varName;
-         /*
-         */
-
+        initialState = reachCleanPlate;
     }
+
 }

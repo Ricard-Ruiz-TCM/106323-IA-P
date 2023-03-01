@@ -1,71 +1,96 @@
 using FSMs;
-using UnityEngine;
 using Steerings;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "P1_FSM_Worker_FoodBuyer", menuName = "Finite State Machines/P1_FSM_Worker_FoodBuyer", order = 1)]
-public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine
-{
-    /* Declare here, as attributes, all the variables that need to be shared among
-     * states and transitions and/or set in OnEnter or used in OnExit 
-     * For instance: steering behaviours, blackboard, ...*/
+public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
 
-    public override void OnEnter()
-    {
-        /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
-         * It's equivalent to the on enter action of any state 
-         * Usually this code includes .GetComponent<...> invocations */
-        base.OnEnter(); // do not remove
+    /** Variables */
+    private Arrive arrive;
+    private P1_Worker_Blackboard blackboard;
+    private float elapsedTime;
+
+    /** OnEnter */
+    public override void OnEnter() {
+
+        /** GetComponent */
+        arrive = GetComponent<Arrive>();
+        blackboard = GetComponent<P1_Worker_Blackboard>();
+
+        /** OnEnter */
+        base.OnEnter();
     }
 
-    public override void OnExit()
-    {
-        /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
-         * It's equivalent to the on exit action of any state 
-         * Usually this code turns off behaviours that shouldn't be on when one the FSM has
-         * been exited. */
+    /** OnExit */
+    public override void OnExit() {
+
+        /** DisableSteerings */
+        base.DisableAllSteerings();
+
+        /** OnExit */
         base.OnExit();
     }
 
-    public override void OnConstruction()
-    {
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         
-        State varName = new State("StateName",
-            () => { }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
-        );
+    public override void OnConstruction() {
 
-         */
+        /** States */
+        State reachFoodShop = new State("reachFoodShop",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theShop;
+            },
+            () => { },
+            () => {
+                arrive.enabled = false;
+            });
+
+        State buyFood = new State("buyFood",
+            () => {
+                elapsedTime = 0.0f;
+            },
+            () => {
+                elapsedTime += Time.deltaTime;
+            }, 
+            () => { });
+
+        State storeFood = new State("storeFood",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theFridge;
+            },
+            () => {
+                elapsedTime += Time.deltaTime;
+            },
+            () => {
+                arrive.enabled = false;
+                blackboard.totalFood += 4;
+            });
+
+        /** Transitions */
+        Transition reachedFoodMachine = new Transition("reachedFoodMachine",
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theShop) < blackboard.pointReachRadius;
+            }, () => { });
+
+        Transition foodBuyed = new Transition("foodBuyed",
+            () => {
+                return elapsedTime >= blackboard.buyFoodTime;
+            }, () => { });
+
+        Transition theFoodStore = new Transition("theFoodStore",
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theFridge) < blackboard.pointReachRadius;
+            }, () => { });
 
 
-        /* STAGE 2: create the transitions with their logic(s)
-         * ---------------------------------------------------
+        /** FSM Set Up */
+        AddStates(reachFoodShop, buyFood, storeFood);
 
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
+        AddTransition(reachFoodShop, reachedFoodMachine, buyFood);
+        AddTransition(buyFood, foodBuyed, storeFood);
+        AddTransition(storeFood, theFoodStore, reachFoodShop);
 
-        */
-
-
-        /* STAGE 3: add states and transitions to the FSM 
-         * ----------------------------------------------
-            
-        AddStates(...);
-
-        AddTransition(sourceState, transition, destinationState);
-
-         */ 
-
-
-        /* STAGE 4: set the initial state
-         
-        initialState = ... 
-
-         */
-
+        initialState = reachFoodShop;
     }
+
 }

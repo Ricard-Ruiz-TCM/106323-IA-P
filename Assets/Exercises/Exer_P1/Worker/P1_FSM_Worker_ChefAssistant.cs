@@ -1,71 +1,100 @@
 using FSMs;
-using UnityEngine;
 using Steerings;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "P1_FSM_Worker_ChefAssistant", menuName = "Finite State Machines/P1_FSM_Worker_ChefAssistant", order = 1)]
-public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine
-{
-    /* Declare here, as attributes, all the variables that need to be shared among
-     * states and transitions and/or set in OnEnter or used in OnExit 
-     * For instance: steering behaviours, blackboard, ...*/
+public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
+    /** Variables */
+    private Arrive arrive;
+    private P1_Worker_Blackboard blackboard;
+    private float elapsedTime;
 
-    public override void OnEnter()
-    {
-        /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
-         * It's equivalent to the on enter action of any state 
-         * Usually this code includes .GetComponent<...> invocations */
-        base.OnEnter(); // do not remove
+    /** OnEnter */
+    public override void OnEnter() {
+
+        /** GetComponent */
+        arrive = GetComponent<Arrive>();
+        blackboard = GetComponent<P1_Worker_Blackboard>();
+
+        /** OnEnter */
+        base.OnEnter();
     }
 
-    public override void OnExit()
-    {
-        /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
-         * It's equivalent to the on exit action of any state 
-         * Usually this code turns off behaviours that shouldn't be on when one the FSM has
-         * been exited. */
+    /** OnExit */
+    public override void OnExit() {
+
+        /** DisableSteerings */
+        base.DisableAllSteerings();
+
+        /** OnExit */
         base.OnExit();
     }
 
-    public override void OnConstruction()
-    {
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         
-        State varName = new State("StateName",
-            () => { }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
-        );
+    public override void OnConstruction() {
 
-         */
+        /** States */
+        State reachDirtyPlate = new State("reachDirtyPlate",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theDirtyDishPile;
+            },
+            () => { },
+            () => {
+                arrive.enabled = false;
+            });
+
+        State washUpPlate = new State("washUpPlate",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theSink;
+                elapsedTime = 0.0f;
+            },
+            () => {
+                elapsedTime += Time.deltaTime;
+            },
+            () => {
+                arrive.enabled = false;
+            });
+
+        State storePlate = new State("storePlate",
+            () => {
+                arrive.enabled = true;
+                arrive.target = blackboard.theCleanDishPile;
+            },
+            () => {
+                elapsedTime += Time.deltaTime;
+            },
+            () => {
+                arrive.enabled = false;
+                blackboard.totalCleanPlates += 2;
+                blackboard.totalDirtyPlates -= 2;
+            });
+
+        /** Transitions */
+        Transition dirtyDishPicked = new Transition("dirtyDishPicked",
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theDirtyDishPile) < blackboard.pointReachRadius;
+            }, () => { });
+
+        Transition washedUpDish = new Transition("washedUpDish",
+            () => {
+                return elapsedTime >= blackboard.washUpTime;
+            }, () => { });
+
+        Transition cleanDishStored = new Transition("cleanDishStored",
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCleanDishPile) < blackboard.pointReachRadius;
+            }, () => { });
 
 
-        /* STAGE 2: create the transitions with their logic(s)
-         * ---------------------------------------------------
+        /** FSM Set Up */
+        AddStates(reachDirtyPlate, washUpPlate, storePlate);
 
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
+        AddTransition(reachDirtyPlate, dirtyDishPicked, washUpPlate);
+        AddTransition(washUpPlate, washedUpDish, storePlate);
+        AddTransition(storePlate, cleanDishStored, reachDirtyPlate);
 
-        */
-
-
-        /* STAGE 3: add states and transitions to the FSM 
-         * ----------------------------------------------
-            
-        AddStates(...);
-
-        AddTransition(sourceState, transition, destinationState);
-
-         */ 
-
-
-        /* STAGE 4: set the initial state
-         
-        initialState = ... 
-
-         */
-
+        initialState = reachDirtyPlate;
     }
+
 }

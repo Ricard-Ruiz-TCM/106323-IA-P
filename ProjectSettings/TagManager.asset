@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CASHIER
+  - CUSTOMER
+  - CHAIR_SPOT
+  - FOOD
+  - ANT
+  - MONEY
+  - SINK
+  - CLEAN_PLATES
+  - DIRTY_PLATES
+  - COOK_SPOT
   layers:
   - Default
   - TransparentFX
