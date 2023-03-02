@@ -9,6 +9,7 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
     private Arrive arrive;
     private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
+    private bool buying = false;
 
     /** OnEnter */
     public override void OnEnter() {
@@ -47,6 +48,7 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
         State buyFood = new State("buyFood",
             () => {
                 elapsedTime = 0.0f;
+                buying = true;
             },
             () => {
                 elapsedTime += Time.deltaTime;
@@ -64,17 +66,18 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
             () => {
                 arrive.enabled = false;
                 blackboard.totalFood += 4;
+                buying = false;
             });
 
         /** Transitions */
         Transition reachedFoodMachine = new Transition("reachedFoodMachine",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theShop) < blackboard.pointReachRadius;
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theShop) < blackboard.pointReachRadius || buying;
             }, () => { });
 
         Transition foodBuyed = new Transition("foodBuyed",
             () => {
-                return elapsedTime >= blackboard.buyFoodTime;
+                return elapsedTime >= blackboard.buyFoodTime || buying;
             }, () => { });
 
         Transition theFoodStore = new Transition("theFoodStore",

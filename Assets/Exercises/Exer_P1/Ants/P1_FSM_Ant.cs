@@ -7,7 +7,7 @@ public class P1_FSM_Ant : FiniteStateMachine {
 
     Arrive arrive;
     P1_Ant_Blackboard blackboard;
-    FlockingAround flockingAround;
+    FlockingAroundPlusAvoidance flockingAround;
 
     GameObject theFood;
 
@@ -16,7 +16,7 @@ public class P1_FSM_Ant : FiniteStateMachine {
     public override void OnEnter() {
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Ant_Blackboard>();
-        flockingAround = GetComponent<FlockingAround>();
+        flockingAround = GetComponent<FlockingAroundPlusAvoidance>();
 
         elapsedTime = 0.0f;
 

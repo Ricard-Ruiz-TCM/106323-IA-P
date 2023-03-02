@@ -30,7 +30,7 @@ namespace Steerings {
             // if this point is reached, it's time to spawn a new instance
             GameObject clone = Instantiate(prefab);
             AddBoid(clone);
-            clone.GetComponent<FlockingAround>().attractor = attractor;
+            clone.GetComponent<FlockingAroundPlusAvoidance>().attractor = attractor;
             created++;
             elapsedTime = 0.0f;
         }

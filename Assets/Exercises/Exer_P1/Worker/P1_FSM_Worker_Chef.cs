@@ -9,6 +9,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
     private Arrive arrive;
     private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
+    private bool cooking = false;
 
     /** OnEnter */
     public override void OnEnter() {
@@ -73,11 +74,13 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 arrive.enabled = true;
                 arrive.target = blackboard.theCook;
                 elapsedTime = 0.0f;
+                cooking = true;
             },
             () => {
                 elapsedTime += Time.deltaTime;
             },
             () => {
+                cooking = false;
                 arrive.enabled = false;
                 blackboard.haveCookedFood = true;
                 blackboard.theDishBB().PlaceFoodOnDish();
@@ -104,7 +107,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
         Transition haveFood = new Transition("haveFood",
             () => {
-                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, blackboard.theFridge) < blackboard.pointReachRadius;
+                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, blackboard.theFridge) < blackboard.pointReachRadius || cooking;
             }, () => { });
 
         Transition haveNoFood = new Transition("haveNoFood",

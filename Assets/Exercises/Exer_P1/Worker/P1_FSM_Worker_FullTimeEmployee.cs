@@ -7,14 +7,14 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
 
     /** Variables */
     private P1_Worker_Blackboard blackboard;
-    private WanderAround wanderAround;
+    private WanderAroundPlusAvoid wanderAround;
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         blackboard = GetComponent<P1_Worker_Blackboard>();
-        wanderAround = GetComponent<WanderAround>();
+        wanderAround = GetComponent<WanderAroundPlusAvoid>();
 
         /** OnEnter */
         base.OnEnter();
