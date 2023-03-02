@@ -50,7 +50,7 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public float pickOrderTime = 2.5f;
     public bool haveOrder = false;
     public bool waiterWorkDone = false;
-    public float deliverFoodTime = 3.0f;
+    public float deliverFoodTime = 5.0f;
 
     /** Chef */
     [Foldout("Chef", styled = true)]

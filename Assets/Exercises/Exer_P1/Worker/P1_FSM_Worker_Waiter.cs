@@ -13,6 +13,8 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
     /** OnEnter */
     public override void OnEnter() {
 
+        Time.timeScale = 3.0f;
+
         /** GetComponent */
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
@@ -66,19 +68,21 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 arrive.enabled = true;
                 arrive.target = blackboard.theCustomer;
                 elapsedTime = 0.0f;
+                blackboard.haveOrder = false;
             },
             () => {
                 elapsedTime += Time.deltaTime;
             },
             () => {
                 arrive.enabled = false;
-                blackboard.haveOrder = false;
                 blackboard.waiterWorkDone = true;
                 blackboard.haveCookedFood = false;
                 blackboard.theCustomer.tag = blackboard.unTag;
-                GameObject.Destroy(blackboard.theCustomer);
-                blackboard.theDish.transform.SetParent(null);
-                blackboard.theDish = null;
+                blackboard.theDish.transform.SetParent(blackboard.theCustomer.transform);
+                blackboard.theCustomer.tag = "Untagged";
+                // TODO Héctor // "ENTREGAR" el plato al costumer
+                    /** BORRAR ESTO */ blackboard.theDishBB().DirtyTheDish();
+                blackboard.theCustomer = null;
             });
 
         /** Transitions */
@@ -99,7 +103,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
 
         Transition foodDelivered = new Transition("foodDelivered",
             () => { 
-                return elapsedTime >= blackboard.deliverFoodTime; 
+                return elapsedTime >= blackboard.deliverFoodTime && SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance; 
             }, () => { });
 
         /** FSM Set Up */
