@@ -7,6 +7,7 @@ namespace Steerings {
         public int numInstances = 20;
         public float delay = 0.5f;
         public GameObject prefab;
+        public Transform spawnPoint;
 
         private int created = 0;
         private float elapsedTime = 0f;
@@ -25,7 +26,7 @@ namespace Steerings {
             }
 
             // if this point is reached, it's time to spawn a new instance
-            GameObject clone = Instantiate(prefab);
+            GameObject clone = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
             AddBoid(clone);
             created++;
             elapsedTime = 0.0f;
