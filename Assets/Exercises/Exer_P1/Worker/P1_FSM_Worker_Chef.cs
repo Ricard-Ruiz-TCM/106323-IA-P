@@ -41,15 +41,21 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         FoodBuyer.Name = "foodBuyer";
 
         /** States */
-        State reachCleanPlate = new State("reachCleanPlate",
-            () => {
+        State findDish = new State("findDish",
+            () => { },
+            () => { },
+            () => { });
+
+        State reachPlate = new State("reachPlate",
+            () => { 
                 arrive.enabled = true;
-                arrive.target = blackboard.theCleanDishPile;
+                arrive.target = blackboard.theDish;
             },
             () => { },
             () => {
                 arrive.enabled = false;
-            });
+                blackboard.theDish.transform.SetParent(gameObject.transform);
+             });
 
         State reachFood = new State("reachFood",
             () => {
@@ -74,21 +80,27 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
             () => {
                 arrive.enabled = false;
                 blackboard.haveCookedFood = true;
-                blackboard.totalPlatesInUse++;
-                blackboard.totalCleanPlates--;
-                blackboard.totalFood--;
+                blackboard.theDishBB().PlaceFoodOnDish();
             });
 
         /** Transitions */
         Transition havePlates = new Transition("havePlates",
             () => {
-                return blackboard.totalCleanPlates > 0 && SensingUtils.DistanceToTarget(gameObject, blackboard.theCleanDishPile) < blackboard.pointReachRadius;
-            }, () => { });
+                return SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_CLEAN", blackboard.dishDetectionRadius) != null;
+            }, () => {
+                blackboard.theDish = SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_CLEAN", blackboard.dishDetectionRadius);
+            } );
 
         Transition haveNoPlates = new Transition("haveNoPlates",
             () => {
-                return blackboard.totalCleanPlates <= 0;
+                blackboard.theDish = SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_DIRTY", blackboard.dishDetectionRadius);
+                return blackboard.theDish != null;
             }, () => { });
+
+        Transition plateReached = new Transition("plateReached",
+        () => {
+            return SensingUtils.DistanceToTarget(gameObject, blackboard.theDish) < blackboard.pointReachRadius;
+        }, () => {} );
 
         Transition haveFood = new Transition("haveFood",
             () => {
@@ -107,19 +119,21 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
 
         /** FSM Set Up */
-        AddStates(reachCleanPlate, reachFood, cookFood, ChefAssistant, FoodBuyer);
+        AddStates(findDish, reachPlate, reachFood, cookFood, ChefAssistant, FoodBuyer);
 
-        AddTransition(reachCleanPlate, havePlates, reachFood);
-        AddTransition(reachCleanPlate, haveNoPlates, ChefAssistant);
+        AddTransition(findDish, havePlates, reachPlate);
+        AddTransition(findDish, haveNoPlates, ChefAssistant);
         AddTransition(ChefAssistant, havePlates, reachFood);
+
+        AddTransition(reachPlate, plateReached, reachFood);
 
         AddTransition(reachFood, haveFood, cookFood);
         AddTransition(reachFood, haveNoFood, FoodBuyer);
         AddTransition(FoodBuyer, haveFood, cookFood);
 
-        AddTransition(cookFood, foodCooked, reachCleanPlate);
+        AddTransition(cookFood, foodCooked, findDish);
 
-        initialState = reachCleanPlate;
+        initialState = findDish;
     }
 
 }

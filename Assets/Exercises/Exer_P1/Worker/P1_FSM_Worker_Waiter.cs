@@ -77,6 +77,8 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 blackboard.haveCookedFood = false;
                 blackboard.theCustomer.tag = blackboard.unTag;
                 GameObject.Destroy(blackboard.theCustomer);
+                blackboard.theDish.transform.SetParent(null);
+                blackboard.theDish = null;
             });
 
         /** Transitions */

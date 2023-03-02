@@ -14,6 +14,10 @@ TagManager:
   - CLEAN_PLATES
   - DIRTY_PLATES
   - COOK_SPOT
+  - BUY_FOOD_SPOT
+  - DISH_IN_USE
+  - DISH_CLEAN
+  - DISH_DIRTY
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "P1_FSM_Worker_ChefAssistant", menuName = "Finite State Machines/P1_FSM_Worker_ChefAssistant", order = 1)]
 public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
+
     /** Variables */
     private Arrive arrive;
     private P1_Worker_Blackboard blackboard;
@@ -36,11 +37,12 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
         State reachDirtyPlate = new State("reachDirtyPlate",
             () => {
                 arrive.enabled = true;
-                arrive.target = blackboard.theDirtyDishPile;
+                arrive.target = blackboard.theDish;
             },
             () => { },
             () => {
                 arrive.enabled = false;
+                blackboard.theDish.transform.SetParent(gameObject.transform);
             });
 
         State washUpPlate = new State("washUpPlate",
@@ -66,14 +68,13 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
             },
             () => {
                 arrive.enabled = false;
-                blackboard.totalCleanPlates += 2;
-                blackboard.totalDirtyPlates -= 2;
+                blackboard.theDishBB().WashUpDish();
             });
 
         /** Transitions */
         Transition dirtyDishPicked = new Transition("dirtyDishPicked",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theDirtyDishPile) < blackboard.pointReachRadius;
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theDish) < blackboard.pointReachRadius;
             }, () => { });
 
         Transition washedUpDish = new Transition("washedUpDish",

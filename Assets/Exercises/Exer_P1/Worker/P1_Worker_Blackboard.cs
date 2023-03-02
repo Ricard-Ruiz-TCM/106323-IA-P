@@ -54,9 +54,6 @@ public class P1_Worker_Blackboard : MonoBehaviour {
 
     /** Chef */
     [Foldout("Chef", styled = true)]
-    public int totalDirtyPlates = 10;
-    public int totalCleanPlates = 0;
-    public int totalPlatesInUse = 0;
     public bool haveCookedFood = false;
     public int totalFood = 0;
     public GameObject theCook;
@@ -64,10 +61,15 @@ public class P1_Worker_Blackboard : MonoBehaviour {
 
     /** Chef Assistant */
     [Foldout("Chef Assistant", styled = true)]
+    public float dishDetectionRadius = 100.0f;
+    public GameObject theDish;
     public float washUpTime = 2.5f;
-    public GameObject theDirtyDishPile;
     public GameObject theCleanDishPile;
     public GameObject theSink;
+
+    public P1_Dish_Blackboard theDishBB() { 
+        return theDish.GetComponent<P1_Dish_Blackboard>();
+    }
 
     /** Food Buyer */
     [Foldout("Food Buyer", styled = true)]
