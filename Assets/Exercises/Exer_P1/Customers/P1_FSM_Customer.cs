@@ -8,12 +8,17 @@ public class P1_FSM_Customer : FiniteStateMachine
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
+    private P1_Customer_Blackboard blackboard;
+    private Arrive arrive;
+    
 
     public override void OnEnter()
     {
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
+        blackboard = GetComponent<P1_Customer_Blackboard>();
+        arrive = GetComponent<Arrive>();
         base.OnEnter(); // do not remove
     }
 
@@ -23,6 +28,7 @@ public class P1_FSM_Customer : FiniteStateMachine
          * It's equivalent to the on exit action of any state 
          * Usually this code turns off behaviours that shouldn't be on when one the FSM has
          * been exited. */
+        base.DisableAllSteerings();
         base.OnExit();
     }
 
@@ -39,6 +45,11 @@ public class P1_FSM_Customer : FiniteStateMachine
 
          */
 
+        State reachSit = new State("ReachSit",
+            () => { arrive.target = blackboard.GetFirstAvailableChairTransform(); arrive.enabled = true; Debug.Log("IN STATE"); },
+            () => {  },
+            () => { arrive.enabled = false; }
+            );
 
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
@@ -58,14 +69,16 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         AddTransition(sourceState, transition, destinationState);
 
-         */ 
+         */
 
+        AddState(reachSit);
 
         /* STAGE 4: set the initial state
          
         initialState = ... 
 
          */
+        initialState = reachSit;
 
     }
 }

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7362019050488785313}
   - component: {fileID: 4759352848274241331}
   - component: {fileID: 7362019050488785315}
+  - component: {fileID: -6503532625600822406}
+  - component: {fileID: -6507218432680212057}
   m_Layer: 0
   m_Name: P1_Customer_Prefab
   m_TagString: CUSTOMER
@@ -152,6 +154,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823459bfcabf59e4bbb7d30c1033e0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 0}
+  fsm: {fileID: 11400000, guid: 1b7883ee2a18bb04fa299c41d64b0040, type: 2}
   currentState: 
   textMesh: {fileID: 0}
+--- !u!114 &-6503532625600822406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362019050488785312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21cddc94e74df1d46929a8151c57da11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitingTime: 0
+  availableChairTag: CHAIR_SPOT
+  occupiedChairTag: CHAIR_OCCUPIED
+  exitPoint: {fileID: 0}
+--- !u!114 &-6507218432680212057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362019050488785312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1c6fa0d5ba45c4eb509c1ad6e53e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationalPolicy: 4
+  target: {fileID: 0}

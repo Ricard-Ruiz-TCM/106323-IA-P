@@ -7,14 +7,13 @@ public class P1_Customer_Blackboard : MonoBehaviour
     public float waitingTime;
     public string availableChairTag;
     public string occupiedChairTag;
-    public float chairDetectionRadious;
     public Transform exitPoint;
 
-    public Transform GetFirstAvailableChairTransform()
+    public GameObject GetFirstAvailableChairTransform()
     {
 
         GameObject[] _chairs = GameObject.FindGameObjectsWithTag(availableChairTag);
-        Transform _firstChair = _chairs[0].transform;
+        GameObject _firstChair = _chairs[0];
         _firstChair.tag = occupiedChairTag;
 
         return _firstChair;
