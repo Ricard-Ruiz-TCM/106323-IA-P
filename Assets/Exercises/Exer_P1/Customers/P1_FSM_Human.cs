@@ -21,6 +21,10 @@ public class P1_FSM_Human : FiniteStateMachine
         flee = GetComponent<Flee>();
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Customer_Blackboard>();
+
+        blackboard.exitPoint = GameObject.FindGameObjectWithTag("CUSTOMER_SPAWN_POINT");
+        blackboard.angryPoint = GameObject.FindGameObjectWithTag("CUSTOMER_SPAWN_POINT");
+
         base.OnEnter(); // do not remove
     }
 
@@ -107,6 +111,11 @@ public class P1_FSM_Human : FiniteStateMachine
           () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
       );
 
+        Transition longWaitTime = new Transition("longWaitTime",
+          () => { return elapsedTime >= blackboard.hungryLevel; }, // write the condition checkeing code in {}
+          () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+      );
+
 
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------
@@ -123,6 +132,10 @@ public class P1_FSM_Human : FiniteStateMachine
         AddState(getHappy);
 
 
+        AddTransition(Customer, antDetected, fleeFromAnts);
+        AddTransition(Customer, longWaitTime, getAngry);
+
+
         AddTransition(fleeFromAnts, antNotDetected, Customer);
         AddTransition(getAngry, tvReached, watchTV);
         AddTransition(watchTV, beingHungry, Customer);
@@ -134,7 +147,7 @@ public class P1_FSM_Human : FiniteStateMachine
 
          */
 
-        initialState = fleeFromAnts;
+        initialState = Customer;
 
     }
 }

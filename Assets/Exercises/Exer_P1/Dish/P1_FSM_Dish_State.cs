@@ -82,4 +82,8 @@ public class P1_FSM_Dish_State : FiniteStateMachine {
         initialState = clean;
     }
 
+    public void CleanOnEnter() {
+
+    }
+
 }

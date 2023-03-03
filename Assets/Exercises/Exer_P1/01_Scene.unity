@@ -1213,7 +1213,7 @@ GameObject:
   - component: {fileID: 144932852}
   m_Layer: 0
   m_Name: CUSTOMER_SPAWN_POINT
-  m_TagString: Untagged
+  m_TagString: CUSTOMER_SPAWN_POINT
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1225,12 +1225,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144932851}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.85, y: -4.27, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -20.850002, y: -1.4319357, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 695874928}
+  m_Father: {fileID: 895054553}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &145460982
@@ -8215,7 +8215,6 @@ Transform:
   - {fileID: 1108412825}
   - {fileID: 584035648}
   - {fileID: 379154939}
-  - {fileID: 144932852}
   m_Father: {fileID: 484074302}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9955,6 +9954,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 144932852}
   - {fileID: 524097888}
   - {fileID: 285930580}
   m_Father: {fileID: 6035186}

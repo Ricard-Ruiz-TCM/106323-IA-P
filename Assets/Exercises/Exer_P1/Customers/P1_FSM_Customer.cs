@@ -39,8 +39,6 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         //FMS
 
-        FiniteStateMachine Human = ScriptableObject.CreateInstance<P1_FSM_Human>();
-        Human.Name = "Human";
 
         /* STAGE 1: create the states with their logic(s)
          *-----------------------------------------------
@@ -52,6 +50,8 @@ public class P1_FSM_Customer : FiniteStateMachine
         );
 
          */
+
+        State findSit = new State("findSit", () => { }, () => { }, () => { });
 
         State reachSit = new State("ReachSit",
             () => { arrive.target = blackboard.GetFirstAvailableChairTransform(); arrive.enabled = true;  },
@@ -85,6 +85,14 @@ public class P1_FSM_Customer : FiniteStateMachine
         );
 
         */
+
+        Transition sitFinded = new Transition("SitReached",
+            () => {
+                blackboard.myChair = GameObject.FindGameObjectWithTag(blackboard.availableChairTag);
+                return blackboard.myChair != null;
+            },
+            () => { }
+        );
 
         Transition sitReached = new Transition("SitReached",
             () => { return SensingUtils.DistanceToTarget(gameObject, blackboard.myChair) <= blackboard.maxDistanceToConsiderSit; }, 
@@ -124,17 +132,16 @@ public class P1_FSM_Customer : FiniteStateMachine
         AddTransition(sourceState, transition, destinationState);
 
          */
-        AddState(Human);
+        AddState(findSit);
         AddState(reachSit);
         AddState(waitWaiter);
         AddState(waitFood);
         AddState(eatFood);
 
+        AddTransition(findSit, sitFinded, reachSit);
         AddTransition(reachSit, sitReached, waitWaiter);
         AddTransition(waitWaiter, waiterPickedOrder, waitFood);
         AddTransition(waitFood, waiterBringFood, eatFood);
-        AddTransition(eatFood, foodEaten, Human);
-        AddTransition(waitWaiter,longTimeWait , Human);
 
         /* STAGE 4: set the initial state
          

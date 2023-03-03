@@ -11,7 +11,7 @@ public class P1_Customer_Blackboard : MonoBehaviour
     public string occupiedChairTag;
     public bool orderPicked;
     public bool foodDelivered;
-    public Transform exitPoint;
+    public GameObject exitPoint;
     public GameObject myChair;
     public GameObject moneyPrefab;
 

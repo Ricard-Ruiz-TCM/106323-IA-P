@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823459bfcabf59e4bbb7d30c1033e0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 11400000, guid: 17b5fdd885b2bf34b84ab0b9f68e23e6, type: 2}
+  fsm: {fileID: 11400000, guid: 8486cdf54bb791d4c85cc5bb31bbb152, type: 2}
   currentState: 
   textMesh: {fileID: 0}
 --- !u!114 &-6503532625600822406
