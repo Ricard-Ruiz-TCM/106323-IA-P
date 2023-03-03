@@ -76,7 +76,7 @@ public class P1_FSM_Human : FiniteStateMachine
 
 
         State getHappy = new State("GetHappy",
-           () => { arrive.enabled = true; arrive.target = blackboard.angryPoint; }, // write on enter logic inside {}
+           () => { arrive.enabled = true; arrive.target = blackboard.angryPoint; blackboard.myChair.tag = "CHAIR_SPOT"; }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
        );
@@ -112,10 +112,16 @@ public class P1_FSM_Human : FiniteStateMachine
       );
 
         Transition longWaitTime = new Transition("longWaitTime",
-          () => { return elapsedTime >= blackboard.hungryLevel; }, // write the condition checkeing code in {}
+          () => { return blackboard.waitingTime >= blackboard.maxWaitingTime; }, // write the condition checkeing code in {}
           () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
       );
 
+        Transition foodEaten = new Transition("FoodEaten",
+           () => { return blackboard.eatingFoodTime >= blackboard.maxEatingFoodTime; },
+           () => { }
+
+
+           );
 
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------
@@ -134,6 +140,7 @@ public class P1_FSM_Human : FiniteStateMachine
 
         AddTransition(Customer, antDetected, fleeFromAnts);
         AddTransition(Customer, longWaitTime, getAngry);
+        AddTransition(Customer, foodEaten, getHappy);
 
 
         AddTransition(fleeFromAnts, antNotDetected, Customer);

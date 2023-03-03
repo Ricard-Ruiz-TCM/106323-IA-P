@@ -5,8 +5,10 @@ public class P1_Customer_Blackboard : MonoBehaviour
     // Customer
     [Foldout("Customer", styled = true)]
     public float waitingTime;
+    public float maxWaitingTime;
     public float maxDistanceToConsiderSit;
     public float eatingFoodTime;
+    public float maxEatingFoodTime;
     public string availableChairTag;
     public string occupiedChairTag;
     public bool orderPicked;

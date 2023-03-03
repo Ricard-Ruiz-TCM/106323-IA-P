@@ -170,9 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cddc94e74df1d46929a8151c57da11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitingTime: 3
+  waitingTime: 0
+  maxWaitingTime: 120
   maxDistanceToConsiderSit: 1
   eatingFoodTime: 0
+  maxEatingFoodTime: 10
   availableChairTag: CHAIR_SPOT
   occupiedChairTag: CHAIR_OCCUPIED
   orderPicked: 0

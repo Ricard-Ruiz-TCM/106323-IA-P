@@ -67,14 +67,14 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         State waitFood = new State("WaitFood",
             () => { },
-            () => { elapsedTime += Time.deltaTime; },
-            () => { elapsedTime = 0f; }
+            () => { blackboard.waitingTime += Time.deltaTime; },
+            () => { blackboard.waitingTime = 0f; }
             );
 
         State eatFood = new State("EatFood",
            () => { },
-           () => { elapsedTime += Time.deltaTime;  },
-           () => {blackboard.DropMoney(); elapsedTime = 0f; blackboard.orderPicked = false; blackboard.foodDelivered = false; }
+           () => { blackboard.eatingFoodTime += Time.deltaTime;  },
+           () => {blackboard.DropMoney(); blackboard.eatingFoodTime = 0f; blackboard.orderPicked = false; blackboard.foodDelivered = false; }
            );
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
@@ -109,12 +109,7 @@ public class P1_FSM_Customer : FiniteStateMachine
             () => { }
         );
 
-        Transition foodEaten = new Transition("FoodEaten",
-            () => { return elapsedTime >= blackboard.eatingFoodTime; },
-            () => { }
-
-
-            );
+       
 
 
         Transition longTimeWait = new Transition("LongTimeWait",
