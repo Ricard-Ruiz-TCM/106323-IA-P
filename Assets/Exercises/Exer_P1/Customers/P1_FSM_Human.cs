@@ -76,7 +76,15 @@ public class P1_FSM_Human : FiniteStateMachine
 
 
         State getHappy = new State("GetHappy",
-           () => { arrive.enabled = true; arrive.target = blackboard.angryPoint; blackboard.myChair.tag = "CHAIR_SPOT"; }, // write on enter logic inside {}
+           () => { 
+               blackboard.DropMoney(); 
+               arrive.enabled = true; 
+               arrive.target = blackboard.angryPoint; 
+               blackboard.myChair.tag = "CHAIR_SPOT";
+               blackboard.eatingFoodTime = 0f; 
+               blackboard.orderPicked = false; 
+               blackboard.foodDelivered = false;
+           }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
        );

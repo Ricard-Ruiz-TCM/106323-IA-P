@@ -74,7 +74,7 @@ public class P1_FSM_Customer : FiniteStateMachine
         State eatFood = new State("EatFood",
            () => { },
            () => { blackboard.eatingFoodTime += Time.deltaTime;  },
-           () => {blackboard.DropMoney(); blackboard.eatingFoodTime = 0f; blackboard.orderPicked = false; blackboard.foodDelivered = false; }
+           () => { }
            );
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------

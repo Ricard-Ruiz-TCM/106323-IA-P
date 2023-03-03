@@ -40,6 +40,7 @@ public class P1_Customer_Blackboard : MonoBehaviour
 
     public void DropMoney()
     {
+        Debug.Log("IN");
        Instantiate(moneyPrefab, transform.position,Quaternion.identity);
     }
 
