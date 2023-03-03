@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class P1_Worker_Blackboard : MonoBehaviour {
@@ -41,6 +42,7 @@ public class P1_Worker_Blackboard : MonoBehaviour {
 
     /** Pick Up Money */
     [Foldout("PickUpMoney", styled = true)]
+    public int money;
     public GameObject theMoney;
     public GameObject theCashier;
 
@@ -76,5 +78,12 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public float buyFoodTime = 2.5f;
     public GameObject theShop;
     public GameObject theFridge;
+
+    [Foldout("HUD", styled = true)]
+    public TextMeshProUGUI _moneyAmount;
+
+    public void updateHUD() {
+        _moneyAmount.text = money.ToString();
+    }
 
 }
