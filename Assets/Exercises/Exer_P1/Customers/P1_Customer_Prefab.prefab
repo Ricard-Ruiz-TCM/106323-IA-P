@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fadfb23a909584e8ff82b91a0977c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 40
+  maxAcceleration: 10
   maxSpeed: 10
   clipVelocity: 1
   maxAngularAcceleration: 360
@@ -169,10 +169,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cddc94e74df1d46929a8151c57da11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitingTime: 0
+  waitingTime: 5
+  maxDistanceToConsiderSit: 1
+  eatingFoodTime: 0
   availableChairTag: CHAIR_SPOT
   occupiedChairTag: CHAIR_OCCUPIED
+  orderPicked: 0
+  foodDelivered: 0
   exitPoint: {fileID: 0}
+  myChair: {fileID: 0}
+  moneyPrefab: {fileID: 0}
+  antDetectionRadious: 0
+  hungryLevel: 0
 --- !u!114 &-6507218432680212057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +188,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7362019050488785312}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b1c6fa0d5ba45c4eb509c1ad6e53e63, type: 3}
   m_Name: 
