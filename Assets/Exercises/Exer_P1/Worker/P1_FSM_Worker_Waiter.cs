@@ -85,7 +85,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 // TODO Héctor // "ENTREGAR" el plato al costumer
                     /** BORRAR ESTO */ blackboard.theDishBB().DirtyTheDish();
                 blackboard.theCustomer = null;
-                blackboard.money += 6;
+                blackboard.money += 666;
                 blackboard.updateHUD();
             });
 

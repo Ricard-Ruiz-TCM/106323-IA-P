@@ -5,17 +5,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_ChefAssistant", menuName = "Finite State Machines/P1_FSM_Worker_ChefAssistant", order = 1)]
 public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
 
+    /** Public Variables */
+    public float washUpTime = 10.0f;
+
     /** Variables */
     private Arrive arrive;
-    private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
+        // The Dish
+    private GameObject theDish;
+        // Objetives
+    private GameObject theSink;
+    private GameObject thePile;
+        // SteeringContext
+    private SteeringContext context;
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         arrive = GetComponent<Arrive>();
-        blackboard = GetComponent<P1_Worker_Blackboard>();
+        context = GetComponent<SteeringContext>();
+
+        /** Finder */
+        theSink = GameObject.FindGameObjectWithTag("SINK");
+        thePile = GameObject.FindGameObjectWithTag("CLEAN_PILE");
 
         /** OnEnter */
         base.OnEnter();
@@ -34,68 +47,73 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
     public override void OnConstruction() {
 
         /** States */
+        State findDirtyPlate = new State("findDirtyPlate", () => { }, () => { }, () => { } );
+        
         State reachDirtyPlate = new State("reachDirtyPlate",
             () => {
                 arrive.enabled = true;
-                arrive.target = blackboard.theDish;
+                arrive.target = theDish;
             },
             () => { },
-            () => {
-                arrive.enabled = false;
-                blackboard.theDish.transform.SetParent(gameObject.transform);
-            });
+            () => { theDish.transform.SetParent(gameObject.transform); });
+
+        State reachTheSink = new State("reachTheSink",
+            () => { arrive.target = theSink; },
+            () => { },
+            () => { });
 
         State washUpPlate = new State("washUpPlate",
-            () => {
-                arrive.enabled = true;
-                arrive.target = blackboard.theSink;
-                elapsedTime = 0.0f;
-            },
-            () => {
-                elapsedTime += Time.deltaTime;
-            },
-            () => {
-                arrive.enabled = false;
-            });
+            () => { elapsedTime = 0.0f; },
+            () => { elapsedTime += Time.deltaTime; },
+            () => { theDish.GetComponent<P1_Dish_Blackboard>().WashUpDish(); });
 
         State storePlate = new State("storePlate",
+            () => { arrive.target = thePile; },
+            () => { },
             () => {
-                arrive.enabled = true;
-                arrive.target = blackboard.theCleanDishPile;
-            },
-            () => {
-                elapsedTime += Time.deltaTime;
-            },
-            () => {
+                theDish.transform.SetParent(thePile.transform);
+                theDish.transform.localPosition = Vector3.zero;
+                theDish.transform.localEulerAngles = Vector3.zero;
+                theDish = null;
                 arrive.enabled = false;
-                blackboard.theDishBB().WashUpDish();
             });
 
         /** Transitions */
-        Transition dirtyDishPicked = new Transition("dirtyDishPicked",
+        Transition dirtyPlateDetected = new Transition("dirtyDishPicked",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theDish) < blackboard.pointReachRadius;
+                theDish = GameObject.FindGameObjectWithTag("DISH_DIRTY");
+                return theDish != null;
+            }, () => { });
+
+        Transition sinkReached = new Transition("targetReached",
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, theSink) < context.closeEnoughRadius;
+            }, () => { });
+
+        Transition dishReached = new Transition("targetReached",
+            () => { return SensingUtils.DistanceToTarget(gameObject, theDish) < context.closeEnoughRadius; }, () => { });
+
+        Transition pileReached = new Transition("targetReached",
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, thePile) < context.closeEnoughRadius;
             }, () => { });
 
         Transition washedUpDish = new Transition("washedUpDish",
             () => {
-                return elapsedTime >= blackboard.washUpTime;
-            }, () => { });
-
-        Transition cleanDishStored = new Transition("cleanDishStored",
-            () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCleanDishPile) < blackboard.pointReachRadius;
+                return elapsedTime >= washUpTime;
             }, () => { });
 
 
         /** FSM Set Up */
-        AddStates(reachDirtyPlate, washUpPlate, storePlate);
+        AddStates(findDirtyPlate, reachDirtyPlate, reachTheSink, washUpPlate, storePlate);
 
-        AddTransition(reachDirtyPlate, dirtyDishPicked, washUpPlate);
+        AddTransition(findDirtyPlate, dirtyPlateDetected, reachDirtyPlate);
+        AddTransition(reachDirtyPlate, dishReached, reachTheSink);
+        AddTransition(reachTheSink, sinkReached, washUpPlate);
         AddTransition(washUpPlate, washedUpDish, storePlate);
-        AddTransition(storePlate, cleanDishStored, reachDirtyPlate);
+        AddTransition(storePlate, pileReached, findDirtyPlate);
 
-        initialState = reachDirtyPlate;
+        initialState = findDirtyPlate;
     }
 
 }
