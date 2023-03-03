@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7362019050488785315}
   - component: {fileID: -6503532625600822406}
   - component: {fileID: -6507218432680212057}
+  - component: {fileID: -4804802050883364673}
   m_Layer: 0
   m_Name: P1_Customer_Prefab
   m_TagString: CUSTOMER
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823459bfcabf59e4bbb7d30c1033e0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 11400000, guid: 1b7883ee2a18bb04fa299c41d64b0040, type: 2}
+  fsm: {fileID: 11400000, guid: 17b5fdd885b2bf34b84ab0b9f68e23e6, type: 2}
   currentState: 
   textMesh: {fileID: 0}
 --- !u!114 &-6503532625600822406
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cddc94e74df1d46929a8151c57da11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitingTime: 5
+  waitingTime: 3
   maxDistanceToConsiderSit: 1
   eatingFoodTime: 0
   availableChairTag: CHAIR_SPOT
@@ -178,9 +179,12 @@ MonoBehaviour:
   foodDelivered: 0
   exitPoint: {fileID: 0}
   myChair: {fileID: 0}
-  moneyPrefab: {fileID: 0}
-  antDetectionRadious: 0
-  hungryLevel: 0
+  moneyPrefab: {fileID: 5062625487195685079, guid: 0ebf528af16304940b0958aec54c59cd, type: 3}
+  antDetectionRadious: 10
+  maxDistanceToWatchTV: 1
+  hungryLevel: 20
+  angryPoint: {fileID: 0}
+  theAnt: {fileID: 0}
 --- !u!114 &-6507218432680212057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +195,20 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b1c6fa0d5ba45c4eb509c1ad6e53e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationalPolicy: 4
+  target: {fileID: 0}
+--- !u!114 &-4804802050883364673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362019050488785312}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51021b399ad270942b4928c10c0a1e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationalPolicy: 4

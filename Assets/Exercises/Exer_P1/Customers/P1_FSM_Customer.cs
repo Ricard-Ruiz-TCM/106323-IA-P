@@ -36,6 +36,12 @@ public class P1_FSM_Customer : FiniteStateMachine
 
     public override void OnConstruction()
     {
+
+        //FMS
+
+        FiniteStateMachine Human = ScriptableObject.CreateInstance<P1_FSM_Human>();
+        Human.Name = "Human";
+
         /* STAGE 1: create the states with their logic(s)
          *-----------------------------------------------
          
@@ -68,7 +74,7 @@ public class P1_FSM_Customer : FiniteStateMachine
         State eatFood = new State("EatFood",
            () => { },
            () => { elapsedTime += Time.deltaTime;  },
-           () => {blackboard.DropMoney(); elapsedTime = 0f; }
+           () => {blackboard.DropMoney(); elapsedTime = 0f; blackboard.orderPicked = false; blackboard.foodDelivered = false; }
            );
         /* STAGE 2: create the transitions with their logic(s)
          * ---------------------------------------------------
@@ -95,6 +101,21 @@ public class P1_FSM_Customer : FiniteStateMachine
             () => { }
         );
 
+        Transition foodEaten = new Transition("FoodEaten",
+            () => { return elapsedTime >= blackboard.eatingFoodTime; },
+            () => { }
+
+
+            );
+
+
+        Transition longTimeWait = new Transition("LongTimeWait",
+            () => { return elapsedTime >= blackboard.waitingTime; },
+            () => { }
+
+
+            );
+
         /* STAGE 3: add states and transitions to the FSM 
          * ----------------------------------------------
             
@@ -103,14 +124,17 @@ public class P1_FSM_Customer : FiniteStateMachine
         AddTransition(sourceState, transition, destinationState);
 
          */
-
+        AddState(Human);
         AddState(reachSit);
         AddState(waitWaiter);
         AddState(waitFood);
+        AddState(eatFood);
 
         AddTransition(reachSit, sitReached, waitWaiter);
-        //AddTransition(waitWaiter, waiterPickedOrder, waitFood);
-        //AddTransition(waitFood, waiterBringFood, eatFood);
+        AddTransition(waitWaiter, waiterPickedOrder, waitFood);
+        AddTransition(waitFood, waiterBringFood, eatFood);
+        AddTransition(eatFood, foodEaten, Human);
+        AddTransition(waitWaiter,longTimeWait , Human);
 
         /* STAGE 4: set the initial state
          

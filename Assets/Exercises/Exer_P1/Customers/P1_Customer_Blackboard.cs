@@ -17,7 +17,11 @@ public class P1_Customer_Blackboard : MonoBehaviour
 
     [Foldout("Human", styled = true)]
     public float antDetectionRadious;
-    public int hungryLevel;
+    public float maxDistanceToWatchTV;
+    public float hungryLevel;
+    public GameObject angryPoint;
+    public GameObject theAnt;
+    
 
     public GameObject GetFirstAvailableChairTransform()
     {
@@ -29,6 +33,8 @@ public class P1_Customer_Blackboard : MonoBehaviour
 
         return _firstChair;
     }
+
+   
 
     public void DropMoney()
     {
