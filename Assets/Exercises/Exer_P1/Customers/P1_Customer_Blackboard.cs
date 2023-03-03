@@ -23,7 +23,6 @@ public class P1_Customer_Blackboard : MonoBehaviour
     public float hungryLevel;
     public GameObject angryPoint;
     public GameObject theAnt;
-    
 
     public GameObject GetFirstAvailableChairTransform()
     {
@@ -40,7 +39,7 @@ public class P1_Customer_Blackboard : MonoBehaviour
 
     public void DropMoney()
     {
-        Debug.Log("IN");
+        
        Instantiate(moneyPrefab, transform.position,Quaternion.identity);
     }
 
