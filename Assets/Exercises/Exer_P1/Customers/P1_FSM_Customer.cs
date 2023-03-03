@@ -61,8 +61,8 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         State waitFood = new State("WaitFood",
             () => { },
-            () => { },
-            () => { }
+            () => { elapsedTime += Time.deltaTime; },
+            () => { elapsedTime = 0f; }
             );
 
         State eatFood = new State("EatFood",

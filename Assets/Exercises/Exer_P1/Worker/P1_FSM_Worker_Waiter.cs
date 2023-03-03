@@ -61,6 +61,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
             },
             () => {
                 blackboard.haveOrder = true;
+                blackboard.CustomerBlackboard().orderPicked = true;
             });
 
         State deliverFood = new State("deliverFood",
@@ -80,6 +81,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 blackboard.theCustomer.tag = blackboard.unTag;
                 blackboard.theDish.transform.SetParent(blackboard.theCustomer.transform);
                 blackboard.theCustomer.tag = "Untagged";
+                blackboard.CustomerBlackboard().foodDelivered = true;
                 // TODO Héctor // "ENTREGAR" el plato al costumer
                     /** BORRAR ESTO */ blackboard.theDishBB().DirtyTheDish();
                 blackboard.theCustomer = null;

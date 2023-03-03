@@ -73,6 +73,10 @@ public class P1_Worker_Blackboard : MonoBehaviour {
         return theDish.GetComponent<P1_Dish_Blackboard>();
     }
 
+    public P1_Customer_Blackboard CustomerBlackboard()
+    {
+        return theCustomer.GetComponent<P1_Customer_Blackboard>();
+    }
     /** Food Buyer */
     [Foldout("Food Buyer", styled = true)]
     public float buyFoodTime = 2.5f;
