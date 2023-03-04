@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_FullTimeEmployee", menuName = "Finite State Machines/P1_FSM_Worker_FullTimeEmployee", order = 1)]
 public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
 
-    /** Variables */
+    /** Blackboard */
     private P1_Worker_Blackboard blackboard;
+
+    /** Variables */
     private WanderAroundPlusAvoid wanderAround;
 
     /** OnEnter */

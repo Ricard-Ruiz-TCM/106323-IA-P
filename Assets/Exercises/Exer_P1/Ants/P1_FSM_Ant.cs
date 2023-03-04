@@ -5,13 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FSM_P1_ANT", menuName = "Finite State Machines/FSM_P1_ANT", order = 1)]
 public class P1_FSM_Ant : FiniteStateMachine {
 
-    Arrive arrive;
-    P1_Ant_Blackboard blackboard;
-    FlockingAroundPlusAvoidance flockingAround;
+    /** Blackboard */
+    private P1_Ant_Blackboard blackboard;
 
-    GameObject theFood;
+    /** Variables */
+    private Arrive arrive;
+    private float elapsedTime;
+    private FlockingAroundPlusAvoidance flockingAround;
 
-    float elapsedTime;
+    private GameObject theFood;
 
     public override void OnEnter() {
         arrive = GetComponent<Arrive>();

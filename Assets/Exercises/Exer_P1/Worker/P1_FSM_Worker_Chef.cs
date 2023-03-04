@@ -5,22 +5,27 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_Chef", menuName = "Finite State Machines/P1_FSM_Worker_Chef", order = 1)]
 public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
+    /** Blackboard */
+    private P1_Worker_Blackboard blackboard;
+
     /** Variables */
     private Arrive arrive;
-    private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
     private bool cooking = false;
 
-    GameObject theFridge;
-
+    private GameObject theFridge;
+    /** SteeringContext */
+    private SteeringContext context;
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         arrive = GetComponent<Arrive>();
+        context = GetComponent<SteeringContext>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
 
+        /** Finder */
         theFridge = GameObject.FindGameObjectWithTag("THE_FRIDGE");
 
         /** OnEnter */
@@ -32,7 +37,6 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -41,16 +45,13 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         
         /** FSM's */
         FiniteStateMachine ChefAssistant = ScriptableObject.CreateInstance<P1_FSM_Worker_ChefAssistant>();
-        ChefAssistant.Name = "chefAssistant";
-
         FiniteStateMachine FoodBuyer = ScriptableObject.CreateInstance<P1_FSM_Worker_FoodBuyer>();
-        FoodBuyer.Name = "foodBuyer";
+        /** ------------------------------------------------------------ */
+        ChefAssistant.Name = "chefAssistant"; FoodBuyer.Name = "foodBuyer";
+        /** ------------------------------------------------------------ */
 
         /** States */
-        State findDish = new State("findDish",
-            () => { },
-            () => { },
-            () => { });
+        State findDish = new State("findDish", () => { }, () => { }, () => { });
 
         State reachPlate = new State("reachPlate",
             () => { 
@@ -60,7 +61,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
             () => { },
             () => {
                 arrive.enabled = false;
-                blackboard.theDish.transform.SetParent(gameObject.transform);
+                blackboard.theDish.GetComponent<P1_DishController>().Pick(transform);
              });
 
         State reachFood = new State("reachFood",
@@ -68,11 +69,8 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 arrive.enabled = true;
                 arrive.target = theFridge;
             },
-            () => {
-            },
-            () => {
-                arrive.enabled = false;
-            });
+            () => { },
+            () => { arrive.enabled = false; });
 
         State cookFood = new State("cookFood",
             () => {

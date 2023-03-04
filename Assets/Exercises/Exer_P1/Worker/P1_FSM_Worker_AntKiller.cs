@@ -5,10 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_AntKiller", menuName = "Finite State Machines/P1_FSM_Worker_AntKiller", order = 1)]
 public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
 
+    /** Blackboard */
+    private P1_Worker_Blackboard blackboard;
+
     /** Variables */
     private Seek seek;
     private float elapsedTime;
-    private P1_Worker_Blackboard blackboard;
 
     /** OnEnter */
     public override void OnEnter() {

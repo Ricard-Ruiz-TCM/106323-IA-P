@@ -5,9 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_PickUpMoney", menuName = "Finite State Machines/P1_FSM_Worker_PickUpMoney", order = 1)]
 public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
 
+    /** Blackboard */
+    private P1_Worker_Blackboard blackboard;
+
     /** Variables */
     private Arrive arrive;
-    private P1_Worker_Blackboard blackboard;
 
     private GameObject theCashier;
 

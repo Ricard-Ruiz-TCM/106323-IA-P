@@ -4,9 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Dish_State", menuName = "Finite State Machines/P1_FSM_Dish_State", order = 1)]
 public class P1_FSM_Dish_State : FiniteStateMachine {
 
+    /** Blackboard */
+    private P1_DishController blackboard;
+
     /** Variables */
     private SpriteRenderer renderer;
-    private P1_DishController blackboard;
 
     /** OnEnter */
     public override void OnEnter() {
