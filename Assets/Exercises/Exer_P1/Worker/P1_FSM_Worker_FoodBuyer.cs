@@ -43,7 +43,7 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
     public override void OnConstruction() {
 
         /** States */
-        State reachFoodShop = new State("reachFoodShop",
+        State reachTheCupboard = new State("reachTheCupboard",
             () => {
                 arrive.enabled = true;
                 arrive.target = theCupboard;
@@ -51,7 +51,7 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
             () => { },
             () => { arrive.enabled = false; });
 
-        State buyFood = new State("buyFood",
+        State pickFood = new State("pickFood",
             () => {
                 buying = true;
                 elapsedTime = 0.0f;
@@ -59,7 +59,7 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
             () => { elapsedTime += Time.deltaTime; },
             () => { });
 
-        State storeFood = new State("storeFood",
+        State storeFoodOnFridge = new State("storeFoodOnFridge",
             () => {
                 arrive.enabled = true;
                 arrive.target = theFridge;
@@ -72,30 +72,30 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
             });
 
         /** Transitions */
-        Transition reachedFoodMachine = new Transition("reachedFoodMachine",
+        Transition reachedTheCupboard = new Transition("reachedTheCupboard",
             () => {
                 return SensingUtils.DistanceToTarget(gameObject, theCupboard) < context.closeEnoughRadius || buying;
             }, () => { });
 
-        Transition foodBuyed = new Transition("foodBuyed",
+        Transition foodPicked = new Transition("foodPicked",
             () => {
                 return elapsedTime >= blackboard.buyFoodTime || buying;
             }, () => { });
 
-        Transition theFoodStore = new Transition("theFoodStore",
+        Transition reachedTheFridge = new Transition("reachedTheFridge",
             () => {
                 return SensingUtils.DistanceToTarget(gameObject, theFridge) < context.closeEnoughRadius;
             }, () => { });
 
 
         /** FSM Set Up */
-        AddStates(reachFoodShop, buyFood, storeFood);
+        AddStates(reachTheCupboard, pickFood, storeFoodOnFridge);
         /** -------------------------------------- */
-        AddTransition(reachFoodShop, reachedFoodMachine, buyFood);
-        AddTransition(buyFood, foodBuyed, storeFood);
-        AddTransition(storeFood, theFoodStore, reachFoodShop);
+        AddTransition(reachTheCupboard, reachedTheCupboard, pickFood);
+        AddTransition(pickFood, foodPicked, storeFoodOnFridge);
+        AddTransition(storeFoodOnFridge, reachedTheFridge, reachTheCupboard);
         /** ----------------------------------------------- */
-        initialState = reachFoodShop;
+        initialState = reachTheCupboard;
 
     }
 }

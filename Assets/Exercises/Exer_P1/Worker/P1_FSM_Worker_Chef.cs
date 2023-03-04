@@ -11,12 +11,17 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
     private float elapsedTime;
     private bool cooking = false;
 
+    GameObject theFridge;
+
+
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
+
+        theFridge = GameObject.FindGameObjectWithTag("THE_FRIDGE");
 
         /** OnEnter */
         base.OnEnter();
@@ -61,7 +66,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         State reachFood = new State("reachFood",
             () => {
                 arrive.enabled = true;
-                arrive.target = blackboard.theFridge;
+                arrive.target = theFridge;
             },
             () => {
             },
@@ -107,7 +112,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
         Transition haveFood = new Transition("haveFood",
             () => {
-                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, blackboard.theFridge) < blackboard.pointReachRadius || cooking;
+                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, theFridge) < blackboard.pointReachRadius || cooking;
             }, () => { });
 
         Transition haveNoFood = new Transition("haveNoFood",
