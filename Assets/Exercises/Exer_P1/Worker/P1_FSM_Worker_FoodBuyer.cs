@@ -7,9 +7,14 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
 
     /** Variables */
     private Arrive arrive;
-    private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
     private bool buying = false;
+    P1_Worker_Blackboard blackboard;
+
+    GameObject theCupboard;
+    GameObject theFridge;
+    /** SteeringContext */
+    private SteeringContext context;
 
     /** OnEnter */
     public override void OnEnter() {
@@ -17,6 +22,10 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
         /** GetComponent */
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
+
+        /** Finder */
+        theCupboard = GameObject.FindGameObjectWithTag("THE_CUPBOARD"); 
+        theFridge = GameObject.FindGameObjectWithTag("THE_FRIDGE");
 
         /** OnEnter */
         base.OnEnter();
@@ -27,7 +36,6 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -38,41 +46,35 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
         State reachFoodShop = new State("reachFoodShop",
             () => {
                 arrive.enabled = true;
-                arrive.target = blackboard.theShop;
+                arrive.target = theCupboard;
             },
             () => { },
-            () => {
-                arrive.enabled = false;
-            });
+            () => { arrive.enabled = false; });
 
         State buyFood = new State("buyFood",
             () => {
-                elapsedTime = 0.0f;
                 buying = true;
+                elapsedTime = 0.0f;
             },
-            () => {
-                elapsedTime += Time.deltaTime;
-            }, 
+            () => { elapsedTime += Time.deltaTime; },
             () => { });
 
         State storeFood = new State("storeFood",
             () => {
                 arrive.enabled = true;
-                arrive.target = blackboard.theFridge;
+                arrive.target = theFridge;
             },
+            () => { elapsedTime += Time.deltaTime; },
             () => {
-                elapsedTime += Time.deltaTime;
-            },
-            () => {
-                arrive.enabled = false;
-                blackboard.totalFood += 4;
                 buying = false;
+                arrive.enabled = false;
+                blackboard.StoreFood();
             });
 
         /** Transitions */
         Transition reachedFoodMachine = new Transition("reachedFoodMachine",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theShop) < blackboard.pointReachRadius || buying;
+                return SensingUtils.DistanceToTarget(gameObject, theCupboard) < context.closeEnoughRadius || buying;
             }, () => { });
 
         Transition foodBuyed = new Transition("foodBuyed",
@@ -82,18 +84,18 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
 
         Transition theFoodStore = new Transition("theFoodStore",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theFridge) < blackboard.pointReachRadius;
+                return SensingUtils.DistanceToTarget(gameObject, theFridge) < context.closeEnoughRadius;
             }, () => { });
 
 
         /** FSM Set Up */
         AddStates(reachFoodShop, buyFood, storeFood);
-
+        /** -------------------------------------- */
         AddTransition(reachFoodShop, reachedFoodMachine, buyFood);
         AddTransition(buyFood, foodBuyed, storeFood);
         AddTransition(storeFood, theFoodStore, reachFoodShop);
-
+        /** ----------------------------------------------- */
         initialState = reachFoodShop;
-    }
 
+    }
 }
