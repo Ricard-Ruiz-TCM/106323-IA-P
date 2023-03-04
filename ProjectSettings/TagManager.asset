@@ -21,6 +21,8 @@ TagManager:
   - CLEAN_PILE
   - CUSTOMER_SPAWN_POINT
   - DISH_PICKED
+  - THE_FRIDGE
+  - THE_CUPBOARD
   layers:
   - Default
   - TransparentFX

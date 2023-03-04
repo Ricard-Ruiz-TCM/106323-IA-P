@@ -38,7 +38,6 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -54,7 +53,7 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
                 arrive.target = theDish;
             },
             () => { },
-            () => { theDish.transform.SetParent(gameObject.transform); });
+            () => { theDish.GetComponent<P1_DishController>().Pick(transform); });
 
         State reachTheSink = new State("reachTheSink",
             () => { arrive.target = theSink; },
@@ -64,14 +63,14 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
         State washUpPlate = new State("washUpPlate",
             () => { elapsedTime = 0.0f; },
             () => { elapsedTime += Time.deltaTime; },
-            () => { theDish.GetComponent<P1_DishController>().Wash(); });
+            () => { });
 
         State storePlate = new State("storePlate",
             () => { arrive.target = thePile; },
             () => { },
             () => {
+                theDish.GetComponent<P1_DishController>().Wash();
                 theDish.GetComponent<P1_DishController>().PlaceOn(thePile);
-                theDish = null;
                 arrive.enabled = false;
             });
 
@@ -103,14 +102,14 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
 
         /** FSM Set Up */
         AddStates(findDirtyPlate, reachDirtyPlate, reachTheSink, washUpPlate, storePlate);
-
+        /** ---------------------------------------------------------------------------- */
         AddTransition(findDirtyPlate, dirtyPlateDetected, reachDirtyPlate);
         AddTransition(reachDirtyPlate, dishReached, reachTheSink);
         AddTransition(reachTheSink, sinkReached, washUpPlate);
         AddTransition(washUpPlate, washedUpDish, storePlate);
         AddTransition(storePlate, pileReached, findDirtyPlate);
-
+        /** ------------------------------------------------ */
         initialState = findDirtyPlate;
-    }
 
+    }
 }

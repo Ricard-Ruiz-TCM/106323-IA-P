@@ -3768,9 +3768,9 @@ GameObject:
   m_Component:
   - component: {fileID: 379154939}
   m_Layer: 0
-  m_Name: BUY_FOOD_SPOT
-  m_TagString: BUY_FOOD_SPOT
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Name: THE_CUPBOARD
+  m_TagString: THE_CUPBOARD
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3781,12 +3781,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379154938}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.875174, y: -0.5180645, z: 0.0008402616}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.875174, y: 2.32, z: 0.0008402467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 695874928}
+  m_Children:
+  - {fileID: 966817173}
+  m_Father: {fileID: 895054553}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &393678112
@@ -4490,7 +4491,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 695874928}
   - {fileID: 6035186}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -6065,8 +6065,8 @@ GameObject:
   - component: {fileID: 584035648}
   m_Layer: 0
   m_Name: THE_FRIDGE
-  m_TagString: BUY_FOOD_SPOT
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_TagString: THE_FRIDGE
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -6077,12 +6077,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584035647}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.835217, y: -7.3919353, z: 0.0008402616}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.835218, y: -4.553871, z: 0.0008402467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 695874928}
+  m_Children:
+  - {fileID: 2118572645}
+  - {fileID: 1453234629}
+  m_Father: {fileID: 895054553}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &586326252
@@ -8215,41 +8217,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &695874927
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 695874928}
-  m_Layer: 0
-  m_Name: Important Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &695874928
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695874927}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.594723, y: 0.8699728, z: 0.46808404}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 966817173}
-  - {fileID: 720321310}
-  - {fileID: 584035648}
-  - {fileID: 379154939}
-  m_Father: {fileID: 484074302}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &710490102
 GameObject:
   m_ObjectHideFlags: 0
@@ -8394,9 +8361,9 @@ GameObject:
   m_Component:
   - component: {fileID: 720321310}
   m_Layer: 0
-  m_Name: COOK_SPOT
-  m_TagString: COOK_SPOT
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Name: COOK
+  m_TagString: COOK
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8407,12 +8374,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720321309}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.622161, y: -3.0508919, z: 0.0008402616}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.622162, y: -0.21282756, z: 0.0008402467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 695874928}
+  m_Children:
+  - {fileID: 1770798349}
+  m_Father: {fileID: 895054553}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &721095790
@@ -9986,6 +9954,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 720321310}
+  - {fileID: 379154939}
+  - {fileID: 584035648}
   - {fileID: 144932852}
   - {fileID: 524097888}
   - {fileID: 285930580}
@@ -10668,7 +10639,7 @@ GameObject:
   - component: {fileID: 966817173}
   - component: {fileID: 966817172}
   m_Layer: 0
-  m_Name: FOOD MACHINE
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10734,11 +10705,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966817171}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.83, y: -0.5180645, z: 0.18248087}
+  m_LocalPosition: {x: -0.045173645, y: 0, z: 0.18164062}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 695874928}
+  m_Father: {fileID: 379154939}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982473898
@@ -14900,7 +14871,7 @@ GameObject:
   - component: {fileID: 1453234629}
   - component: {fileID: 1453234628}
   m_Layer: 0
-  m_Name: home_pack_6
+  m_Name: UpperSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14966,11 +14937,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453234627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.835218, y: -3.7919357, z: 0.18248089}
+  m_LocalPosition: {x: 0, y: 3.6, z: 0.18164062}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1554689796}
+  m_Father: {fileID: 584035648}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1486789170
@@ -16557,9 +16528,6 @@ Transform:
   - {fileID: 155066491}
   - {fileID: 1216528689}
   - {fileID: 607002647}
-  - {fileID: 1770798349}
-  - {fileID: 2118572645}
-  - {fileID: 1453234629}
   - {fileID: 368253817}
   m_Father: {fileID: 6035186}
   m_RootOrder: -1
@@ -18418,7 +18386,7 @@ GameObject:
   - component: {fileID: 1770798349}
   - component: {fileID: 1770798348}
   m_Layer: 0
-  m_Name: home_pack_49
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18484,11 +18452,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770798347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.635218, y: -2.5919356, z: -0.6575191}
+  m_LocalPosition: {x: -1.9869442, y: 0.45895636, z: -0.65835935}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1554689796}
+  m_Father: {fileID: 720321310}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1788601154
@@ -21694,7 +21662,7 @@ GameObject:
   - component: {fileID: 2118572645}
   - component: {fileID: 2118572644}
   m_Layer: 0
-  m_Name: home_pack_25
+  m_Name: LowerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21760,11 +21728,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118572643}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.835218, y: -6.1919355, z: 0.18248089}
+  m_LocalPosition: {x: 0, y: 1.1999998, z: 0.18164062}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1554689796}
+  m_Father: {fileID: 584035648}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2118678756
