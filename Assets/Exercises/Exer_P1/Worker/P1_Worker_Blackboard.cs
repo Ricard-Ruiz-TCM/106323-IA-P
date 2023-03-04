@@ -58,6 +58,7 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public bool haveOrder = false;
     public bool waiterWorkDone = false;
     public float deliverFoodTime = 5.0f;
+    public float tableSpotRadious;
 
     /** Chef */
     [Foldout("Chef", styled = true)]
@@ -85,8 +86,13 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     /** Food Buyer */
     [Foldout("Food Buyer", styled = true)]
     public float buyFoodTime = 2.5f;
-    public GameObject theShop;
-    public GameObject theFridge;
+    public int serviceFood = 3;
+
+    public void StoreFood()
+    {
+        totalFood += serviceFood;
+        updateHUD();
+    }
 
     [Foldout("HUD", styled = true)]
     public TextMeshProUGUI _moneyAmount;

@@ -13,8 +13,8 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
     /** OnEnter */
     public override void OnEnter() {
 
-        
 
+        Time.timeScale = 3f;
         /** GetComponent */
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
@@ -79,7 +79,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 blackboard.waiterWorkDone = true;
                 blackboard.haveCookedFood = false;
                 blackboard.theCustomer.tag = blackboard.unTag;
-                blackboard.theDish.transform.SetParent(blackboard.theCustomer.transform);
+                blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(SensingUtils.FindInstanceWithinRadius(gameObject, "TABLE_SPOT", blackboard.tableSpotRadious));
                 blackboard.theCustomer.tag = "Untagged";
                 blackboard.CustomerBlackboard().foodDelivered = true;
                 // TODO Héctor // "ENTREGAR" el plato al costumer
