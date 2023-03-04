@@ -83,7 +83,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
         /** Transitions */
         Transition customerReached = new Transition("customerReached",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance || !activeOrder;
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance;
             }, () => { });
 
         Transition haveOrder = new Transition("haveOrder",
