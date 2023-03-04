@@ -11,6 +11,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
     /** Variables */
     private Arrive arrive;
     private float elapsedTime;
+    private bool activeOrder;
 
     /** OnEnter */
     public override void OnEnter() {
@@ -45,18 +46,20 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
             () => {
                 elapsedTime = 0.0f;
                 arrive.enabled = true;
-                blackboard.waiterWorkDone = false;
                 arrive.target = blackboard.theCustomer;
             },
             () => { },
             () => { arrive.enabled = false; });
 
         State pickOrder = new State("pickOrder",
-            () => { elapsedTime = 0.0f; },
+            () => { 
+                elapsedTime = 0.0f;
+                activeOrder = false;
+            },
             () => { elapsedTime += Time.deltaTime; },
             () => {
-                blackboard.haveOrder = true;
-                blackboard.CustomerBlackboard().orderPicked = true;
+                activeOrder = true;
+                blackboard.theCustomer.GetComponent<P1_Customer_Blackboard>().orderPicked = true;
             });
 
         State deliverFood = new State("deliverFood",
@@ -64,29 +67,28 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 arrive.enabled = true;
                 arrive.target = blackboard.theCustomer;
                 elapsedTime = 0.0f;
-                blackboard.haveOrder = false;
             },
             () => { elapsedTime += Time.deltaTime; },
             () => {
                 arrive.enabled = false;
-                blackboard.waiterWorkDone = true;
                 blackboard.haveCookedFood = false;
                 blackboard.theDish.GetComponent<P1_DishController>().Dirty();
                 blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(SensingUtils.FindInstanceWithinRadius(gameObject, "TABLE_SPOT", blackboard.tableSpotRadious));
                 blackboard.theCustomer.tag = "Untagged";
-                blackboard.CustomerBlackboard().foodDelivered = true;
+                blackboard.theCustomer.GetComponent<P1_Customer_Blackboard>().foodDelivered = true;
                 blackboard.theCustomer = null;
+                activeOrder = false;
             });
 
         /** Transitions */
         Transition customerReached = new Transition("customerReached",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance || blackboard.haveOrder;
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance || !activeOrder;
             }, () => { });
 
         Transition haveOrder = new Transition("haveOrder",
             () => {
-                return elapsedTime >= blackboard.pickOrderTime || blackboard.haveOrder;
+                return elapsedTime >= blackboard.pickOrderTime || activeOrder;
             }, () => { });
 
         Transition haveCookedFood = new Transition("haveCookedFood",
@@ -103,10 +105,13 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
         AddStates(reachCustomer, pickOrder, chef, deliverFood);
         /** ------------------------------------------------ */
         AddTransition(reachCustomer, haveCookedFood, deliverFood);
-        AddTransition(chef, haveCookedFood, deliverFood);
         AddTransition(reachCustomer, haveOrder, chef);
         AddTransition(reachCustomer, customerReached, pickOrder);
+        /** -------------------------------------------------- */
+        AddTransition(chef, haveCookedFood, deliverFood);
+        /** ------------------------------------------ */
         AddTransition(pickOrder, haveOrder, chef);
+        /** ----------------------------------- */
         AddTransition(deliverFood, foodDelivered, reachCustomer);
         /** -------------------------------------------------- */
         initialState = reachCustomer;

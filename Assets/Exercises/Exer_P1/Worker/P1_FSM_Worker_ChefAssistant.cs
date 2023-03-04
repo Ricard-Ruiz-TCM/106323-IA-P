@@ -104,9 +104,13 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
         AddStates(findDirtyPlate, reachDirtyPlate, reachTheSink, washUpPlate, storePlate);
         /** ---------------------------------------------------------------------------- */
         AddTransition(findDirtyPlate, dirtyPlateDetected, reachDirtyPlate);
+        /** ------------------------------------------------------------ */
         AddTransition(reachDirtyPlate, dishReached, reachTheSink);
+        /** --------------------------------------------------- */
         AddTransition(reachTheSink, sinkReached, washUpPlate);
+        /** ----------------------------------------------- */
         AddTransition(washUpPlate, washedUpDish, storePlate);
+        /** ---------------------------------------------- */
         AddTransition(storePlate, pileReached, findDirtyPlate);
         /** ------------------------------------------------ */
         initialState = findDirtyPlate;

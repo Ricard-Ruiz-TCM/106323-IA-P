@@ -67,6 +67,7 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
         AddStates(reachAnt, killAnt);
         /** ---------------------- */
         AddTransition(killAnt, antKilled, reachAnt);
+        /** ------------------------------------- */
         AddTransition(reachAnt, antReached, killAnt);
         /** -------------------------------------- */
         initialState = reachAnt;

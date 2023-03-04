@@ -93,11 +93,13 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
 
         /** FSM Set Up */
         AddStates(reachTheCupboard, pickFood, storeFoodOnFridge);
-        /** -------------------------------------- */
+        /** -------------------------------------------------- */
         AddTransition(reachTheCupboard, reachedTheCupboard, pickFood);
+        /** ------------------------------------------------------- */
         AddTransition(pickFood, foodPicked, storeFoodOnFridge);
+        /** ------------------------------------------------ */
         AddTransition(storeFoodOnFridge, reachedTheFridge, reachTheCupboard);
-        /** ----------------------------------------------- */
+        /** -------------------------------------------------------------- */
         initialState = reachTheCupboard;
 
     }

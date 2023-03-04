@@ -14,6 +14,8 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
     /** OnEnter */
     public override void OnEnter() {
 
+        Time.timeScale = 5.0f;
+
         /** GetComponent */
         blackboard = GetComponent<P1_Worker_Blackboard>();
         wanderAround = GetComponent<WanderAroundPlusAvoid>();
@@ -50,7 +52,7 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
         /** Transitions */
         Transition antDetected = new Transition("antDetected",
             () => {
-                blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, blackboard.antTag, blackboard.antDetectionRadius);
+                blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antDetectionRadius);
                 return blackboard.theAnt != null;
             }, () => { });
 
@@ -61,7 +63,7 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
 
         Transition moneyDetected = new Transition("moneyDetected",
             () => {
-                blackboard.theMoney = SensingUtils.FindRandomInstanceWithinRadius(gameObject, blackboard.moneyTag, blackboard.moneyDetectionRadius);
+                blackboard.theMoney = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "MONEY", blackboard.moneyDetectionRadius);
                 return blackboard.theMoney != null;
             }, () => { });
 
@@ -70,15 +72,16 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
                 return blackboard.theMoney == null || blackboard.theMoney.Equals(null);
             }, () => { });
 
-        Transition customerDetected = new Transition("customerDetected",
-            () => {
-                blackboard.theCustomer = SensingUtils.FindRandomInstanceWithinRadius(gameObject, blackboard.customerTag, blackboard.customerDetectionRadius);
-                return blackboard.theCustomer;
-            }, () => { });
-
-        Transition waiterWorkDone = new Transition("waiterWorkDone",
+        Transition customerNOTDetected = new Transition("customerNOTDetected",
             () => {
                 return blackboard.theCustomer == null || blackboard.theCustomer.Equals(null);
+            }, () => { });
+
+        Transition customerDetected = new Transition("customerDetected",
+            () => {
+                if (blackboard.theCustomer != null) { return true; }
+                blackboard.theCustomer = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "CUSTOMER", blackboard.customerDetectionRadius);
+                return blackboard.theCustomer;
             }, () => { });
 
         /** FSM Set Up */
@@ -95,7 +98,7 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
         /** --------------------------------------------------------- */
         AddTransition(waiter, antDetected, antKiller);
         AddTransition(waiter, moneyDetected, pickUpMoney);
-        AddTransition(waiter, waiterWorkDone, wanderAroundState);
+        AddTransition(waiter, customerNOTDetected, wanderAroundState);
         /** -------------------------------------------------- */
         initialState = wanderAroundState;
     }

@@ -13,6 +13,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
     private float elapsedTime;
     private bool cooking = false;
 
+    private GameObject theCook;
     private GameObject theFridge;
     /** SteeringContext */
     private SteeringContext context;
@@ -26,6 +27,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         blackboard = GetComponent<P1_Worker_Blackboard>();
 
         /** Finder */
+        theCook = GameObject.FindGameObjectWithTag("COOK");
         theFridge = GameObject.FindGameObjectWithTag("THE_FRIDGE");
 
         /** OnEnter */
@@ -77,10 +79,12 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 cooking = true;
                 elapsedTime = 0.0f;
                 arrive.enabled = true;
-                arrive.target = blackboard.theCook;
+                arrive.target = theCook;
             },
             () => {
-                elapsedTime += Time.deltaTime;
+                if (SensingUtils.DistanceToTarget(gameObject, theCook) < context.closeEnoughRadius) {
+                    elapsedTime += Time.deltaTime;
+                }
             },
             () => {
                 cooking = false;
@@ -92,10 +96,9 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         /** Transitions */
         Transition havePlates = new Transition("havePlates",
             () => {
-                return SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_CLEAN", blackboard.dishDetectionRadius) != null;
-            }, () => {
                 blackboard.theDish = SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_CLEAN", blackboard.dishDetectionRadius);
-            });
+                return blackboard.theDish != null;
+            }, () => { });
 
         Transition haveNoPlates = new Transition("haveNoPlates",
             () => {
@@ -104,17 +107,17 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
             }, () => { });
 
         Transition plateReached = new Transition("plateReached",
-        () => {
-            return SensingUtils.DistanceToTarget(gameObject, blackboard.theDish) < blackboard.pointReachRadius;
-        }, () => { });
+            () => {
+                return SensingUtils.DistanceToTarget(gameObject, blackboard.theDish) < context.closeEnoughRadius;
+            }, () => { });
 
         Transition haveFood = new Transition("haveFood",
             () => {
-                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, theFridge) < blackboard.pointReachRadius || cooking;
+                return blackboard.totalFood > 0 && SensingUtils.DistanceToTarget(gameObject, theFridge) < context.closeEnoughRadius || cooking;
             }, () => { });
 
         Transition haveNoFood = new Transition("haveNoFood",
-            () => {
+            () => { 
                 return blackboard.totalFood <= 0;
             }, () => { });
 
@@ -123,23 +126,24 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 return elapsedTime >= blackboard.cookFoodTime;
             }, () => { });
 
-
         /** FSM Set Up */
         AddStates(findDish, reachPlate, reachFood, cookFood, chefAssistant, foodBuyer);
-
+        /** ------------------------------------------*/
         AddTransition(findDish, havePlates, reachPlate);
         AddTransition(findDish, haveNoPlates, chefAssistant);
+        /** -----------------------------------------------*/
         AddTransition(chefAssistant, havePlates, reachPlate);
-
+        /** -----------------------------------------------*/
         AddTransition(reachPlate, plateReached, reachFood);
-
+        /** ---------------------------------------------*/
         AddTransition(reachFood, haveFood, cookFood);
         AddTransition(reachFood, haveNoFood, foodBuyer);
+        /** ------------------------------------------*/
         AddTransition(foodBuyer, haveFood, cookFood);
-
+        /** ---------------------------------------*/
         AddTransition(cookFood, foodCooked, findDish);
-
+        /** ----------------------------------------*/
         initialState = findDish;
-    }
 
+    }
 }

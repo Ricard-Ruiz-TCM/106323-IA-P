@@ -76,6 +76,7 @@ public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
         AddStates(reachMoney, storeMoney);
         /** --------------------------- */
         AddTransition(reachMoney, moneyPicked, storeMoney);
+        /** -------------------------------------------- */
         AddTransition(storeMoney, cashierReached, reachMoney);
         /** ----------------------------------------------- */
         initialState = reachMoney;
