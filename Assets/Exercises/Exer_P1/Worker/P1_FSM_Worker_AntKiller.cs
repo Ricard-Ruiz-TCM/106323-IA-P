@@ -7,8 +7,8 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
 
     /** Variables */
     private Seek seek;
-    private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
+    private P1_Worker_Blackboard blackboard;
 
     /** OnEnter */
     public override void OnEnter() {
@@ -26,7 +26,6 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -38,24 +37,18 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
             () => {
                 seek.enabled = true;
                 seek.target = blackboard.theAnt;
-            }, 
+            },
             () => { },
-            () => {
-                seek.enabled = false;
-            } );
+            () => { seek.enabled = false; });
 
         State killAnt = new State("killAnt",
             () => {
                 elapsedTime = 0.0f;
-                blackboard.theAnt.GetComponent<FSMExecutor>().enabled = false;
-                blackboard.theAnt.GetComponent<FlockingAround>().enabled = false;
+                // blackboard.theAnt.GetComponent<FSMExecutor>().enabled = false;
+                // blackboard.theAnt.GetComponent<FlockingAround>().enabled = false;
             },
-            () => {
-                elapsedTime += Time.deltaTime;
-            },
-            () => {
-                GameObject.Destroy(blackboard.theAnt);
-            } );
+            () => { elapsedTime += Time.deltaTime; },
+            () => { GameObject.Destroy(blackboard.theAnt); });
 
         /** Transitions */
         Transition antReached = new Transition("antDetected",
@@ -70,11 +63,11 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
 
         /** FSM Set Up */
         AddStates(reachAnt, killAnt);
-
-        AddTransition(reachAnt, antReached, killAnt);
+        /** ---------------------- */
         AddTransition(killAnt, antKilled, reachAnt);
-        
+        AddTransition(reachAnt, antReached, killAnt);
+        /** -------------------------------------- */
         initialState = reachAnt;
-
     }
+
 }

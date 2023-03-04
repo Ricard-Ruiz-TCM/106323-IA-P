@@ -37,14 +37,18 @@ public class P1_Worker_Blackboard : MonoBehaviour {
 
     /** Ant Killer */
     [Foldout("AntKiller", styled = true)]
-    public GameObject theAnt;
+    public GameObject theAnt = null;
     public float killAntTime = 0.1f;
 
     /** Pick Up Money */
     [Foldout("PickUpMoney", styled = true)]
     public int money;
+    public int serviceCost = 5;
     public GameObject theMoney;
-    public GameObject theCashier;
+    public void StoreMoney() {
+        GameObject.Destroy(theMoney);
+        money += serviceCost;
+    }
 
     /** Waiter */
     [Foldout("Waiter", styled = true)]
@@ -69,8 +73,8 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public GameObject theCleanDishPile;
     public GameObject theSink;
 
-    public P1_Dish_Blackboard theDishBB() { 
-        return theDish.GetComponent<P1_Dish_Blackboard>();
+    public P1_DishController theDishBB() { 
+        return theDish.GetComponent<P1_DishController>();
     }
 
     public P1_Customer_Blackboard CustomerBlackboard()

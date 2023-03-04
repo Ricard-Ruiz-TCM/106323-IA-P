@@ -83,7 +83,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 blackboard.theCustomer.tag = "Untagged";
                 blackboard.CustomerBlackboard().foodDelivered = true;
                 // TODO Héctor // "ENTREGAR" el plato al costumer
-                    /** BORRAR ESTO */ blackboard.theDishBB().DirtyTheDish();
+                    /** BORRAR ESTO */ blackboard.theDishBB().Dirty();
                 blackboard.theCustomer = null;
                 blackboard.money += 666;
                 blackboard.updateHUD();

@@ -11,12 +11,11 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
     /** Variables */
     private Arrive arrive;
     private float elapsedTime;
-        // The Dish
+
     private GameObject theDish;
-        // Objetives
     private GameObject theSink;
     private GameObject thePile;
-        // SteeringContext
+    /** SteeringContext */
     private SteeringContext context;
 
     /** OnEnter */
@@ -47,8 +46,8 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
     public override void OnConstruction() {
 
         /** States */
-        State findDirtyPlate = new State("findDirtyPlate", () => { }, () => { }, () => { } );
-        
+        State findDirtyPlate = new State("findDirtyPlate", () => { }, () => { }, () => { });
+
         State reachDirtyPlate = new State("reachDirtyPlate",
             () => {
                 arrive.enabled = true;
@@ -65,7 +64,7 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
         State washUpPlate = new State("washUpPlate",
             () => { elapsedTime = 0.0f; },
             () => { elapsedTime += Time.deltaTime; },
-            () => { theDish.GetComponent<P1_Dish_Blackboard>().WashUpDish(); });
+            () => { theDish.GetComponent<P1_DishController>().Wash(); });
 
         State storePlate = new State("storePlate",
             () => { arrive.target = thePile; },

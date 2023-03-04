@@ -9,6 +9,8 @@ public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
     private Arrive arrive;
     private P1_Worker_Blackboard blackboard;
 
+    private GameObject theCashier;
+
     /** OnEnter */
     public override void OnEnter() {
 
@@ -16,7 +18,8 @@ public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
 
-        blackboard.theCashier = GameObject.FindGameObjectWithTag(blackboard.cashierTag);
+        /** Finder */
+        theCashier = GameObject.FindGameObjectWithTag("CASHIER");
 
         /** OnEnter */
         base.OnEnter();
@@ -27,7 +30,6 @@ public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -42,17 +44,19 @@ public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
             },
             () => { },
             () => {
+                arrive.enabled = false;
                 blackboard.theMoney.transform.SetParent(transform);
             });
 
         State storeMoney = new State("storeMoney",
             () => {
-                arrive.target = blackboard.theCashier;
+                arrive.enabled = true;
+                arrive.target = theCashier;
             },
             () => { },
             () => {
-                GameObject.Destroy(blackboard.theMoney);
                 arrive.enabled = false;
+                blackboard.StoreMoney();
             });
 
         /** Transitions */
@@ -63,16 +67,16 @@ public class P1_FSM_Worker_PickUpMoney : FiniteStateMachine {
 
         Transition cashierReached = new Transition("cashierReached",
             () => {
-                return SensingUtils.DistanceToTarget(gameObject, blackboard.theCashier) < blackboard.cashierReachDistance;
+                return SensingUtils.DistanceToTarget(gameObject, theCashier) < blackboard.cashierReachDistance;
             }, () => { });
 
         /** FSM Set Up */
         AddStates(reachMoney, storeMoney);
-
+        /** --------------------------- */
         AddTransition(reachMoney, moneyPicked, storeMoney);
         AddTransition(storeMoney, cashierReached, reachMoney);
-
+        /** ----------------------------------------------- */
         initialState = reachMoney;
-
     }
+
 }

@@ -6,14 +6,14 @@ public class P1_FSM_Dish_State : FiniteStateMachine {
 
     /** Variables */
     private SpriteRenderer renderer;
-    private P1_Dish_Blackboard blackboard;
+    private P1_DishController blackboard;
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         renderer = GetComponent<SpriteRenderer>();
-        blackboard = GetComponent<P1_Dish_Blackboard>();
+        blackboard = GetComponent<P1_DishController>();
 
         /** OnEnter */
         base.OnEnter();
@@ -36,53 +36,51 @@ public class P1_FSM_Dish_State : FiniteStateMachine {
             () => {
                 gameObject.tag = "DISH_CLEAN";
                 renderer.sprite = blackboard.cleanSprite;
-            },
-            () => { },
-            () => { });
+            }, () => { }, () => { });
 
         State withFood = new State("withFood",
             () => {
                 gameObject.tag = "DISH_IN_USE";
                 renderer.sprite = blackboard.dirtySprite;
-            },
-            () => { },
-            () => { });
+            }, () => { }, () => { });
 
         State dirty = new State("dirty",
-            () => {
-                gameObject.tag = "DISH_DIRTY";
-            },
-            () => { },
-            () => { });
+            () => { gameObject.tag = "DISH_DIRTY"; },
+            () => { }, () => { });
+
+        State picked = new State("picked",
+            () => { gameObject.tag = "DISH_PICKED"; },
+            () => { }, () => { });
 
         /** Transitions */
-        Transition some1UsedMe = new Transition("reachedFoodMachine",
-            () => {
-                return blackboard.state.Equals(DishState.withFood);
-            }, () => { });
+        Transition some1UsedMe = new Transition("some1UsedMe",
+            () => { return blackboard.state.Equals(DishState.withFood); },
+            () => { });
 
-        Transition some1EatAll = new Transition("reachedFoodMachine",
+        Transition some1EatAll = new Transition("some1EatAll",
             () => {
                 return blackboard.state.Equals(DishState.dirty);
             }, () => { });
 
-        Transition some1CleanedMe = new Transition("foodBuyed",
+        Transition some1CleanedMe = new Transition("some1CleanedMe",
             () => {
                 return blackboard.state.Equals(DishState.clean);
             }, () => { });
 
+        Transition some1PickedMe = new Transition("some1PickedMe",
+            () => {
+                return blackboard.state.Equals(DishState.picked);
+            }, () => { });
 
         /** FSM Set Up */
-        AddStates(clean, withFood, dirty);
-
+        AddStates(clean, withFood, dirty, picked);
+        /** ------------------------------------- */
         AddTransition(clean, some1UsedMe, withFood);
         AddTransition(withFood, some1EatAll, dirty);
-        AddTransition(dirty, some1CleanedMe, clean);
-
+        AddTransition(dirty, some1PickedMe, picked);
+        AddTransition(picked, some1CleanedMe, clean);
+        /** -------------------------------------- */
         initialState = clean;
-    }
-
-    public void CleanOnEnter() {
 
     }
 

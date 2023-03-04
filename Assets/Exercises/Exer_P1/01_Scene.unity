@@ -1214,7 +1214,7 @@ GameObject:
   m_Layer: 0
   m_Name: CUSTOMER_SPAWN_POINT
   m_TagString: CUSTOMER_SPAWN_POINT
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2621,7 +2621,7 @@ GameObject:
   m_Layer: 0
   m_Name: CLEAN_PILE
   m_TagString: CLEAN_PILE
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3347,6 +3347,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &364953344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 364953345}
+  m_Layer: 0
+  m_Name: CASHIER
+  m_TagString: CASHIER
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &364953345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364953344}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.835218, y: -6.953872, z: 0.18248087}
+  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 667294666}
+  m_Father: {fileID: 895054553}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &368253816
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,7 +5197,7 @@ GameObject:
   m_Layer: 0
   m_Name: SINK
   m_TagString: SINK
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5180,7 +5212,8 @@ Transform:
   m_LocalPosition: {x: 14.435221, y: 5.4841933, z: 0.18248087}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 773006908}
   m_Father: {fileID: 895054553}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7773,7 +7806,7 @@ GameObject:
   - component: {fileID: 667294666}
   - component: {fileID: 667294665}
   m_Layer: 0
-  m_Name: home_pack_40
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7839,11 +7872,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667294664}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.835218, y: -9.791936, z: 0.18248089}
-  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1554689796}
+  m_Father: {fileID: 364953345}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &687321977
@@ -8212,7 +8245,6 @@ Transform:
   m_Children:
   - {fileID: 966817173}
   - {fileID: 720321310}
-  - {fileID: 1108412825}
   - {fileID: 584035648}
   - {fileID: 379154939}
   m_Father: {fileID: 484074302}
@@ -9058,7 +9090,7 @@ GameObject:
   - component: {fileID: 773006908}
   - component: {fileID: 773006907}
   m_Layer: 0
-  m_Name: home_pack_46
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9124,11 +9156,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773006906}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.435219, y: 2.646129, z: 0.18248089}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1554689796}
+  m_Father: {fileID: 524097888}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &778175900
@@ -9957,6 +9989,7 @@ Transform:
   - {fileID: 144932852}
   - {fileID: 524097888}
   - {fileID: 285930580}
+  - {fileID: 364953345}
   m_Father: {fileID: 6035186}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11952,37 +11985,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1108412824
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1108412825}
-  m_Layer: 0
-  m_Name: CASHIER_SPOT
-  m_TagString: CASHIER
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1108412825
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108412824}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.835217, y: -10.23, z: 0.0008402616}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 695874928}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133783261
 GameObject:
   m_ObjectHideFlags: 0
@@ -15826,7 +15828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1535143649
 Transform:
   m_ObjectHideFlags: 0
@@ -16548,7 +16550,6 @@ Transform:
   - {fileID: 145460984}
   - {fileID: 369974774}
   - {fileID: 2027007488}
-  - {fileID: 773006908}
   - {fileID: 1528205210}
   - {fileID: 185012636}
   - {fileID: 246116313}
@@ -16556,7 +16557,6 @@ Transform:
   - {fileID: 155066491}
   - {fileID: 1216528689}
   - {fileID: 607002647}
-  - {fileID: 667294666}
   - {fileID: 1770798349}
   - {fileID: 2118572645}
   - {fileID: 1453234629}

@@ -25,7 +25,6 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -33,24 +32,18 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
     public override void OnConstruction() {
 
         /** FSM's */
-        FiniteStateMachine AntKiller = ScriptableObject.CreateInstance<P1_FSM_Worker_AntKiller>();
-        FiniteStateMachine PickUpMoney = ScriptableObject.CreateInstance<P1_FSM_Worker_PickUpMoney>();
-        FiniteStateMachine Waiter = ScriptableObject.CreateInstance<P1_FSM_Worker_Waiter>();
-
-        AntKiller.Name = "antKiller";
-        PickUpMoney.Name = "pickUpMoney";
-        Waiter.Name = "waiter";
+        FiniteStateMachine antKiller = ScriptableObject.CreateInstance<P1_FSM_Worker_AntKiller>();
+        FiniteStateMachine pickUpMoney = ScriptableObject.CreateInstance<P1_FSM_Worker_PickUpMoney>();
+        FiniteStateMachine waiter = ScriptableObject.CreateInstance<P1_FSM_Worker_Waiter>();
+        /** -------------------------------------------------------------------------------- */
+        antKiller.Name = "antKiller"; pickUpMoney.Name = "pickUpMoney"; waiter.Name = "waiter";
+        /** -------------------------------------------------------------------------------- */
 
         /** States */
-        State wanderAroundState = new State("wanderArount",
-            () => {
-                wanderAround.enabled = true;
-            },
+        State wanderAroundState = new State("wanderAroundState",
+            () => { wanderAround.enabled = true; },
             () => { },
-            () => {
-                wanderAround.enabled = false;
-            }
-        );
+            () => { wanderAround.enabled = false; });
 
         /** Transitions */
         Transition antDetected = new Transition("antDetected",
@@ -59,18 +52,18 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
                 return blackboard.theAnt != null;
             }, () => { });
 
-        Transition antNotDetected = new Transition("antNotDetected",
+        Transition antNOTDetected = new Transition("antNOTDetected",
             () => {
                 return blackboard.theAnt == null || blackboard.theAnt.Equals(null);
             }, () => { });
 
         Transition moneyDetected = new Transition("moneyDetected",
             () => {
-                blackboard.theMoney = SensingUtils.FindInstanceWithinRadius(gameObject, blackboard.moneyTag, blackboard.moneyDetectionRadius);
+                blackboard.theMoney = SensingUtils.FindRandomInstanceWithinRadius(gameObject, blackboard.moneyTag, blackboard.moneyDetectionRadius);
                 return blackboard.theMoney != null;
             }, () => { });
 
-        Transition moneyNotDetected = new Transition("moneyNotDetected",
+        Transition moneyNOTDetected = new Transition("moneyNOTDetected",
             () => {
                 return blackboard.theMoney == null || blackboard.theMoney.Equals(null);
             }, () => { });
@@ -83,25 +76,26 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
 
         Transition waiterWorkDone = new Transition("waiterWorkDone",
             () => {
-                return blackboard.waiterWorkDone || (blackboard.theCustomer == null || blackboard.theCustomer.Equals(null));
+                return blackboard.theCustomer == null || blackboard.theCustomer.Equals(null);
             }, () => { });
 
         /** FSM Set Up */
-        AddStates(wanderAroundState, AntKiller, PickUpMoney, Waiter);
-
-        AddTransition(wanderAroundState, antDetected, AntKiller);
-        AddTransition(AntKiller, antNotDetected, wanderAroundState);
-
-        AddTransition(wanderAroundState, moneyDetected, PickUpMoney);
-        AddTransition(PickUpMoney, moneyNotDetected, wanderAroundState);
-        AddTransition(PickUpMoney, antDetected, AntKiller);
-
-        AddTransition(wanderAroundState, customerDetected, Waiter);
-        AddTransition(Waiter, waiterWorkDone, wanderAroundState);
-        AddTransition(Waiter, antDetected, AntKiller);
-        AddTransition(Waiter, moneyDetected, PickUpMoney);
-
+        AddStates(wanderAroundState, antKiller, pickUpMoney, waiter);
+        /** ------------------------------------------------------ */
+        AddTransition(wanderAroundState, antDetected, antKiller);
+        AddTransition(wanderAroundState, moneyDetected, pickUpMoney);
+        AddTransition(wanderAroundState, customerDetected, waiter);
+        /** -------------------------------------------------- - */
+        AddTransition(antKiller, antNOTDetected, wanderAroundState);
+        /** ----------------------------------------------------- */
+        AddTransition(pickUpMoney, antDetected, antKiller);
+        AddTransition(pickUpMoney, moneyNOTDetected, wanderAroundState);
+        /** --------------------------------------------------------- */
+        AddTransition(waiter, antDetected, antKiller);
+        AddTransition(waiter, moneyDetected, pickUpMoney);
+        AddTransition(waiter, waiterWorkDone, wanderAroundState);
+        /** -------------------------------------------------- */
         initialState = wanderAroundState;
-
     }
+
 }

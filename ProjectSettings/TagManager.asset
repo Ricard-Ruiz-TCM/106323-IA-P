@@ -19,6 +19,8 @@ TagManager:
   - DISH_DIRTY
   - CHAIR_OCCUPIED
   - CLEAN_PILE
+  - CUSTOMER_SPAWN_POINT
+  - DISH_PICKED
   layers:
   - Default
   - TransparentFX
