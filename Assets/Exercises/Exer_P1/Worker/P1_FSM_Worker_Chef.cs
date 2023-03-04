@@ -44,10 +44,10 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
     public override void OnConstruction() {
         
         /** FSM's */
-        FiniteStateMachine ChefAssistant = ScriptableObject.CreateInstance<P1_FSM_Worker_ChefAssistant>();
-        FiniteStateMachine FoodBuyer = ScriptableObject.CreateInstance<P1_FSM_Worker_FoodBuyer>();
+        FiniteStateMachine foodBuyer = ScriptableObject.CreateInstance<P1_FSM_Worker_FoodBuyer>();
+        FiniteStateMachine chefAssistant = ScriptableObject.CreateInstance<P1_FSM_Worker_ChefAssistant>();
         /** ------------------------------------------------------------ */
-        ChefAssistant.Name = "chefAssistant"; FoodBuyer.Name = "foodBuyer";
+        chefAssistant.Name = "chefAssistant"; foodBuyer.Name = "foodBuyer";
         /** ------------------------------------------------------------ */
 
         /** States */
@@ -74,10 +74,10 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
         State cookFood = new State("cookFood",
             () => {
+                cooking = true;
+                elapsedTime = 0.0f;
                 arrive.enabled = true;
                 arrive.target = blackboard.theCook;
-                elapsedTime = 0.0f;
-                cooking = true;
             },
             () => {
                 elapsedTime += Time.deltaTime;
@@ -125,17 +125,17 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
 
         /** FSM Set Up */
-        AddStates(findDish, reachPlate, reachFood, cookFood, ChefAssistant, FoodBuyer);
+        AddStates(findDish, reachPlate, reachFood, cookFood, chefAssistant, foodBuyer);
 
         AddTransition(findDish, havePlates, reachPlate);
-        AddTransition(findDish, haveNoPlates, ChefAssistant);
-        AddTransition(ChefAssistant, havePlates, reachFood);
+        AddTransition(findDish, haveNoPlates, chefAssistant);
+        AddTransition(chefAssistant, havePlates, reachFood);
 
         AddTransition(reachPlate, plateReached, reachFood);
 
         AddTransition(reachFood, haveFood, cookFood);
-        AddTransition(reachFood, haveNoFood, FoodBuyer);
-        AddTransition(FoodBuyer, haveFood, cookFood);
+        AddTransition(reachFood, haveNoFood, foodBuyer);
+        AddTransition(foodBuyer, haveFood, cookFood);
 
         AddTransition(cookFood, foodCooked, findDish);
 
