@@ -70,9 +70,7 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
             () => { arrive.target = thePile; },
             () => { },
             () => {
-                theDish.transform.SetParent(thePile.transform);
-                theDish.transform.localPosition = Vector3.zero;
-                theDish.transform.localEulerAngles = Vector3.zero;
+                theDish.GetComponent<P1_DishController>().PlaceOn(thePile);
                 theDish = null;
                 arrive.enabled = false;
             });

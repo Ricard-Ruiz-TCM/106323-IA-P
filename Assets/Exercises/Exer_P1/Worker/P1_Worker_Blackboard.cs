@@ -48,6 +48,7 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public void StoreMoney() {
         GameObject.Destroy(theMoney);
         money += serviceCost;
+        updateHUD();
     }
 
     /** Waiter */
