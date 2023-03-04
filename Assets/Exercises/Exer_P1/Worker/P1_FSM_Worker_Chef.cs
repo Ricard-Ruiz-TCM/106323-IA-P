@@ -129,7 +129,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
 
         AddTransition(findDish, havePlates, reachPlate);
         AddTransition(findDish, haveNoPlates, chefAssistant);
-        AddTransition(chefAssistant, havePlates, reachFood);
+        AddTransition(chefAssistant, havePlates, reachPlate);
 
         AddTransition(reachPlate, plateReached, reachFood);
 

@@ -14,7 +14,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
     public override void OnEnter() {
 
 
-        Time.timeScale = 3f;
+        Time.timeScale = 10f;
         /** GetComponent */
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
