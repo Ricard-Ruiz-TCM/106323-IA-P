@@ -5,16 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_Waiter", menuName = "Finite State Machines/P1_FSM_Worker_Waiter", order = 1)]
 public class P1_FSM_Worker_Waiter : FiniteStateMachine {
 
+    /** Blackboard */
+    private P1_Worker_Blackboard blackboard;
+
     /** Variables */
     private Arrive arrive;
-    private P1_Worker_Blackboard blackboard;
     private float elapsedTime;
 
     /** OnEnter */
     public override void OnEnter() {
 
-
-        Time.timeScale = 10f;
         /** GetComponent */
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
@@ -28,7 +28,6 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
 
         /** DisableSteerings */
         base.DisableAllSteerings();
-
         /** OnExit */
         base.OnExit();
     }
@@ -36,29 +35,25 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
     public override void OnConstruction() {
 
         /** FSM's */
-        FiniteStateMachine Chef = ScriptableObject.CreateInstance<P1_FSM_Worker_Chef>();
-        Chef.Name = "chef";
+        FiniteStateMachine chef = ScriptableObject.CreateInstance<P1_FSM_Worker_Chef>();
+        /** ------------ */
+        chef.Name = "chef";
+        /** ------------ */
 
         /** States */
         State reachCustomer = new State("reachCustomer",
             () => {
+                elapsedTime = 0.0f;
                 arrive.enabled = true;
                 blackboard.waiterWorkDone = false;
                 arrive.target = blackboard.theCustomer;
-                elapsedTime = 0.0f;
             },
             () => { },
-            () => {
-                arrive.enabled = false;
-            });
+            () => { arrive.enabled = false; });
 
         State pickOrder = new State("pickOrder",
-            () => {
-                elapsedTime = 0.0f;
-            },
-            () => {
-                elapsedTime += Time.deltaTime;
-            },
+            () => { elapsedTime = 0.0f; },
+            () => { elapsedTime += Time.deltaTime; },
             () => {
                 blackboard.haveOrder = true;
                 blackboard.CustomerBlackboard().orderPicked = true;
@@ -71,22 +66,16 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 elapsedTime = 0.0f;
                 blackboard.haveOrder = false;
             },
-            () => {
-                elapsedTime += Time.deltaTime;
-            },
+            () => { elapsedTime += Time.deltaTime; },
             () => {
                 arrive.enabled = false;
                 blackboard.waiterWorkDone = true;
                 blackboard.haveCookedFood = false;
-                blackboard.theCustomer.tag = blackboard.unTag;
+                blackboard.theDish.GetComponent<P1_DishController>().Dirty();
                 blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(SensingUtils.FindInstanceWithinRadius(gameObject, "TABLE_SPOT", blackboard.tableSpotRadious));
                 blackboard.theCustomer.tag = "Untagged";
                 blackboard.CustomerBlackboard().foodDelivered = true;
-                // TODO Héctor // "ENTREGAR" el plato al costumer
-                    /** BORRAR ESTO */ blackboard.theDishBB().Dirty();
                 blackboard.theCustomer = null;
-                blackboard.money += 666;
-                blackboard.updateHUD();
             });
 
         /** Transitions */
@@ -106,20 +95,20 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
             }, () => { });
 
         Transition foodDelivered = new Transition("foodDelivered",
-            () => { 
-                return elapsedTime >= blackboard.deliverFoodTime && SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance; 
+            () => {
+                return elapsedTime >= blackboard.deliverFoodTime && SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance;
             }, () => { });
 
         /** FSM Set Up */
-        AddStates(reachCustomer, pickOrder, Chef, deliverFood);
-
+        AddStates(reachCustomer, pickOrder, chef, deliverFood);
+        /** ------------------------------------------------ */
         AddTransition(reachCustomer, haveCookedFood, deliverFood);
-        AddTransition(Chef, haveCookedFood, deliverFood);
-        AddTransition(reachCustomer, haveOrder, Chef);
+        AddTransition(chef, haveCookedFood, deliverFood);
+        AddTransition(reachCustomer, haveOrder, chef);
         AddTransition(reachCustomer, customerReached, pickOrder);
-        AddTransition(pickOrder, haveOrder, Chef);
+        AddTransition(pickOrder, haveOrder, chef);
         AddTransition(deliverFood, foodDelivered, reachCustomer);
-
+        /** -------------------------------------------------- */
         initialState = reachCustomer;
 
     }

@@ -42,7 +42,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
     }
 
     public override void OnConstruction() {
-        
+
         /** FSM's */
         FiniteStateMachine foodBuyer = ScriptableObject.CreateInstance<P1_FSM_Worker_FoodBuyer>();
         FiniteStateMachine chefAssistant = ScriptableObject.CreateInstance<P1_FSM_Worker_ChefAssistant>();
@@ -54,7 +54,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         State findDish = new State("findDish", () => { }, () => { }, () => { });
 
         State reachPlate = new State("reachPlate",
-            () => { 
+            () => {
                 arrive.enabled = true;
                 arrive.target = blackboard.theDish;
             },
@@ -62,7 +62,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
             () => {
                 arrive.enabled = false;
                 blackboard.theDish.GetComponent<P1_DishController>().Pick(transform);
-             });
+            });
 
         State reachFood = new State("reachFood",
             () => {
@@ -86,7 +86,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 cooking = false;
                 arrive.enabled = false;
                 blackboard.haveCookedFood = true;
-                blackboard.theDishBB().PlaceFood();
+                blackboard.theDish.GetComponent<P1_DishController>().PlaceFood();
             });
 
         /** Transitions */
@@ -95,7 +95,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 return SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_CLEAN", blackboard.dishDetectionRadius) != null;
             }, () => {
                 blackboard.theDish = SensingUtils.FindInstanceWithinRadius(gameObject, "DISH_CLEAN", blackboard.dishDetectionRadius);
-            } );
+            });
 
         Transition haveNoPlates = new Transition("haveNoPlates",
             () => {
@@ -106,7 +106,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
         Transition plateReached = new Transition("plateReached",
         () => {
             return SensingUtils.DistanceToTarget(gameObject, blackboard.theDish) < blackboard.pointReachRadius;
-        }, () => {} );
+        }, () => { });
 
         Transition haveFood = new Transition("haveFood",
             () => {

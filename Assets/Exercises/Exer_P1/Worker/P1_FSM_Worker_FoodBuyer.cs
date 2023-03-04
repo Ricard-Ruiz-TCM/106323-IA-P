@@ -27,7 +27,7 @@ public class P1_FSM_Worker_FoodBuyer : FiniteStateMachine {
         blackboard = GetComponent<P1_Worker_Blackboard>();
 
         /** Finder */
-        theCupboard = GameObject.FindGameObjectWithTag("THE_CUPBOARD"); 
+        theCupboard = GameObject.FindGameObjectWithTag("THE_CUPBOARD");
         theFridge = GameObject.FindGameObjectWithTag("THE_FRIDGE");
 
         /** OnEnter */

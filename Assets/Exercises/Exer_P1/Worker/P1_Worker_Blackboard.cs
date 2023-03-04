@@ -24,13 +24,13 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     [Foldout("Distances & Radius", styled = true)]
     public float pointReachRadius = 0.1f;
     /** FullTimeEmplyee */
-        /* Customers */
+    /* Customers */
     public float customerDetectionRadius = 20.0f;
     public float customerReachDistance = 4.0f;
-        /* Ants */
+    /* Ants */
     public float antDetectionRadius = 8.0f;
     public float antReachDistance = 2.0f;
-        /* Money */
+    /* Money */
     public float moneyDetectionRadius = 12.5f;
     public float moneyReachDistance = 2.0f;
     public float cashierReachDistance = 2.0f;
@@ -75,12 +75,11 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public GameObject theCleanDishPile;
     public GameObject theSink;
 
-    public P1_DishController theDishBB() { 
+    public P1_DishController theDishBB() {
         return theDish.GetComponent<P1_DishController>();
     }
 
-    public P1_Customer_Blackboard CustomerBlackboard()
-    {
+    public P1_Customer_Blackboard CustomerBlackboard() {
         return theCustomer.GetComponent<P1_Customer_Blackboard>();
     }
     /** Food Buyer */
@@ -88,8 +87,7 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     public float buyFoodTime = 2.5f;
     public int serviceFood = 3;
 
-    public void StoreFood()
-    {
+    public void StoreFood() {
         totalFood += serviceFood;
         updateHUD();
     }
