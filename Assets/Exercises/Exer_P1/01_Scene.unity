@@ -2742,7 +2742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &302435284
 Transform:
   m_ObjectHideFlags: 0
@@ -5838,8 +5838,8 @@ MonoBehaviour:
   theAnt: {fileID: 0}
   killAntTime: 0.1
   money: 0
+  serviceCost: 5
   theMoney: {fileID: 0}
-  theCashier: {fileID: 0}
   theCustomer: {fileID: 0}
   pickOrderTime: 2.5
   haveOrder: 0
@@ -13140,8 +13140,8 @@ MonoBehaviour:
   theAnt: {fileID: 0}
   killAntTime: 0.1
   money: 0
+  serviceCost: 5
   theMoney: {fileID: 0}
-  theCashier: {fileID: 0}
   theCustomer: {fileID: 0}
   pickOrderTime: 2.5
   haveOrder: 0
@@ -15828,7 +15828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1535143649
 Transform:
   m_ObjectHideFlags: 0
