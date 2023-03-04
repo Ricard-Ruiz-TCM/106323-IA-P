@@ -558,11 +558,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &97129584 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-  m_PrefabInstance: {fileID: 2927032217165591719}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &97206272
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,7 +2444,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 97129584}
   - {fileID: 2014306819}
   - {fileID: 852624448}
   m_Father: {fileID: 895054553}
@@ -4216,7 +4210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dishValue: 10
-  dishPrefab: {fileID: 2018013613}
+  dishPrefab: {fileID: 0}
   assistantValue: 100
   assistantObject: {fileID: 1244754723}
   buyAssisButton: {fileID: 710490104}
@@ -5530,12 +5524,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6100a8c8a774e2d48a096977afeaf243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerTag: CUSTOMER
-  antTag: ANT
-  moneyTag: MONEY
-  cashierTag: CASHIER
-  unTag: Untagged
-  pointReachRadius: 1
+  money: 12
+  totalFood: 0
+  serviceCost: 5
+  serviceFood: 3
   customerDetectionRadius: 20
   customerReachDistance: 4
   antDetectionRadius: 8
@@ -5543,28 +5535,19 @@ MonoBehaviour:
   moneyDetectionRadius: 12.5
   moneyReachDistance: 2
   cashierReachDistance: 2
+  tableSpotRadious: 20
+  dishDetectionRadius: 100
   theAnt: {fileID: 0}
   killAntTime: 0.1
-  money: 0
-  serviceCost: 5
   theMoney: {fileID: 0}
   theCustomer: {fileID: 0}
   pickOrderTime: 2.5
-  haveOrder: 0
-  waiterWorkDone: 0
   deliverFoodTime: 5
-  tableSpotRadious: 20
   haveCookedFood: 0
-  totalFood: 0
-  theCook: {fileID: 720321309}
   cookFoodTime: 5
-  dishDetectionRadius: 100
   theDish: {fileID: 0}
   washUpTime: 2.5
-  theCleanDishPile: {fileID: 285930579}
-  theSink: {fileID: 524097887}
   buyFoodTime: 2.5
-  serviceFood: 3
   _moneyAmount: {fileID: 599524916}
 --- !u!114 &557540389
 MonoBehaviour:
@@ -12176,12 +12159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6100a8c8a774e2d48a096977afeaf243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerTag: CUSTOMER
-  antTag: ANT
-  moneyTag: MONEY
-  cashierTag: CASHIER
-  unTag: Untagged
-  pointReachRadius: 1
+  money: 0
+  totalFood: 0
+  serviceCost: 5
+  serviceFood: 3
   customerDetectionRadius: 20
   customerReachDistance: 4
   antDetectionRadius: 8
@@ -12189,28 +12170,19 @@ MonoBehaviour:
   moneyDetectionRadius: 12.5
   moneyReachDistance: 2
   cashierReachDistance: 2
+  tableSpotRadious: 0
+  dishDetectionRadius: 100
   theAnt: {fileID: 0}
   killAntTime: 0.1
-  money: 0
-  serviceCost: 5
   theMoney: {fileID: 0}
   theCustomer: {fileID: 0}
   pickOrderTime: 2.5
-  haveOrder: 0
-  waiterWorkDone: 0
   deliverFoodTime: 5
-  tableSpotRadious: 0
   haveCookedFood: 0
-  totalFood: 0
-  theCook: {fileID: 720321309}
   cookFoodTime: 5
-  dishDetectionRadius: 100
   theDish: {fileID: 0}
   washUpTime: 2.5
-  theCleanDishPile: {fileID: 285930579}
-  theSink: {fileID: 524097887}
   buyFoodTime: 2.5
-  serviceFood: 3
   _moneyAmount: {fileID: 599524916}
 --- !u!212 &1244754731
 SpriteRenderer:
@@ -19140,11 +19112,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
   m_PrefabInstance: {fileID: 2014306818}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2018013613 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2927032217119842505, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-  m_PrefabInstance: {fileID: 2927032217165591719}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2024527888
 GameObject:
   m_ObjectHideFlags: 0
@@ -20354,70 +20321,3 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 386e51990a3a7344496998ed80723dd6, type: 3}
---- !u!1001 &2927032217165591719
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 2
-    m_TransformParent: {fileID: 285930580}
-    m_Modifications:
-    - target: {fileID: 2927032217119842504, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842505, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_Name
-      value: Dish
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842505, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.6505649
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2927032217119842519, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_AddedGameObjects: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8ff341cc9eb33a84190ff163e99b9f9e, type: 3}

@@ -63,7 +63,7 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
             () => { },
             () => {
                 arrive.enabled = false;
-                blackboard.theDish.GetComponent<P1_DishController>().Pick(transform);
+                blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(transform);
             });
 
         State reachFood = new State("reachFood",

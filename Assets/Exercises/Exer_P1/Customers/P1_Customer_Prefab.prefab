@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingTime: 0
-  maxWaitingTime: 120
+  maxWaitingTime: 60
   maxDistanceToConsiderSit: 1
   eatingFoodTime: 0
   maxEatingFoodTime: 10

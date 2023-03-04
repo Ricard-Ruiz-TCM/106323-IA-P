@@ -53,7 +53,7 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
                 arrive.target = theDish;
             },
             () => { },
-            () => { theDish.GetComponent<P1_DishController>().Pick(transform); });
+            () => { if (theDish != null) theDish.GetComponent<P1_DishController>().Pick(transform); });
 
         State reachTheSink = new State("reachTheSink",
             () => { arrive.target = theSink; },
@@ -71,7 +71,6 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
             () => {
                 theDish.GetComponent<P1_DishController>().Wash();
                 theDish.GetComponent<P1_DishController>().PlaceOn(thePile);
-                arrive.enabled = false;
             });
 
         /** Transitions */
@@ -81,18 +80,24 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
                 return theDish != null;
             }, () => { });
 
+        Transition some1WantToWashMyDish = new Transition("some1WantToWashMyDish",
+            () => {
+                return theDish.tag != "DISH_DIRTY";
+            }, () => { theDish = null; arrive.target = theSink; });
+
         Transition sinkReached = new Transition("targetReached",
             () => {
                 return SensingUtils.DistanceToTarget(gameObject, theSink) < context.closeEnoughRadius;
             }, () => { });
 
         Transition dishReached = new Transition("targetReached",
-            () => { return SensingUtils.DistanceToTarget(gameObject, theDish) < context.closeEnoughRadius; }, () => { });
+            () => { return SensingUtils.DistanceToTarget(gameObject, theDish) < context.closeEnoughRadius; 
+            }, () => { });
 
         Transition pileReached = new Transition("targetReached",
             () => {
                 return SensingUtils.DistanceToTarget(gameObject, thePile) < context.closeEnoughRadius;
-            }, () => { });
+            }, () => { arrive.target = theSink; });
 
         Transition washedUpDish = new Transition("washedUpDish",
             () => {
@@ -106,7 +111,8 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
         AddTransition(findDirtyPlate, dirtyPlateDetected, reachDirtyPlate);
         /** ------------------------------------------------------------ */
         AddTransition(reachDirtyPlate, dishReached, reachTheSink);
-        /** --------------------------------------------------- */
+        AddTransition(reachDirtyPlate, some1WantToWashMyDish, findDirtyPlate);
+        /** ------------------------------------------------------------- */
         AddTransition(reachTheSink, sinkReached, washUpPlate);
         /** ----------------------------------------------- */
         AddTransition(washUpPlate, washedUpDish, storePlate);
