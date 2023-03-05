@@ -24,8 +24,7 @@ public class P1_Customer_Blackboard : MonoBehaviour
 
     [Foldout("Human", styled = true)]
     public float antDetectionRadious;
-    public float antFleeRadious;
-    public float maxDistanceToWatchTV;
+    public float maxDistanceToAngryPoint;
     public float hungryLevel;
     /** borrar */ public float currentHungry;
     public GameObject angryPoint;

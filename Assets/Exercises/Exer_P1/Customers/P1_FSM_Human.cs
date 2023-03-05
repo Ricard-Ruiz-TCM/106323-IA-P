@@ -25,30 +25,17 @@ public class P1_FSM_Human : FiniteStateMachine {
     }
 
     public override void OnExit() {
-        /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
-         * It's equivalent to the on exit action of any state 
-         * Usually this code turns off behaviours that shouldn't be on when one the FSM has
-         * been exited. */
+      
         base.DisableAllSteerings();
         base.OnExit();
     }
 
     public override void OnConstruction() {
 
-        // FMS
         FiniteStateMachine Customer = ScriptableObject.CreateInstance<P1_FSM_Customer>();
         Customer.Name = "Customer";
 
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         
-        State varName = new State("StateName",
-            () => { }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
-        );
 
-         */
 
         State getAngry = new State("GetAngry",
            () => {
@@ -86,32 +73,27 @@ public class P1_FSM_Human : FiniteStateMachine {
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
        );
 
-        /* STAGE 2: create the transitions with their logic(s)
-         * ---------------------------------------------------
-
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
-
-        */
+  
 
         Transition antDetectedOnMyDish = new Transition("antDetectedOnMyDish",
            () => {
                if (blackboard.myDish == null) {
+                  
                    return false;
                }
                blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antDetectionRadious);
                if (blackboard.theAnt == null) {
+                  
                    return false;
                }
-               return Vector2.Distance(blackboard.myDish.transform.position, blackboard.theAnt.transform.position) < blackboard.antAndDishDistance;
+              
+               return Vector2.Distance(blackboard.myDish.transform.position, blackboard.theAnt.transform.position) <= blackboard.antAndDishDistance ;
            },
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
 
         Transition outPointReached = new Transition("OutPointReached",
-           () => { return SensingUtils.DistanceToTarget(gameObject, blackboard.angryPoint) <= blackboard.maxDistanceToWatchTV; }, // write the condition checkeing code in {}
+           () => { return SensingUtils.DistanceToTarget(gameObject, blackboard.angryPoint) <= blackboard.maxDistanceToAngryPoint; }, // write the condition checkeing code in {}
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
 
@@ -132,14 +114,7 @@ public class P1_FSM_Human : FiniteStateMachine {
 
            );
 
-        /* STAGE 3: add states and transitions to the FSM 
-         * ----------------------------------------------
-            
-        AddStates(...);
 
-        AddTransition(sourceState, transition, destinationState);
-
-         */
         AddStates(Customer, goOutside, getAngry, getHappy);
 
         AddTransition(Customer, antDetectedOnMyDish, getAngry);
@@ -151,12 +126,6 @@ public class P1_FSM_Human : FiniteStateMachine {
         AddTransition(getHappy, outPointReached, goOutside);
 
         AddTransition(goOutside, beingHungry, Customer);
-
-        /* STAGE 4: set the initial state
-         
-        initialState = ... 
-
-         */
 
         initialState = Customer;
 

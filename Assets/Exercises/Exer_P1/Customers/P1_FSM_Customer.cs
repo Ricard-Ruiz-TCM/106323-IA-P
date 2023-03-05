@@ -5,20 +5,16 @@ using Steerings;
 [CreateAssetMenu(fileName = "P1_FSM_Customer", menuName = "Finite State Machines/P1_FSM_Customer", order = 1)]
 public class P1_FSM_Customer : FiniteStateMachine
 {
-    /* Declare here, as attributes, all the variables that need to be shared among
-     * states and transitions and/or set in OnEnter or used in OnExit 
-     * For instance: steering behaviours, blackboard, ...*/
+
     private P1_Customer_Blackboard blackboard;
     private Arrive arrive;
-    private GameObject myChair;
+   
     
 
 
     public override void OnEnter()
     {
-        /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
-         * It's equivalent to the on enter action of any state 
-         * Usually this code includes .GetComponent<...> invocations */
+
         blackboard = GetComponent<P1_Customer_Blackboard>();
         arrive = GetComponent<Arrive>();
         base.OnEnter(); // do not remove
@@ -26,10 +22,7 @@ public class P1_FSM_Customer : FiniteStateMachine
 
     public override void OnExit()
     {
-        /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
-         * It's equivalent to the on exit action of any state 
-         * Usually this code turns off behaviours that shouldn't be on when one the FSM has
-         * been exited. */
+
         base.DisableAllSteerings();
         base.OnExit();
     }
@@ -39,7 +32,7 @@ public class P1_FSM_Customer : FiniteStateMachine
 
 
         State findSit = new State("findSit", 
-            () => { }, 
+            () => { blackboard.myChair = null; }, 
             () => { }, 
             () => { }
             
@@ -118,13 +111,10 @@ public class P1_FSM_Customer : FiniteStateMachine
 
 
 
-       
-        AddState(findSit);
-        AddState(reachSit);
-        AddState(waitWaiter);
-        AddState(waitFood);
-        AddState(eatFood);
-
+       // States
+        AddStates(findSit, reachSit, waitWaiter, waitFood, eatFood);
+        
+        // Transitions
         AddTransition(findSit, sitFinded, reachSit);
         AddTransition(reachSit, sitReached, waitWaiter);
         AddTransition(reachSit, sitStillAvailable, findSit);

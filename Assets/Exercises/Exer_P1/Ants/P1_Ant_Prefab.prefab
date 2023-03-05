@@ -118,11 +118,11 @@ MonoBehaviour:
   idTag: ANT
   repulsionThreshold: 15
   cohesionThreshold: 30
-  coneOfVisionAngle: 270
-  applyVision: 0
+  coneOfVisionAngle: 360
+  applyVision: 1
   cohesionWeight: 0.3
-  repulsionWeight: 0.3
-  alignmentWeight: 0.4
+  repulsionWeight: 0.5
+  alignmentWeight: 0.2
   addWanderIfZero: 1
   wanderRate: 30
   wanderRadius: 10
