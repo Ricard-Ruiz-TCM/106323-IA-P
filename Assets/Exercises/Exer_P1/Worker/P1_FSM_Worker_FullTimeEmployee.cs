@@ -14,8 +14,6 @@ public class P1_FSM_Worker_FullTimeEmployee : FiniteStateMachine {
     /** OnEnter */
     public override void OnEnter() {
 
-        Time.timeScale = 5.0f;
-
         /** GetComponent */
         blackboard = GetComponent<P1_Worker_Blackboard>();
         wanderAround = GetComponent<WanderAroundPlusAvoid>();

@@ -9,14 +9,14 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
     private P1_Worker_Blackboard blackboard;
 
     /** Variables */
-    private Seek seek;
+    private Arrive arrive;
     private float elapsedTime;
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
-        seek = GetComponent<Seek>();
+        arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Worker_Blackboard>();
 
         /** OnEnter */
@@ -37,11 +37,11 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
         /** States */
         State reachAnt = new State("reachAnt",
             () => {
-                seek.enabled = true;
-                seek.target = blackboard.theAnt;
+                arrive.enabled = true;
+                arrive.target = blackboard.theAnt;
             },
             () => { },
-            () => { seek.enabled = false; });
+            () => { arrive.enabled = false; });
 
         State killAnt = new State("killAnt",
             () => { elapsedTime = 0.0f; },

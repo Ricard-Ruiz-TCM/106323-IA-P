@@ -38,7 +38,8 @@ public class P1_Ant_GroupManager : GroupManager {
 
         // Spawn 
         elapsedTime = 0.0f;
-        AddBoid(Instantiate(prefab, spawn));
+        GameObject ant = Instantiate(prefab, spawn);
+        ant.name = "ANT"; AddBoid(ant);
     }
 
     public void LockHole() {
