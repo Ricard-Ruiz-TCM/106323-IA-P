@@ -75,7 +75,9 @@ public class P1_FSM_Customer : FiniteStateMachine
            () => { blackboard.eatingFoodTime += Time.deltaTime;  },
            () => {
                if (blackboard.myDish != null) {
-                   blackboard.myDish.GetComponent<P1_DishController>().Dirty();
+                   if (blackboard.eatingFoodTime >= blackboard.maxEatingFoodTime) {
+                       blackboard.myDish.GetComponent<P1_DishController>().Dirty();
+                   }
                }
                blackboard.myDish = null;
            }

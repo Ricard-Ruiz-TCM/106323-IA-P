@@ -1,10 +1,9 @@
-        using FSMs;
-using UnityEngine;
+using FSMs;
 using Steerings;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "P1_FSM_Human", menuName = "Finite State Machines/P1_FSM_Human", order = 1)]
-public class P1_FSM_Human : FiniteStateMachine
-{
+public class P1_FSM_Human : FiniteStateMachine {
     /* Declare here, as attributes, all the variables that need to be shared among
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
@@ -12,8 +11,7 @@ public class P1_FSM_Human : FiniteStateMachine
     Arrive arrive;
     public float elapsedTime;
 
-    public override void OnEnter()
-    {
+    public override void OnEnter() {
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
@@ -26,8 +24,7 @@ public class P1_FSM_Human : FiniteStateMachine
         base.OnEnter(); // do not remove
     }
 
-    public override void OnExit()
-    {
+    public override void OnExit() {
         /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
          * It's equivalent to the on exit action of any state 
          * Usually this code turns off behaviours that shouldn't be on when one the FSM has
@@ -36,8 +33,7 @@ public class P1_FSM_Human : FiniteStateMachine
         base.OnExit();
     }
 
-    public override void OnConstruction()
-    {
+    public override void OnConstruction() {
 
         // FMS
         FiniteStateMachine Customer = ScriptableObject.CreateInstance<P1_FSM_Customer>();
@@ -58,31 +54,33 @@ public class P1_FSM_Human : FiniteStateMachine
            () => {
                arrive.enabled = true;
                arrive.target = blackboard.angryPoint;
-               blackboard.myChair.tag = "CHAIR_SPOT";
                gameObject.tag = "Untagged";
-               blackboard.orderPicked = false;
-               blackboard.foodDelivered = false;
            }, // write on enter logic inside {}
-           () => {  }, // write in state logic inside {}
+           () => { }, // write in state logic inside {}
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
        );
 
         State goOutside = new State("GoOutside",
-            () => { blackboard.myChair = null;  elapsedTime = 0; blackboard.myChair = null; blackboard.waitingTime = 0f; blackboard.eatingFoodTime = 0f; }, // write on enter logic inside {}
+            () => {
+                blackboard.myChair.tag = "CHAIR_SPOT";
+                blackboard.myChair = null;
+                blackboard.orderPicked = false;
+                blackboard.foodDelivered = false;
+                elapsedTime = 0;
+                blackboard.waitingTime = 0f; 
+                blackboard.eatingFoodTime = 0f;
+            }, // write on enter logic inside {}
             () => { elapsedTime += Time.deltaTime; blackboard.currentHungry = elapsedTime; }, // write in state logic inside {}
             () => { }  // write on exit logic inisde {}  
         );
 
 
         State getHappy = new State("GetHappy",
-           () => { 
-               blackboard.DropMoney(); 
-               arrive.enabled = true; 
-               arrive.target = blackboard.angryPoint; 
-               blackboard.myChair.tag = "CHAIR_SPOT";
+           () => {
+               blackboard.DropMoney();
+               arrive.enabled = true;
+               arrive.target = blackboard.angryPoint;
                gameObject.tag = "Untagged";
-               blackboard.orderPicked = false; 
-               blackboard.foodDelivered = false;
            }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
