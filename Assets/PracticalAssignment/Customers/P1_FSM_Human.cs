@@ -75,6 +75,10 @@ public class P1_FSM_Human : FiniteStateMachine {
                blackboard.DropMoney();
                blackboard.SetSprite(blackboard.happyEmoji, true);
                blackboard.gameManager.IncreaseHappyClients();
+               if (blackboard.myDish != null) {
+                   blackboard.myDish.GetComponent<P1_DishController>().Dirty();
+                   blackboard.myDish = null;
+               }
                arrive.enabled = true;
                arrive.target = blackboard.angryPoint;
                gameObject.tag = "Untagged";

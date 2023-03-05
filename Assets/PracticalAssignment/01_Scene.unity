@@ -19621,7 +19621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   members: []
   numInstances: 7
-  delay: 25
+  delay: 50
   prefab: {fileID: 7362019050488785312, guid: 4a103de19f3f9eb4bafb0b72f7b48e60, type: 3}
   spawnPoint: {fileID: 144932852}
 --- !u!1 &1872888182

@@ -292,7 +292,7 @@ MonoBehaviour:
   maxWaitingTime: 120
   maxDistanceToConsiderSit: 1
   eatingFoodTime: 0
-  maxEatingFoodTime: 6
+  maxEatingFoodTime: 12
   availableChairTag: CHAIR_SPOT
   occupiedChairTag: CHAIR_OCCUPIED
   orderPicked: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   moneyPrefab: {fileID: 5062625487195685079, guid: 0ebf528af16304940b0958aec54c59cd, type: 3}
   myDish: {fileID: 0}
   dishDetectRadius: 10
-  antAndDishDistance: 2
+  antAndDishDistance: 3
   antDetectionRadious: 20
   maxDistanceToAngryPoint: 1
   hungryLevel: 20

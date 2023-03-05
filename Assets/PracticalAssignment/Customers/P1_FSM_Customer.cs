@@ -66,15 +66,7 @@ public class P1_FSM_Customer : FiniteStateMachine
            () => { blackboard.eatingFoodTime = 0f;
            },
            () => { blackboard.eatingFoodTime += Time.deltaTime;  },
-           () => {
-               if (blackboard.myDish != null) {
-                   if (blackboard.eatingFoodTime >= blackboard.maxEatingFoodTime) {
-                       blackboard.myDish.GetComponent<P1_DishController>().Dirty();
-                   }
-               }
-               blackboard.myDish = null;
-           }
-           );
+           () => { } );
 
 
         Transition sitFinded = new Transition("SitFinded",
