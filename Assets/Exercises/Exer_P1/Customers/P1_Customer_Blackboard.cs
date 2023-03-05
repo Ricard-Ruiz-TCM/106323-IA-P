@@ -19,6 +19,7 @@ public class P1_Customer_Blackboard : MonoBehaviour
 
     [Foldout("Human", styled = true)]
     public float antDetectionRadious;
+    public float antFleeRadious;
     public float maxDistanceToWatchTV;
     public float hungryLevel;
     /** borrar */ public float currentHungry;
@@ -33,7 +34,6 @@ public class P1_Customer_Blackboard : MonoBehaviour
         if(_chairs.Length != 0)
         {
             GameObject _firstChair = _chairs[0];
-            _firstChair.tag = occupiedChairTag;
             return _firstChair;
         }
         else

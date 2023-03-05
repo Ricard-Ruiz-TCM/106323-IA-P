@@ -56,7 +56,12 @@ public class P1_FSM_Human : FiniteStateMachine
 
          */
         State fleeFromAnts = new State("FleeFromAnts",
-            () => { flee.enabled = true; flee.target = blackboard.theAnt; }, // write on enter logic inside {}
+            () => { 
+                arrive.enabled = false;  
+                flee.enabled = true;
+                flee.target = blackboard.theAnt;
+                blackboard.myChair.tag = "CHAIR_SPOT";
+            }, // write on enter logic inside {}
             () => { }, // write in state logic inside {}
             () => { flee.enabled = false; }  // write on exit logic inisde {}  
         );
@@ -76,7 +81,7 @@ public class P1_FSM_Human : FiniteStateMachine
        );
 
         State goOutside = new State("GoOutside",
-            () => { elapsedTime = 0; blackboard.myChair = null; blackboard.waitingTime = 0f; blackboard.eatingFoodTime = 0f; }, // write on enter logic inside {}
+            () => { blackboard.myChair = null;  elapsedTime = 0; blackboard.myChair = null; blackboard.waitingTime = 0f; blackboard.eatingFoodTime = 0f; }, // write on enter logic inside {}
             () => { elapsedTime += Time.deltaTime; blackboard.currentHungry = elapsedTime; }, // write in state logic inside {}
             () => { }  // write on exit logic inisde {}  
         );
@@ -114,7 +119,9 @@ public class P1_FSM_Human : FiniteStateMachine
        );
 
         Transition antNotDetected = new Transition("AntNotDetected",
-           () => { return SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antDetectionRadious) == null; }, // write the condition checkeing code in {}
+           () => {
+               blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antFleeRadious);
+               return blackboard.theAnt == null; }, // write the condition checkeing code in {}
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
 

@@ -10,7 +10,7 @@ public class P1_FSM_Customer : FiniteStateMachine
      * For instance: steering behaviours, blackboard, ...*/
     private P1_Customer_Blackboard blackboard;
     private Arrive arrive;
-
+    private GameObject myChair;
     
 
 
@@ -47,16 +47,18 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         State reachSit = new State("ReachSit",
             () => {
-                
+                arrive.enabled = true;
+
                 arrive.target = blackboard.myChair; 
-                arrive.enabled = true; 
+               
+                
             },
             () => {  },
             () => { arrive.enabled = false; }
             );
 
         State waitWaiter = new State("WaitWaiter",
-            () => { gameObject.tag = "CUSTOMER"; blackboard.waitingTime = 0f; },
+            () => { blackboard.myChair.tag = blackboard.occupiedChairTag; gameObject.tag = "CUSTOMER"; blackboard.waitingTime = 0f; },
             () => { blackboard.waitingTime += Time.deltaTime; },
             () => { }
             );
@@ -76,11 +78,18 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         Transition sitFinded = new Transition("SitFinded",
             () => {
-                blackboard.myChair = blackboard.GetFirstAvailableChairTransform();
+                if(blackboard.myChair == null) blackboard.myChair = blackboard.GetFirstAvailableChairTransform();
                 return blackboard.myChair != null;
             },
             () => { }
         );
+
+        Transition sitStillAvailable = new Transition("SitStillAvailable",
+           () => {
+               return blackboard.myChair.tag != blackboard.availableChairTag;
+           },
+           () => { }
+       );
 
         Transition sitReached = new Transition("SitReached",
             () => { return SensingUtils.DistanceToTarget(gameObject, blackboard.myChair) <= blackboard.maxDistanceToConsiderSit; }, 
@@ -110,6 +119,7 @@ public class P1_FSM_Customer : FiniteStateMachine
 
         AddTransition(findSit, sitFinded, reachSit);
         AddTransition(reachSit, sitReached, waitWaiter);
+        AddTransition(reachSit, sitStillAvailable, findSit);
         AddTransition(waitWaiter, waiterPickedOrder, waitFood);
         AddTransition(waitFood, waiterBringFood, eatFood);
 
