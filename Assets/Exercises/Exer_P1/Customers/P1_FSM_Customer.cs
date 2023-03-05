@@ -32,7 +32,7 @@ public class P1_FSM_Customer : FiniteStateMachine
 
 
         State findSit = new State("findSit", 
-            () => { blackboard.myChair = null; }, 
+            () => { blackboard.myChair = null; blackboard.SetSprite(null, false); }, 
             () => { }, 
             () => { }
             

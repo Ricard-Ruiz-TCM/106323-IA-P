@@ -10,6 +10,7 @@ public class P1_FSM_Human : FiniteStateMachine {
     P1_Customer_Blackboard blackboard;
     Arrive arrive;
     public float elapsedTime;
+    
 
     public override void OnEnter() {
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
@@ -42,6 +43,7 @@ public class P1_FSM_Human : FiniteStateMachine {
                arrive.enabled = true;
                arrive.target = blackboard.angryPoint;
                gameObject.tag = "Untagged";
+               blackboard.SetSprite(blackboard.angryEmoji, true);
            }, // write on enter logic inside {}
            () => { }, // write in state logic inside {}
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
@@ -49,6 +51,7 @@ public class P1_FSM_Human : FiniteStateMachine {
 
         State goOutside = new State("GoOutside",
             () => {
+               
                 blackboard.myChair.tag = "CHAIR_SPOT";
                 blackboard.myChair = null;
                 blackboard.orderPicked = false;
@@ -57,7 +60,7 @@ public class P1_FSM_Human : FiniteStateMachine {
                 blackboard.waitingTime = 0f; 
                 blackboard.eatingFoodTime = 0f;
             }, // write on enter logic inside {}
-            () => { elapsedTime += Time.deltaTime; blackboard.currentHungry = elapsedTime; }, // write in state logic inside {}
+            () => { blackboard.currentHungry += Time.deltaTime; }, // write in state logic inside {}
             () => { }  // write on exit logic inisde {}  
         );
 
@@ -65,6 +68,7 @@ public class P1_FSM_Human : FiniteStateMachine {
         State getHappy = new State("GetHappy",
            () => {
                blackboard.DropMoney();
+               blackboard.SetSprite(blackboard.happyEmoji, true);
                arrive.enabled = true;
                arrive.target = blackboard.angryPoint;
                gameObject.tag = "Untagged";

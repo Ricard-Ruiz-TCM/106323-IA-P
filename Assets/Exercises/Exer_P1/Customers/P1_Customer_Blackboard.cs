@@ -29,6 +29,11 @@ public class P1_Customer_Blackboard : MonoBehaviour
     /** borrar */ public float currentHungry;
     public GameObject angryPoint;
     public GameObject theAnt;
+    public GameObject emoji;
+    public Sprite happyEmoji;
+    public Sprite angryEmoji;
+
+
 
     public GameObject GetFirstAvailableChairTransform()
     {
@@ -49,6 +54,11 @@ public class P1_Customer_Blackboard : MonoBehaviour
         
     }
 
+    public void SetSprite(Sprite _sprite, bool state)
+    {
+        emoji.SetActive(state);
+        emoji.GetComponent<SpriteRenderer>().sprite = _sprite;
+    }
    
 
     public void DropMoney()

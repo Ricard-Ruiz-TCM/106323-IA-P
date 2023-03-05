@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a5dcd3754541a4299084c2aaa93cde, type: 3}
   m_Name: P1_FSM_Human
   m_EditorClassIdentifier: 
+  elapsedTime: 0
+  happyEmoji: {fileID: 21300000, guid: f2fbb563c3c2d8f49b86c0818b33bea1, type: 3}
+  angryEmoji: {fileID: 21300000, guid: 1e1634f9a6476224bbe6819691243918, type: 3}
