@@ -10,7 +10,7 @@ public class P1_FSM_Customer : FiniteStateMachine
      * For instance: steering behaviours, blackboard, ...*/
     private P1_Customer_Blackboard blackboard;
     private Arrive arrive;
-    private float elapsedTime; 
+
     
 
 
@@ -37,58 +37,46 @@ public class P1_FSM_Customer : FiniteStateMachine
     public override void OnConstruction()
     {
 
-        //FMS
 
-
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         
-        State varName = new State("StateName",
-            () => { }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
-        );
-
-         */
-
-        State findSit = new State("findSit", () => { }, () => { }, () => { });
+        State findSit = new State("findSit", 
+            () => { }, 
+            () => { }, 
+            () => { }
+            
+            );
 
         State reachSit = new State("ReachSit",
-            () => { arrive.target = blackboard.GetFirstAvailableChairTransform(); arrive.enabled = true;  },
-            () => { },
+            () => {
+                
+                arrive.target = blackboard.myChair; 
+                arrive.enabled = true; 
+            },
+            () => {  },
             () => { arrive.enabled = false; }
             );
 
         State waitWaiter = new State("WaitWaiter",
-            () => { },
-            () => { elapsedTime += Time.deltaTime; },
-            () => { elapsedTime = 0f; }
+            () => { gameObject.tag = "CUSTOMER"; blackboard.waitingTime = 0f; },
+            () => { blackboard.waitingTime += Time.deltaTime; },
+            () => { }
             );
 
         State waitFood = new State("WaitFood",
-            () => { },
+            () => { blackboard.waitingTime = 0f; },
             () => { blackboard.waitingTime += Time.deltaTime; },
-            () => { blackboard.waitingTime = 0f; }
+            () => {  }
             );
 
         State eatFood = new State("EatFood",
-           () => { },
+           () => { blackboard.eatingFoodTime = 0f; },
            () => { blackboard.eatingFoodTime += Time.deltaTime;  },
            () => { }
            );
-        /* STAGE 2: create the transitions with their logic(s)
-         * ---------------------------------------------------
 
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-        );
 
-        */
-
-        Transition sitFinded = new Transition("SitReached",
+        Transition sitFinded = new Transition("SitFinded",
             () => {
-                blackboard.myChair = GameObject.FindGameObjectWithTag(blackboard.availableChairTag);
+                blackboard.myChair = blackboard.GetFirstAvailableChairTransform();
                 return blackboard.myChair != null;
             },
             () => { }
@@ -112,21 +100,8 @@ public class P1_FSM_Customer : FiniteStateMachine
        
 
 
-        Transition longTimeWait = new Transition("LongTimeWait",
-            () => { return elapsedTime >= blackboard.waitingTime; },
-            () => { }
 
-
-            );
-
-        /* STAGE 3: add states and transitions to the FSM 
-         * ----------------------------------------------
-            
-        AddStates(...);
-
-        AddTransition(sourceState, transition, destinationState);
-
-         */
+       
         AddState(findSit);
         AddState(reachSit);
         AddState(waitWaiter);
@@ -138,12 +113,8 @@ public class P1_FSM_Customer : FiniteStateMachine
         AddTransition(waitWaiter, waiterPickedOrder, waitFood);
         AddTransition(waitFood, waiterBringFood, eatFood);
 
-        /* STAGE 4: set the initial state
-         
-        initialState = ... 
 
-         */
-        initialState = reachSit;
+        initialState = findSit;
 
     }
 

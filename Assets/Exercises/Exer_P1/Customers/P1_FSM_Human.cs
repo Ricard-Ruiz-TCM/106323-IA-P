@@ -11,7 +11,7 @@ public class P1_FSM_Human : FiniteStateMachine
     P1_Customer_Blackboard blackboard;
     Flee flee;
     Arrive arrive;
-    private float elapsedTime;
+    public float elapsedTime;
 
     public override void OnEnter()
     {
@@ -63,15 +63,22 @@ public class P1_FSM_Human : FiniteStateMachine
 
 
         State getAngry = new State("GetAngry",
-           () => { arrive.enabled = true; arrive.target = blackboard.angryPoint; }, // write on enter logic inside {}
-           () => { }, // write in state logic inside {}
+           () => {
+               arrive.enabled = true;
+               arrive.target = blackboard.angryPoint;
+               blackboard.myChair.tag = "CHAIR_SPOT";
+               gameObject.tag = "Untagged";
+               blackboard.orderPicked = false;
+               blackboard.foodDelivered = false;
+           }, // write on enter logic inside {}
+           () => {  }, // write in state logic inside {}
            () => { arrive.enabled = false; }  // write on exit logic inisde {}  
        );
 
-        State watchTV = new State("WatchTV",
-            () => {  }, // write on enter logic inside {}
-            () => { elapsedTime += Time.deltaTime; }, // write in state logic inside {}
-            () => { elapsedTime = 0; }  // write on exit logic inisde {}  
+        State goOutside = new State("GoOutside",
+            () => { elapsedTime = 0; blackboard.myChair = null; blackboard.waitingTime = 0f; blackboard.eatingFoodTime = 0f; }, // write on enter logic inside {}
+            () => { elapsedTime += Time.deltaTime; blackboard.currentHungry = elapsedTime; }, // write in state logic inside {}
+            () => { }  // write on exit logic inisde {}  
         );
 
 
@@ -81,7 +88,7 @@ public class P1_FSM_Human : FiniteStateMachine
                arrive.enabled = true; 
                arrive.target = blackboard.angryPoint; 
                blackboard.myChair.tag = "CHAIR_SPOT";
-               blackboard.eatingFoodTime = 0f; 
+               gameObject.tag = "Untagged";
                blackboard.orderPicked = false; 
                blackboard.foodDelivered = false;
            }, // write on enter logic inside {}
@@ -100,7 +107,9 @@ public class P1_FSM_Human : FiniteStateMachine
         */
 
         Transition antDetected = new Transition("AntDetected",
-           () => { return SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antDetectionRadious) != null;  }, // write the condition checkeing code in {}
+           () => {
+               blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antDetectionRadious);
+               return blackboard.theAnt != null;  }, // write the condition checkeing code in {}
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
 
@@ -109,7 +118,7 @@ public class P1_FSM_Human : FiniteStateMachine
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
 
-        Transition tvReached = new Transition("TVReached",
+        Transition outPointReached = new Transition("OutPointReached",
            () => { return SensingUtils.DistanceToTarget(gameObject, blackboard.angryPoint) <= blackboard.maxDistanceToWatchTV; }, // write the condition checkeing code in {}
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
@@ -141,7 +150,7 @@ public class P1_FSM_Human : FiniteStateMachine
          */
         AddState(Customer);
         AddState(fleeFromAnts);
-        AddState(watchTV);
+        AddState(goOutside);
         AddState(getAngry);
         AddState(getHappy);
 
@@ -152,9 +161,9 @@ public class P1_FSM_Human : FiniteStateMachine
 
 
         AddTransition(fleeFromAnts, antNotDetected, Customer);
-        AddTransition(getAngry, tvReached, watchTV);
-        AddTransition(watchTV, beingHungry, Customer);
-        AddTransition(getHappy, tvReached, watchTV);
+        AddTransition(getAngry, outPointReached, goOutside);
+        AddTransition(goOutside, beingHungry, Customer);
+        AddTransition(getHappy, outPointReached, goOutside);
 
         /* STAGE 4: set the initial state
          
