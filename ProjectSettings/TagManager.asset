@@ -23,6 +23,9 @@ TagManager:
   - DISH_PICKED
   - THE_FRIDGE
   - THE_CUPBOARD
+  - COOK
+  - TABLE_SPOT
+  - ANT_ATTRACTOR_POINT
   layers:
   - Default
   - TransparentFX

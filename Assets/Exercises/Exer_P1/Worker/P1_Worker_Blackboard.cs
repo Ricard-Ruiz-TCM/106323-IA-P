@@ -1,4 +1,5 @@
 using TMPro;
+using Steerings;
 using UnityEngine;
 
 public class P1_Worker_Blackboard : MonoBehaviour {
@@ -31,6 +32,11 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     [Foldout("AntKiller", styled = true)]
     public GameObject theAnt = null;
     public float killAntTime = 0.1f;
+
+    public void KillAnt() {
+        theAnt.GetComponent<SteeringContext>().groupManager.RemoveBoid(theAnt);
+        GameObject.Destroy(theAnt);
+    }
 
     /** Pick Up Money STM */
     [Foldout("PickUpMoney", styled = true)]

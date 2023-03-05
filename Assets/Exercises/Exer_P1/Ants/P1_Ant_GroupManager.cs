@@ -1,38 +1,55 @@
+using Steerings;
 using UnityEngine;
+using System.Collections;
 
-namespace Steerings {
+public class P1_Ant_GroupManager : GroupManager {
 
-    public class P1_Ant_GroupManager : Steerings.GroupManager {
+    [Header("Spawn Settings:")]
+    public int numInstances = 20;
+    public float delay = 0.5f;
+    public GameObject prefab;
+    public Transform spawn;
+    public bool holeLocked = false;
+    public SpriteRenderer holeSprite;
+    public float unlockHoleTime = 10.0f;
 
-        public int numInstances = 20;
-        public float delay = 0.5f;
-        public GameObject prefab;
-        public GameObject attractor;
+    /** Related GroupManager Variables */
+    private int created = 0;
+    private float elapsedTime = 0f;
 
-        private int created = 0;
-        private float elapsedTime = 0f;
+    // Unity Update
+    private void Update() {
+        Spawn();
+    }
 
+    private void Spawn() {
+        // Update Amount
+        created = members.Count;
 
-        // Update is called once per frame
-        void Update() {
-            Spawn();
+        // InstanceAmount Control
+        if (created == numInstances || holeLocked)
+            return;
+
+        // Time Control
+        if (elapsedTime < delay) {
+            elapsedTime += Time.deltaTime;
+            return;
         }
 
-        private void Spawn() {
+        // Spawn 
+        elapsedTime = 0.0f;
+        AddBoid(Instantiate(prefab, spawn));
+    }
 
-            if (created == numInstances) return;
+    public void LockHole() {
+        holeLocked = true;
+        holeSprite.color = Color.black;
+        StartCoroutine(UnlockHoleCoroutine());
+    }
 
-            if (elapsedTime < delay) {
-                elapsedTime += Time.deltaTime;
-                return;
-            }
-
-            // if this point is reached, it's time to spawn a new instance
-            GameObject clone = Instantiate(prefab);
-            AddBoid(clone);
-            clone.GetComponent<FlockingAroundPlusAvoidance>().attractor = attractor;
-            created++;
-            elapsedTime = 0.0f;
-        }
+    private IEnumerator UnlockHoleCoroutine() {
+        yield return new WaitForSeconds(unlockHoleTime);
+        holeLocked = false;
+        holeSprite.color = Color.white;
     }
 }

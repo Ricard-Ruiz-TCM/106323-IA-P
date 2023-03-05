@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6235339366004685743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1121674, y: 2.2309961, z: -5.8930883}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,8 +120,8 @@ MonoBehaviour:
   cohesionThreshold: 30
   coneOfVisionAngle: 270
   applyVision: 0
-  cohesionWeight: 0.3
-  repulsionWeight: 0.5
+  cohesionWeight: 0.4
+  repulsionWeight: 0.6
   alignmentWeight: 0.2
   addWanderIfZero: 1
   wanderRate: 30
@@ -170,9 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad39dae23d6c57428bb30256ad4dd85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodDetectionRadius: 60
+  dishWithFoodDetectionRadius: 60
   foodEatTime: 5
-  foodReachRadius: 5
 --- !u!114 &6235339366004685712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b1c6fa0d5ba45c4eb509c1ad6e53e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationalPolicy: 4
+  rotationalPolicy: 0
   target: {fileID: 0}
 --- !u!114 &1619096708562558223
 MonoBehaviour:
@@ -199,5 +198,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63e0a1f340f88547a3d519d2651c15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationalPolicy: 1
+  rotationalPolicy: 0
   attractor: {fileID: 0}

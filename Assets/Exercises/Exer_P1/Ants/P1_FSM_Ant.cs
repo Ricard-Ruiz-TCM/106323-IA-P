@@ -10,91 +10,80 @@ public class P1_FSM_Ant : FiniteStateMachine {
 
     /** Variables */
     private Arrive arrive;
-    private float elapsedTime;
-    private FlockingAroundPlusAvoidance flockingAround;
+    private float elapsedTime = 0.0f;
+    private GameObject theDishWithFood = null;
 
-    private GameObject theFood;
+    /** SteeringContext */
+    private SteeringContext context;
 
+    /** OnEnter */
     public override void OnEnter() {
+
+        /** GetComponent */
         arrive = GetComponent<Arrive>();
+        context = GetComponent<SteeringContext>();
         blackboard = GetComponent<P1_Ant_Blackboard>();
-        flockingAround = GetComponent<FlockingAroundPlusAvoidance>();
 
-        elapsedTime = 0.0f;
-
+        /** OnEnter */
         base.OnEnter();
     }
 
+    /** OnExit */
     public override void OnExit() {
+
+        /** DisableSteerings */
         base.DisableAllSteerings();
+        /** OnExit */
         base.OnExit();
     }
 
     public override void OnConstruction() {
-       
-         
-        State wanderAround = new State("wanderAround",
-            () => {
-                flockingAround.enabled = true;
-            }, 
-            () => { },
-            () => {
-                flockingAround.enabled = false;
-            }
-        );
 
+        /** FSM's */
+        FiniteStateMachine pointWandering = ScriptableObject.CreateInstance<P1_Ant_PointWandering>();
+        /** -------------------------------- */
+        pointWandering.Name = "pointWandering";
+        /** -------------------------------- */
+
+        /** States */
         State reachFood = new State("reachFood",
             () => {
                 arrive.enabled = true;
-                arrive.target = theFood;
+                arrive.target = theDishWithFood;
             },
             () => { },
-            () => {
-                arrive.enabled = false;
-            }
-        );
+            () => { arrive.enabled = false; });
 
         State eatFood = new State("eatFood",
-            () => {
-                theFood.tag = "NO_ITEM";
-                elapsedTime = 0.0f;
-            },
-            () => {
-                elapsedTime += Time.deltaTime;
-            },
-            () => {
-                GameObject.Destroy(theFood);
-            }
-        );
+            () => { elapsedTime = 0.0f; },
+            () => { elapsedTime += Time.deltaTime; },
+            () => { theDishWithFood.GetComponent<P1_DishController>().Dirty(); });
 
+        /** Transitions */
         Transition foodDetected = new Transition("foodDetected",
             () => {
-                theFood = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "FOOD", blackboard.foodDetectionRadius);
-                return theFood != null;
-            }, 
-            () => { }
-        );
-        Transition foodReached = new Transition("foodEaten",
-            () => {
-                return SensingUtils.DistanceToTarget(gameObject, theFood) < blackboard.foodReachRadius;
-            },
-            () => { }
-        );
-        Transition foodEaten = new Transition("TransitionName",
-            () => {
-                return elapsedTime >= blackboard.foodEatTime;
-            },
-            () => { }
-        );
-            
-        AddStates(wanderAround, reachFood, eatFood);
+                theDishWithFood = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "DISH_IN_USE", blackboard.dishWithFoodDetectionRadius);
+                return theDishWithFood != null;
+            }, () => { });
 
-        AddTransition(wanderAround, foodDetected, reachFood);
+        Transition foodReached = new Transition("foodReached",
+            () => { return SensingUtils.DistanceToTarget(gameObject, theDishWithFood) < context.closeEnoughRadius; },
+            () => { });
+
+        Transition foodEat = new Transition("foodEat",
+            () => { return elapsedTime >= blackboard.foodEatTime; },
+            () => { });
+
+
+        AddStates(pointWandering, reachFood, eatFood);
+        /** ---------------------------------------- */
+        AddTransition(pointWandering, foodDetected, reachFood);
+        /** ------------------------------------------------ */
         AddTransition(reachFood, foodReached, eatFood);
-        AddTransition(eatFood, foodEaten, wanderAround);
-
-
-        initialState = wanderAround;
-
+        /** ---------------------------------------- */
+        AddTransition(eatFood, foodEat, pointWandering);
+        /** ----------------------------------------- */
+        initialState = pointWandering;
     }
+
 }

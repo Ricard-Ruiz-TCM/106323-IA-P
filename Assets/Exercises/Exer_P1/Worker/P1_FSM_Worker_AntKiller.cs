@@ -44,13 +44,9 @@ public class P1_FSM_Worker_AntKiller : FiniteStateMachine {
             () => { seek.enabled = false; });
 
         State killAnt = new State("killAnt",
-            () => {
-                elapsedTime = 0.0f;
-                // blackboard.theAnt.GetComponent<FSMExecutor>().enabled = false;
-                // blackboard.theAnt.GetComponent<FlockingAround>().enabled = false;
-            },
+            () => { elapsedTime = 0.0f; },
             () => { elapsedTime += Time.deltaTime; },
-            () => { GameObject.Destroy(blackboard.theAnt); });
+            () => { blackboard.KillAnt(); });
 
         /** Transitions */
         Transition antReached = new Transition("antDetected",
