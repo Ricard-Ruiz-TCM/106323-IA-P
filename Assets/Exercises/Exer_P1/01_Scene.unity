@@ -5355,6 +5355,8 @@ GameObject:
   m_Component:
   - component: {fileID: 557540382}
   - component: {fileID: 557540381}
+  - component: {fileID: 557540391}
+  - component: {fileID: 557540392}
   - component: {fileID: 557540387}
   - component: {fileID: 557540386}
   - component: {fileID: 557540385}
@@ -5407,8 +5409,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: c94aa96cd0676704cbd105f85cab9598, type: 3}
+  m_SortingOrder: 9
+  m_Sprite: {fileID: 21300000, guid: fe895cccc4e621e478736b62740b35a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5428,7 +5430,7 @@ Transform:
   m_GameObject: {fileID: 557540380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.040494, y: -7.521963, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1535143649}
@@ -5552,7 +5554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b1c6fa0d5ba45c4eb509c1ad6e53e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationalPolicy: 1
+  rotationalPolicy: 4
   target: {fileID: 0}
 --- !u!114 &557540390
 MonoBehaviour:
@@ -5566,8 +5568,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84089e0acf3c8540bdb418abbe30c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationalPolicy: 0
+  rotationalPolicy: 4
   attractor: {fileID: 109049754}
+--- !u!95 &557540391
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557540380}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7319bfa710b4d8647bca0aefca0e826a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &557540392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557540380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181bfa86a6e34c042a0d7f011b200bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &563391703
 GameObject:
   m_ObjectHideFlags: 0
