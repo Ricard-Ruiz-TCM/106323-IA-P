@@ -52,7 +52,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
             () => { arrive.enabled = false; });
 
         State pickOrder = new State("pickOrder",
-            () => { 
+            () => {
                 elapsedTime = 0.0f;
                 activeOrder = false;
             },
@@ -73,7 +73,12 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 arrive.enabled = false;
                 blackboard.haveCookedFood = false;
                 blackboard.theDish.GetComponent<P1_DishController>().Dirty();
-                blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(SensingUtils.FindInstanceWithinRadius(gameObject, "TABLE_SPOT", blackboard.tableSpotRadious));
+                Transform spot = null; bool place = false;
+                if (blackboard.theCustomer.tag != "Untagged") {
+                    spot = SensingUtils.FindInstanceWithinRadius(gameObject, "TABLE_SPOT", blackboard.tableSpotRadious).transform;
+                    place = true; }
+                blackboard.theDish.transform.SetParent(null);
+                blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(spot, place);
                 blackboard.theCustomer.tag = "Untagged";
                 blackboard.theCustomer.GetComponent<P1_Customer_Blackboard>().foodDelivered = true;
                 blackboard.theCustomer = null;
@@ -101,6 +106,11 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 return elapsedTime >= blackboard.deliverFoodTime && SensingUtils.DistanceToTarget(gameObject, blackboard.theCustomer) < blackboard.customerReachDistance;
             }, () => { });
 
+        Transition angryCustomer = new Transition("angryCustomer",
+            () => {
+                return blackboard.theCustomer.tag == "Untagged";
+            }, () => { });
+
         /** FSM Set Up */
         AddStates(reachCustomer, pickOrder, chef, deliverFood);
         /** ------------------------------------------------ */
@@ -113,6 +123,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
         AddTransition(pickOrder, haveOrder, chef);
         /** ----------------------------------- */
         AddTransition(deliverFood, foodDelivered, reachCustomer);
+        AddTransition(deliverFood, angryCustomer, reachCustomer);
         /** -------------------------------------------------- */
         initialState = reachCustomer;
 

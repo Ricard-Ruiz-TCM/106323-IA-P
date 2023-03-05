@@ -28,10 +28,13 @@ public class P1_DishController : MonoBehaviour {
     private void changeState(DishState newState) {
         state = newState; }
 
-    public void PlaceOn(Transform parent) {
+    public void PlaceOn(Transform parent, bool resetPost = true) {
         transform.SetParent(parent);
-        transform.localPosition = Vector3.zero;
-        transform.localEulerAngles = Vector3.zero; }
+        if (resetPost) {
+            transform.localPosition = Vector3.zero;
+            transform.localEulerAngles = Vector3.zero;
+        }
+    }
 
     public void PlaceOn(GameObject parent) { 
         PlaceOn(parent.transform); }

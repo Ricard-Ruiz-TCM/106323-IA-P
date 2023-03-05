@@ -70,6 +70,10 @@ public class P1_FSM_Ant : FiniteStateMachine {
             () => { return SensingUtils.DistanceToTarget(gameObject, theDishWithFood) < context.closeEnoughRadius; },
             () => { });
 
+        Transition foodEatedBySome1 = new Transition("foodEatedBySome1",
+            () => { return theDishWithFood.tag != "DISH_IN_USE"; },
+            () => { });
+
         Transition foodEat = new Transition("foodEat",
             () => { return elapsedTime >= blackboard.foodEatTime; },
             () => { });
@@ -79,6 +83,7 @@ public class P1_FSM_Ant : FiniteStateMachine {
         /** ---------------------------------------- */
         AddTransition(pointWandering, foodDetected, reachFood);
         /** ------------------------------------------------ */
+        AddTransition(reachFood, foodEatedBySome1, pointWandering);
         AddTransition(reachFood, foodReached, eatFood);
         /** ---------------------------------------- */
         AddTransition(eatFood, foodEat, pointWandering);

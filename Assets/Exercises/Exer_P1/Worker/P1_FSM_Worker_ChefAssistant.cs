@@ -56,7 +56,10 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
             () => { if (theDish != null) theDish.GetComponent<P1_DishController>().Pick(transform); });
 
         State reachTheSink = new State("reachTheSink",
-            () => { arrive.target = theSink; },
+            () => {
+                arrive.enabled = true;
+                arrive.target = theSink;
+            },
             () => { },
             () => { });
 
@@ -71,12 +74,18 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
             () => {
                 theDish.GetComponent<P1_DishController>().Wash();
                 theDish.GetComponent<P1_DishController>().PlaceOn(thePile);
+                theDish = null;
             });
 
         /** Transitions */
         Transition dirtyPlateDetected = new Transition("dirtyDishPicked",
             () => {
                 theDish = GameObject.FindGameObjectWithTag("DISH_DIRTY");
+                return theDish != null;
+            }, () => { });
+
+        Transition alreadyPickedADish = new Transition("alreadyPickedADish",
+            () => {
                 return theDish != null;
             }, () => { });
 
@@ -108,6 +117,7 @@ public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
         /** FSM Set Up */
         AddStates(findDirtyPlate, reachDirtyPlate, reachTheSink, washUpPlate, storePlate);
         /** ---------------------------------------------------------------------------- */
+        AddTransition(findDirtyPlate, alreadyPickedADish, reachTheSink);
         AddTransition(findDirtyPlate, dirtyPlateDetected, reachDirtyPlate);
         /** ------------------------------------------------------------ */
         AddTransition(reachDirtyPlate, dishReached, reachTheSink);
