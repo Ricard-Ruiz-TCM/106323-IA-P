@@ -1,10 +1,8 @@
-using System.Collections;
 using Steerings;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class P1_WorkerAnimatorController : MonoBehaviour
-{
+public class P1_BasicAnimator : MonoBehaviour {
+
     /** Variables */
     private Animator animator;
 
