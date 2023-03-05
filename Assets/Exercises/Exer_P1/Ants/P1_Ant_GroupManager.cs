@@ -28,7 +28,7 @@ public class P1_Ant_GroupManager : GroupManager {
     private void CheckHoleState()
     {
         GameObject _employee = SensingUtils.FindInstanceWithinRadius(spawn.gameObject, "Player", radiousLockHole);
-        if (_employee != null) LockHole();
+        if (_employee != null && !holeLocked) LockHole();
         
     }
 

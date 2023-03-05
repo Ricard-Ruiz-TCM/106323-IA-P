@@ -32,6 +32,7 @@ public class P1_Customer_Blackboard : MonoBehaviour
     public GameObject emoji;
     public Sprite happyEmoji;
     public Sprite angryEmoji;
+    public P1_GameManager gameManager;
 
 
 

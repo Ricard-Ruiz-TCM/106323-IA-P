@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class P1_GameManager : MonoBehaviour {
 
@@ -19,6 +20,12 @@ public class P1_GameManager : MonoBehaviour {
 
     public P1_Worker_Blackboard _player;
 
+    [Header("Count")]
+    public TextMeshProUGUI guiAngry;
+    public TextMeshProUGUI guiHappy;
+
+    private int happyClients;
+    private int angryClients;
     // Unity Start
     private void Start() {
         _player.updateHUD();
@@ -36,6 +43,20 @@ public class P1_GameManager : MonoBehaviour {
             assistantObject.SetActive(true);
             buyAssisButton.interactable = false;
         }
+    }
+
+    public void IncreaseHappyClients()
+    {
+        happyClients++;
+        guiHappy.text = happyClients.ToString();
+
+    }
+
+    public void IncreaseAngryClients()
+    {
+        angryClients++;
+        guiAngry.text = angryClients.ToString();
+
     }
 
     public void BTN_LockHole() {

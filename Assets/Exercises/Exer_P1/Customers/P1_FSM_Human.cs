@@ -40,6 +40,8 @@ public class P1_FSM_Human : FiniteStateMachine {
 
         State getAngry = new State("GetAngry",
            () => {
+               blackboard.myChair.tag = "CHAIR_SPOT";
+               blackboard.gameManager.IncreaseAngryClients();
                arrive.enabled = true;
                arrive.target = blackboard.angryPoint;
                gameObject.tag = "Untagged";
@@ -52,11 +54,11 @@ public class P1_FSM_Human : FiniteStateMachine {
         State goOutside = new State("GoOutside",
             () => {
                
-                blackboard.myChair.tag = "CHAIR_SPOT";
+                
                 blackboard.myChair = null;
                 blackboard.orderPicked = false;
                 blackboard.foodDelivered = false;
-                elapsedTime = 0;
+                blackboard.currentHungry = 0f;
                 blackboard.waitingTime = 0f; 
                 blackboard.eatingFoodTime = 0f;
             }, // write on enter logic inside {}
@@ -67,8 +69,10 @@ public class P1_FSM_Human : FiniteStateMachine {
 
         State getHappy = new State("GetHappy",
            () => {
+               blackboard.myChair.tag = "CHAIR_SPOT";
                blackboard.DropMoney();
                blackboard.SetSprite(blackboard.happyEmoji, true);
+               blackboard.gameManager.IncreaseHappyClients();
                arrive.enabled = true;
                arrive.target = blackboard.angryPoint;
                gameObject.tag = "Untagged";
@@ -102,7 +106,7 @@ public class P1_FSM_Human : FiniteStateMachine {
        );
 
         Transition beingHungry = new Transition("BeingHungry",
-          () => { return elapsedTime >= blackboard.hungryLevel; }, // write the condition checkeing code in {}
+          () => { return blackboard.currentHungry >= blackboard.hungryLevel; }, // write the condition checkeing code in {}
           () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
       );
 

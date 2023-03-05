@@ -271,7 +271,7 @@ MonoBehaviour:
   dishDetectRadius: 10
   antAndDishDistance: 3
   antDetectionRadious: 20
-  maxDistanceToAngryPoint: 0
+  maxDistanceToAngryPoint: 1
   hungryLevel: 20
   currentHungry: 0
   angryPoint: {fileID: 0}
