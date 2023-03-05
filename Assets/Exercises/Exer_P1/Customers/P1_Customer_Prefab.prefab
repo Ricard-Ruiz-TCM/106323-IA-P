@@ -174,7 +174,7 @@ MonoBehaviour:
   maxWaitingTime: 60
   maxDistanceToConsiderSit: 1
   eatingFoodTime: 0
-  maxEatingFoodTime: 10
+  maxEatingFoodTime: 60
   availableChairTag: CHAIR_SPOT
   occupiedChairTag: CHAIR_OCCUPIED
   orderPicked: 0

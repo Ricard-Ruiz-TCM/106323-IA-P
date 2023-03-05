@@ -72,7 +72,6 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
             () => {
                 arrive.enabled = false;
                 blackboard.haveCookedFood = false;
-                blackboard.theDish.GetComponent<P1_DishController>().Dirty();
                 Transform spot = null; bool place = false;
                 if (blackboard.theCustomer.tag != "Untagged") {
                     spot = SensingUtils.FindInstanceWithinRadius(gameObject, "TABLE_SPOT", blackboard.tableSpotRadious).transform;
@@ -81,6 +80,7 @@ public class P1_FSM_Worker_Waiter : FiniteStateMachine {
                 blackboard.theDish.GetComponent<P1_DishController>().PlaceOn(spot, place);
                 blackboard.theCustomer.tag = "Untagged";
                 blackboard.theCustomer.GetComponent<P1_Customer_Blackboard>().foodDelivered = true;
+                blackboard.theCustomer.GetComponent<P1_Customer_Blackboard>().myDish = blackboard.theDish;
                 blackboard.theCustomer = null;
                 activeOrder = false;
             });

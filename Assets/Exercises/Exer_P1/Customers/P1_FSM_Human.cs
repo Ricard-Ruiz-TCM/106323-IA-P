@@ -9,7 +9,6 @@ public class P1_FSM_Human : FiniteStateMachine
      * states and transitions and/or set in OnEnter or used in OnExit 
      * For instance: steering behaviours, blackboard, ...*/
     P1_Customer_Blackboard blackboard;
-    Flee flee;
     Arrive arrive;
     public float elapsedTime;
 
@@ -18,7 +17,6 @@ public class P1_FSM_Human : FiniteStateMachine
         /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
          * It's equivalent to the on enter action of any state 
          * Usually this code includes .GetComponent<...> invocations */
-        flee = GetComponent<Flee>();
         arrive = GetComponent<Arrive>();
         blackboard = GetComponent<P1_Customer_Blackboard>();
 
@@ -55,17 +53,6 @@ public class P1_FSM_Human : FiniteStateMachine
         );
 
          */
-        State fleeFromAnts = new State("FleeFromAnts",
-            () => { 
-                arrive.enabled = false;  
-                flee.enabled = true;
-                flee.target = blackboard.theAnt;
-                blackboard.myChair.tag = "CHAIR_SPOT";
-            }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { flee.enabled = false; }  // write on exit logic inisde {}  
-        );
-
 
         State getAngry = new State("GetAngry",
            () => {
@@ -111,17 +98,17 @@ public class P1_FSM_Human : FiniteStateMachine
 
         */
 
-        Transition antDetected = new Transition("AntDetected",
+        Transition antDetectedOnMyDish = new Transition("antDetectedOnMyDish",
            () => {
+               if (blackboard.myDish == null) {
+                   return false;
+               }
                blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antDetectionRadious);
-               return blackboard.theAnt != null;  }, // write the condition checkeing code in {}
-           () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
-       );
-
-        Transition antNotDetected = new Transition("AntNotDetected",
-           () => {
-               blackboard.theAnt = SensingUtils.FindInstanceWithinRadius(gameObject, "ANT", blackboard.antFleeRadious);
-               return blackboard.theAnt == null; }, // write the condition checkeing code in {}
+               if (blackboard.theAnt == null) {
+                   return false;
+               }
+               return SensingUtils.DistanceToTarget(blackboard.myDish, blackboard.theAnt) < blackboard.antAndDishDistance;
+           },
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
 
@@ -155,22 +142,17 @@ public class P1_FSM_Human : FiniteStateMachine
         AddTransition(sourceState, transition, destinationState);
 
          */
-        AddState(Customer);
-        AddState(fleeFromAnts);
-        AddState(goOutside);
-        AddState(getAngry);
-        AddState(getHappy);
+        AddStates(Customer, goOutside, getAngry, getHappy);
 
-
-        AddTransition(Customer, antDetected, fleeFromAnts);
+        AddTransition(Customer, antDetectedOnMyDish, getAngry);
         AddTransition(Customer, longWaitTime, getAngry);
         AddTransition(Customer, foodEaten, getHappy);
 
 
-        AddTransition(fleeFromAnts, antNotDetected, Customer);
         AddTransition(getAngry, outPointReached, goOutside);
-        AddTransition(goOutside, beingHungry, Customer);
         AddTransition(getHappy, outPointReached, goOutside);
+
+        AddTransition(goOutside, beingHungry, Customer);
 
         /* STAGE 4: set the initial state
          

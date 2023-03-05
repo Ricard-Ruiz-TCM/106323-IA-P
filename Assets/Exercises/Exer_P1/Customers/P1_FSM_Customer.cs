@@ -70,9 +70,15 @@ public class P1_FSM_Customer : FiniteStateMachine
             );
 
         State eatFood = new State("EatFood",
-           () => { blackboard.eatingFoodTime = 0f; },
+           () => { blackboard.eatingFoodTime = 0f;
+           },
            () => { blackboard.eatingFoodTime += Time.deltaTime;  },
-           () => { }
+           () => {
+               if (blackboard.myDish != null) {
+                   blackboard.myDish.GetComponent<P1_DishController>().Dirty();
+               }
+               blackboard.myDish = null;
+           }
            );
 
 

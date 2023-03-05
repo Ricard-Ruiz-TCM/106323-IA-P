@@ -16,6 +16,11 @@ public class P1_Customer_Blackboard : MonoBehaviour
     public GameObject exitPoint;
     public GameObject myChair;
     public GameObject moneyPrefab;
+    public GameObject myDish;
+
+    public float dishDetectRadius = 10.0f;
+
+    public float antAndDishDistance = 3.0f;
 
     [Foldout("Human", styled = true)]
     public float antDetectionRadious;
