@@ -22,6 +22,8 @@ public class P1_FSM_Human : FiniteStateMachine {
         blackboard.exitPoint = GameObject.FindGameObjectWithTag("CUSTOMER_SPAWN_POINT");
         blackboard.angryPoint = GameObject.FindGameObjectWithTag("CUSTOMER_SPAWN_POINT");
 
+        blackboard.gameManager = GameObject.FindObjectOfType<P1_GameManager>();
+
         base.OnEnter(); // do not remove
     }
 
