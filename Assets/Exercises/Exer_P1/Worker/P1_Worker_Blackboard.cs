@@ -76,9 +76,11 @@ public class P1_Worker_Blackboard : MonoBehaviour {
     /** HUD --------------------------------- */
     [Foldout("HUD", styled = true)]
     public TextMeshProUGUI _moneyAmount;
+    public TextMeshProUGUI _foodAmount;
 
     public void updateHUD() {
         _moneyAmount.text = money.ToString();
+        _foodAmount.text = totalFood.ToString();
     }
     /** ------------------------------------- */
 

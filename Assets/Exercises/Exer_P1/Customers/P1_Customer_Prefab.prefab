@@ -121,7 +121,7 @@ Transform:
   m_Children:
   - {fileID: 5425335911774620664}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7362019050488785313
 SpriteRenderer:
@@ -289,10 +289,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingTime: 0
-  maxWaitingTime: 60
+  maxWaitingTime: 120
   maxDistanceToConsiderSit: 1
   eatingFoodTime: 0
-  maxEatingFoodTime: 15
+  maxEatingFoodTime: 6
   availableChairTag: CHAIR_SPOT
   occupiedChairTag: CHAIR_OCCUPIED
   orderPicked: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   moneyPrefab: {fileID: 5062625487195685079, guid: 0ebf528af16304940b0958aec54c59cd, type: 3}
   myDish: {fileID: 0}
   dishDetectRadius: 10
-  antAndDishDistance: 3
+  antAndDishDistance: 2
   antDetectionRadious: 20
   maxDistanceToAngryPoint: 1
   hungryLevel: 20
@@ -312,6 +312,7 @@ MonoBehaviour:
   emoji: {fileID: 656497066539220469}
   happyEmoji: {fileID: 21300000, guid: f2fbb563c3c2d8f49b86c0818b33bea1, type: 3}
   angryEmoji: {fileID: 21300000, guid: 1e1634f9a6476224bbe6819691243918, type: 3}
+  gameManager: {fileID: 0}
 --- !u!114 &-6507218432680212057
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -90,6 +90,8 @@ public class P1_FSM_Worker_Chef : FiniteStateMachine {
                 cooking = false;
                 arrive.enabled = false;
                 blackboard.haveCookedFood = true;
+                blackboard.totalFood--;
+                blackboard.updateHUD();
                 blackboard.theDish.GetComponent<P1_DishController>().PlaceFood();
             });
 

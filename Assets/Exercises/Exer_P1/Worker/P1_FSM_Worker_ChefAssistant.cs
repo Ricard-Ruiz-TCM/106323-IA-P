@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "P1_FSM_Worker_ChefAssistant", menuName = "Finite State Machines/P1_FSM_Worker_ChefAssistant", order = 1)]
 public class P1_FSM_Worker_ChefAssistant : FiniteStateMachine {
 
-    /** Public Variables */
-    public float washUpTime = 10.0f;
+    private float washUpTime = 3.0f;
 
     /** Variables */
     private Arrive arrive;

@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fadfb23a909584e8ff82b91a0977c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 3
-  maxSpeed: 1
+  maxAcceleration: 2
+  maxSpeed: 0.65
   clipVelocity: 1
   maxAngularAcceleration: 360
   maxAngularSpeed: 90
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad39dae23d6c57428bb30256ad4dd85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dishWithFoodDetectionRadius: 60
+  dishWithFoodDetectionRadius: 10
   foodEatTime: 5
 --- !u!114 &6235339366004685712
 MonoBehaviour:

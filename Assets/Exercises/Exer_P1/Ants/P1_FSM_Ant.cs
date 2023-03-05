@@ -16,6 +16,13 @@ public class P1_FSM_Ant : FiniteStateMachine {
     /** SteeringContext */
     private SteeringContext context;
 
+    // Unity On Destroy
+    private void OnDestroy() {
+        if (theDishWithFood != null) {
+            theDishWithFood.GetComponent<P1_DishController>().Dirty();
+        }
+    }
+
     /** OnEnter */
     public override void OnEnter() {
 

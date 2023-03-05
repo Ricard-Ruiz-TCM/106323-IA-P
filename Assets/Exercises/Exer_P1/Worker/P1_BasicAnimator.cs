@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class P1_BasicAnimator : MonoBehaviour {
 
+    private float currentVelX, currentVelY;
+
     /** Variables */
     private Animator animator;
 
@@ -21,4 +23,5 @@ public class P1_BasicAnimator : MonoBehaviour {
         animator.SetFloat("velX", context.velocity.x);
         animator.SetFloat("velY", context.velocity.y);
     }
+
 }

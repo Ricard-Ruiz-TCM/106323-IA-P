@@ -12,11 +12,13 @@ public class P1_Ant_GroupManager : GroupManager {
     public bool holeLocked = false;
     public SpriteRenderer holeSprite;
     public float unlockHoleTime = 10.0f;
-    public float radiousLockHole;
+    public float radiousLockHole = 5.0f;
 
     /** Related GroupManager Variables */
     private int created = 0;
     private float elapsedTime = 0f;
+
+    public GameObject player;
 
 
     // Unity Update
@@ -25,11 +27,10 @@ public class P1_Ant_GroupManager : GroupManager {
         CheckHoleState();
     }
 
-    private void CheckHoleState()
-    {
-        GameObject _employee = SensingUtils.FindInstanceWithinRadius(spawn.gameObject, "Player", radiousLockHole);
-        if (_employee != null && !holeLocked) LockHole();
-        
+    private void CheckHoleState() {
+        if ((Vector2.Distance(spawn.position, player.transform.position) < radiousLockHole) && !holeLocked) {
+            LockHole();
+        }
     }
 
     private void Spawn() {
