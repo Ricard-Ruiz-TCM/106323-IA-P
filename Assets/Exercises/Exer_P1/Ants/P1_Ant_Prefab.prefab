@@ -120,9 +120,9 @@ MonoBehaviour:
   cohesionThreshold: 30
   coneOfVisionAngle: 270
   applyVision: 0
-  cohesionWeight: 0.4
-  repulsionWeight: 0.6
-  alignmentWeight: 0.2
+  cohesionWeight: 0.3
+  repulsionWeight: 0.3
+  alignmentWeight: 0.4
   addWanderIfZero: 1
   wanderRate: 30
   wanderRadius: 10

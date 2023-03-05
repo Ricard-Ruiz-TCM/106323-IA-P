@@ -105,7 +105,7 @@ public class P1_FSM_Human : FiniteStateMachine {
                if (blackboard.theAnt == null) {
                    return false;
                }
-               return SensingUtils.DistanceToTarget(blackboard.myDish, blackboard.theAnt) < blackboard.antAndDishDistance;
+               return Vector2.Distance(blackboard.myDish.transform.position, blackboard.theAnt.transform.position) < blackboard.antAndDishDistance;
            },
            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
        );
