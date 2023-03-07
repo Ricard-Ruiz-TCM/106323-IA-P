@@ -3,29 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - CASHIER
-  - CUSTOMER
-  - CHAIR_SPOT
-  - FOOD
-  - ANT
-  - MONEY
-  - SINK
-  - DIRTY_PLATES
-  - COOK_SPOT
-  - BUY_FOOD_SPOT
-  - DISH_IN_USE
-  - DISH_CLEAN
-  - DISH_DIRTY
-  - CHAIR_OCCUPIED
-  - CLEAN_PILE
-  - CUSTOMER_SPAWN_POINT
-  - DISH_PICKED
-  - THE_FRIDGE
-  - THE_CUPBOARD
-  - COOK
-  - TABLE_SPOT
-  - ANT_ATTRACTOR_POINT
+  tags: []
   layers:
   - Default
   - TransparentFX

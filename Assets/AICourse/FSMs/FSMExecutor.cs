@@ -12,7 +12,7 @@ namespace FSMs
         public TextMeshProUGUI textMesh;
         private string originalText;
 
-        void Start()
+        public void Start()
         {
             if (fsm == null) return;
             fsm = (FiniteStateMachine)ScriptableObject.CreateInstance(fsm.GetType().Name);
