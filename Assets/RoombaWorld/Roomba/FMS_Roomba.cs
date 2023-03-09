@@ -1,71 +1,92 @@
 using FSMs;
 using UnityEngine;
-using Steerings;
 
 [CreateAssetMenu(fileName = "FMS_Roomba", menuName = "Finite State Machines/FMS_Roomba", order = 1)]
-public class FMS_Roomba : FiniteStateMachine
-{
-    /* Declare here, as attributes, all the variables that need to be shared among
-     * states and transitions and/or set in OnEnter or used in OnExit 
-     * For instance: steering behaviours, blackboard, ...*/
+public class FMS_Roomba : FiniteStateMachine {
 
-    public override void OnEnter()
-    {
-        /* Write here the FSM initialization code. This code is execute every time the FSM is entered.
-         * It's equivalent to the on enter action of any state 
-         * Usually this code includes .GetComponent<...> invocations */
-        base.OnEnter(); // do not remove
+    /** Blackboard */
+    private ROOMBA_Blackboard blackboard;
+
+    /** OnEnter */
+    public override void OnEnter() {
+
+        /** GetComponent */
+        blackboard = GetComponent<ROOMBA_Blackboard>();
+
+        /** OnEnter */
+        base.OnEnter();
     }
 
-    public override void OnExit()
-    {
-        /* Write here the FSM exiting code. This code is execute every time the FSM is exited.
-         * It's equivalent to the on exit action of any state 
-         * Usually this code turns off behaviours that shouldn't be on when one the FSM has
-         * been exited. */
+    /** OnExit */
+    public override void OnExit() {
+        /** DisableSteerings */
+        base.DisableAllSteerings();
+        /** OnExit */
         base.OnExit();
     }
 
-    public override void OnConstruction()
-    {
-        /* STAGE 1: create the states with their logic(s)
-         *-----------------------------------------------
-         
-        State varName = new State("StateName",
-            () => { }, // write on enter logic inside {}
-            () => { }, // write in state logic inside {}
-            () => { }  // write on exit logic inisde {}  
+    /** OnConstruction */
+    public override void OnConstruction() {
+
+        /** FSM's */
+        FiniteStateMachine roombaBehaviour = ScriptableObject.CreateInstance<FMS_RoombBehaviour>();
+        /** ------------------------------------------------------------------------------------ */
+        roombaBehaviour.Name = "roombaBehaviour";
+        /** ---------------------------------- */
+
+        /** States */
+        State findNearestChargeSpot = new State("findNearestChargeSpot",
+            () => { },
+            () => { },
+            () => { }
         );
 
-         */
-
-
-        /* STAGE 2: create the transitions with their logic(s)
-         * ---------------------------------------------------
-
-        Transition varName = new Transition("TransitionName",
-            () => { }, // write the condition checkeing code in {}
-            () => { }  // write the on trigger code in {} if any. Remove line if no on trigger action needed
+        State reachChargeSpot = new State("reachChargeSpot",
+            () => { },
+            () => { },
+            () => { }
         );
 
-        */
+        State charge = new State("charge",
+            () => { },
+            () => { },
+            () => { }
+        );
+
+        /** Transitions */
+        Transition lowBatteryDetected = new Transition("lowBatteryDetected",
+            () => { return false; },
+            () => { }
+        );
+
+        Transition chargeSpotFound = new Transition("chargeSpotFound",
+            () => { return false; },
+            () => { }
+        );
+
+        Transition chargeSpotReached = new Transition("chargeSpotReached",
+            () => { return false; },
+            () => { }
+        );
+
+        Transition chargeCompleted = new Transition("chargeCompleted",
+            () => { return false; },
+            () => { }
+        );
 
 
-        /* STAGE 3: add states and transitions to the FSM 
-         * ----------------------------------------------
-            
-        AddStates(...);
-
-        AddTransition(sourceState, transition, destinationState);
-
-         */ 
-
-
-        /* STAGE 4: set the initial state
-         
-        initialState = ... 
-
-         */
+        /** FSM Set Up */
+        AddStates(roombaBehaviour, findNearestChargeSpot, reachChargeSpot, charge);
+        /** -------------------------------------------------------------------- */
+        AddTransition(roombaBehaviour, lowBatteryDetected, findNearestChargeSpot);
+        /** ------------------------------------------------------------------- */
+        AddTransition(findNearestChargeSpot, chargeSpotFound, reachChargeSpot);
+        /** ---------------------------------------------------------------- */
+        AddTransition(reachChargeSpot, chargeSpotReached, charge);
+        /** --------------------------------------------------- */
+        AddTransition(charge, chargeCompleted, roombaBehaviour);
+        /** ------------------------------------------------- */
+        initialState = roombaBehaviour;
 
     }
 }
