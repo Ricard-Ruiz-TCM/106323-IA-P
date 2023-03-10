@@ -216,7 +216,9 @@ MonoBehaviour:
   pooDetectionRadius: 150
   dustReachedRadius: 5
   pooReachedRadius: 5
+  chargingStationDetectionRadius: 999
   chargingStationReachedRadius: 2
+  patrolPointDetectionRadius: 999
   energyConsumptionPerSecond: 1
   energyRechargePerSecond: 15
   minCharge: 15
