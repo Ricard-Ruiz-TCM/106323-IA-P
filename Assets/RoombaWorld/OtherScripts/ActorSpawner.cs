@@ -16,6 +16,7 @@ public class ActorSpawner : MonoBehaviour {
     // Unity Awake
     private void Awake() {
         actors = (actors == null ? transform : actors);
+        new RandomLocationGenerator();
     }
 
     // Unity Start
@@ -26,7 +27,8 @@ public class ActorSpawner : MonoBehaviour {
     /** DustSpawnRoutine */
     public IEnumerator SpawnRoutine() {
         // Spawn
-        Instantiate(item, actors);
+        GameObject g = Instantiate(item, actors);
+        g.transform.position = (Vector2)RandomLocationGenerator.RandomWalkableLocation();
         // Wait
         yield return new WaitForSeconds(Random.Range(spawnDelay - spawnDelayRange, spawnDelay + spawnDelayRange));
         StartCoroutine(SpawnRoutine());
