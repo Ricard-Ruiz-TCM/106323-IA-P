@@ -43,7 +43,7 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
 
         /** States */
         State patrolling = new State("patrolling",
-            () => { goToTarget.target = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "PATROLPOINT", 65.0f); },
+            () => { goToTarget.target = SensingUtils.FindRandomInstanceWithinRadius(gameObject, "PATROLPOINT", blackboard.patrolPointDetectionRadius); },
             () => { }, () => { });
 
         State reachDust = new State("reachDust",
@@ -54,10 +54,8 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
             () => { goToTarget.target = thePoo; },
             () => {
                 theDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
-                if (theDust != null) {
-                    blackboard.AddToMemory(theDust);
-                    theDust = null;
-                }
+                // Adding Dust on Memory if necessary
+                if (theDust != null) { blackboard.AddToMemory(theDust); theDust = null; }
             }, () => { });
 
         /** Transitions */
@@ -79,7 +77,7 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
         Transition closerPooDetected = new Transition("closerPooDetected",
             () => {
                 GameObject poo = SensingUtils.FindInstanceWithinRadius(gameObject, "POO", blackboard.pooDetectionRadius);
-                if (thePoo != poo) {
+                if ((thePoo != poo) && (poo != null)) {
                     thePoo = poo;
                     return true;
                 }
@@ -96,12 +94,8 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
             });
 
         Transition dustOnMemory = new Transition("dustOnMemory",
-            () => {
-                if (blackboard.somethingInMemory()) {
-                    theDust = blackboard.RetrieveFromMemory();
-                }
-                return theDust != null;
-            }, () => { });
+            () => { return blackboard.somethingInMemory(); },
+            () => { theDust = blackboard.RetrieveNearestFromMemory(gameObject); });
 
         Transition dustDetected = new Transition("dustDetected",
             () => {
@@ -112,7 +106,8 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
         Transition closerDustDetected = new Transition("closerDustDetected",
             () => {
                 GameObject dust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
-                if (theDust != dust) {
+                if ((theDust != dust) && (dust != null)) {
+                    blackboard.AddToMemory(theDust);
                     theDust = dust;
                     return true;
                 }
@@ -126,7 +121,7 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
 
         /** FSM Set Up */
         AddStates(patrolling, reachPoo, reachDust);
-        /** ------------------------------------------ */
+        /** ------------------------------------ */
         AddTransition(patrolling, pooDetected, reachPoo);
         AddTransition(patrolling, dustDetected, reachDust);
         AddTransition(patrolling, dustOnMemory, reachDust);
