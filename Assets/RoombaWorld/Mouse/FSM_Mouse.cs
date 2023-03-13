@@ -6,12 +6,15 @@ public class FSM_Mouse : FiniteStateMachine {
 
     /** Blackboard */
     private MOUSE_Blackboard blackboard;
+    private GameObject roomba;
+    private GoToTarget goToTarget;
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         blackboard = GetComponent<MOUSE_Blackboard>();
+        goToTarget = GetComponent<GoToTarget>();
 
         /** OnEnter */
         base.OnEnter();
@@ -35,41 +38,36 @@ public class FSM_Mouse : FiniteStateMachine {
         /** -------------------------------- */
 
         /** States */
-        State findNearestExit = new State("findNearestExit",
-            () => { },
-            () => { },
-            () => { }
-        );
 
         State reachExit = new State("reachExit",
-            () => { },
+            () => {
+                goToTarget.target = blackboard.RandomExitPoint();
+            },
             () => { },
             () => { }
         );
 
         /** Transitions */
         Transition roombaDetected = new Transition("roombaDetected",
-            () => { return true; },
+            () => {
+                roomba = SensingUtils.FindInstanceWithinRadius(gameObject, "ROOMBA", blackboard.roombaDetectionRadius);
+                return roomba != null; },
             () => { }
         );
 
-        Transition nearestExitFound = new Transition("nearestExitFound",
-            () => { return true; },
-            () => { }
-        );
 
         Transition exitReached = new Transition("exitReached",
-            () => { return true; },
-            () => { }
+            () => { return goToTarget.routeTerminated(); },
+            () => {
+                GameObject.Destroy(gameObject);
+            }
         );
 
 
         /** FSM Set Up */
-        AddStates(mouseBehaviour, findNearestExit, reachExit);
+        AddStates(mouseBehaviour, reachExit);
         /** ---------------------------------------------------------------- */
-        AddTransition(mouseBehaviour, roombaDetected, findNearestExit);
-        /** -------------------------------------------------------- */
-        AddTransition(findNearestExit, nearestExitFound, reachExit);
+        AddTransition(mouseBehaviour, roombaDetected, reachExit);
         /** ----------------------------------------------------- */
         AddTransition(reachExit, exitReached, mouseBehaviour);
         /** ----------------------------------------------- */

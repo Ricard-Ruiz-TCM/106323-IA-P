@@ -31,6 +31,11 @@ public class MOUSE_Blackboard : MonoBehaviour {
         return nearest;
     }
 
+    public void SpawnPoo(Vector3 transform)
+    {
+        Instantiate(pooPrefab).transform.position = transform;
+    }
+
 
 
 }

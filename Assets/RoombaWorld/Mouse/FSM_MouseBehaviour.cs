@@ -6,12 +6,20 @@ public class FSM_MouseBehaviour : FiniteStateMachine {
 
     /** Blackboard */
     private MOUSE_Blackboard blackboard;
+    private GoToTarget goToTarget;
+    
+    private GameObject destiny;
+    private float elapsedTime;
+
 
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         blackboard = GetComponent<MOUSE_Blackboard>();
+        goToTarget = GetComponent<GoToTarget>();
+        destiny = new GameObject();
+        transform.position = blackboard.RandomExitPoint().transform.position;
 
         /** OnEnter */
         base.OnEnter();
@@ -30,75 +38,65 @@ public class FSM_MouseBehaviour : FiniteStateMachine {
 
         /** States */
         State findDestination = new State("findDestination",
-            () => { },
-            () => { },
-            () => { }
-        );
-
-        State reachDestination = new State("reachDestination",
-            () => { },
+            () => { 
+                destiny.transform.position = RandomLocationGenerator.RandomWalkableLocation();
+                goToTarget.target = destiny;
+            },
             () => { },
             () => { }
         );
 
         State poo = new State("poo",
-            () => { },
-            () => { },
-            () => { }
+            () => { 
+                elapsedTime = 0.0f;
+            },
+            () => {
+                elapsedTime = elapsedTime + Time.deltaTime;
+            },
+            () => 
+            { 
+                blackboard.SpawnPoo(transform.position);
+            }
         );
 
         State findExit = new State("findExit",
-            () => { },
-            () => { },
-            () => { }
-        );
-
-        State reachExit = new State("reachExit",
-            () => { },
+            () => { goToTarget.target = blackboard.RandomExitPoint(); },
             () => { },
             () => { }
         );
 
         /** Transitions */
-        Transition destinationFound = new Transition("destinationFound",
-            () => { return true; },
-            () => { }
-        );
+        
 
         Transition destinationReached = new Transition("destinationReached",
-            () => { return true; },
+            () => { return goToTarget.routeTerminated(); },
             () => { }
         );
 
         Transition poopDone = new Transition("poopDone",
-            () => { return true; },
-            () => { }
-        );
-
-        Transition exitFound = new Transition("exitFound",
-            () => { return true; },
+            () => { 
+                return elapsedTime >= 1;
+            },
             () => { }
         );
 
         Transition exitReached = new Transition("exitReached",
-            () => { return true; },
-            () => { }
+            () => { return goToTarget.routeTerminated(); },
+            () => {
+                GameObject.Destroy(gameObject);
+            }
         );
 
 
         /** FSM Set Up */
-        AddStates(findDestination, reachDestination, poo, findExit, reachExit);
+        AddStates(findDestination, poo, findExit);
         /** ---------------------------------------------------------------- */
-        AddTransition(findDestination, destinationFound, reachDestination);
+        AddTransition(findDestination, destinationReached, poo);
         /** ------------------------------------------------------------ */
-        AddTransition(reachDestination, destinationReached, poo);
-        /** -------------------------------------------------- */
         AddTransition(poo, poopDone, findExit);
         /** -------------------------------- */
-        AddTransition(findExit, exitFound, reachExit);
+        AddTransition(findExit, exitReached, findDestination);
         /** --------------------------------------- */
-        AddTransition(reachExit, exitReached, findDestination);
-        /** ------------------------------------------------ */
         initialState = findDestination;
 
     }
