@@ -1,4 +1,5 @@
 using FSMs;
+using Steerings;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FSM_Mouse", menuName = "Finite State Machines/FSM_Mouse", order = 1)]
@@ -9,12 +10,16 @@ public class FSM_Mouse : FiniteStateMachine {
     private GameObject roomba;
     private GoToTarget goToTarget;
 
+    /** SteeringContext */
+    private SteeringContext context;
+
     /** OnEnter */
     public override void OnEnter() {
 
         /** GetComponent */
         blackboard = GetComponent<MOUSE_Blackboard>();
         goToTarget = GetComponent<GoToTarget>();
+        context = GetComponent<SteeringContext>();
 
         /** OnEnter */
         base.OnEnter();
@@ -41,7 +46,7 @@ public class FSM_Mouse : FiniteStateMachine {
 
         State reachExit = new State("reachExit",
             () => {
-                goToTarget.target = blackboard.RandomExitPoint();
+                goToTarget.target = blackboard.NearestExitPoint();
             },
             () => { },
             () => { }
@@ -50,9 +55,13 @@ public class FSM_Mouse : FiniteStateMachine {
         /** Transitions */
         Transition roombaDetected = new Transition("roombaDetected",
             () => {
-                roomba = SensingUtils.FindInstanceWithinRadius(gameObject, "ROOMBA", blackboard.roombaDetectionRadius);
+                roomba = SensingUtils.FindInstanceWithinRadius(gameObject, "ROOMBA", blackboard.roombaDetectionRadius);                
                 return roomba != null; },
-            () => { }
+            () => {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                context.maxSpeed *= 2;
+                context.maxAcceleration *= 4;
+            }
         );
 
 
