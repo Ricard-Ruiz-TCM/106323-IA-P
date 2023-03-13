@@ -107,9 +107,13 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
             () => {
                 GameObject dust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", blackboard.dustDetectionRadius);
                 if ((theDust != dust) && (dust != null)) {
-                    blackboard.AddToMemory(theDust);
-                    theDust = dust;
-                    return true;
+                    float findedDDistance = SensingUtils.DistanceToTarget(gameObject, dust);
+                    float DDistnace = SensingUtils.DistanceToTarget(gameObject, theDust);
+                    if (findedDDistance < DDistnace) {
+                        blackboard.AddToMemory(theDust);
+                        theDust = dust;
+                        return true;
+                    }
                 }
                 return false;
             }, () => { });
@@ -130,8 +134,8 @@ public class FMS_RoombBehaviour : FiniteStateMachine {
         AddTransition(reachPoo, closerPooDetected, reachPoo);
         AddTransition(reachPoo, pooReached, patrolling);
         /** ----------------------------------------- */
-        AddTransition(reachDust, closerDustDetected, reachDust);
         AddTransition(reachDust, pooDetected, reachPoo);
+        AddTransition(reachDust, closerDustDetected, reachDust);
         AddTransition(reachDust, dustReached, patrolling);
         /** ------------------------------------------- */
         initialState = patrolling;

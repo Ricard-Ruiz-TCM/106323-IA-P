@@ -179,10 +179,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (23)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -247,10 +243,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (18)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -314,10 +306,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (34)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -556,10 +544,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (26)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -735,10 +719,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (28)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -897,10 +877,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (17)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1108,10 +1084,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -1175,10 +1147,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (35)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1244,10 +1212,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (7)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -1311,10 +1275,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (21)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1380,10 +1340,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (15)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -1447,10 +1403,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (36)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1547,10 +1499,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1652,10 +1600,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (11)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -1719,10 +1663,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (14)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1788,10 +1728,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (31)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -1855,10 +1791,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -2107,10 +2039,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (27)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -2334,10 +2262,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (25)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -2538,10 +2462,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (39)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3021,10 +2941,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (10)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -3246,10 +3162,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (16)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -3396,10 +3308,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (19)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3566,10 +3474,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (24)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -3633,10 +3537,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3766,10 +3666,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -3865,10 +3761,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3998,10 +3890,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (29)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -4065,10 +3953,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -4250,10 +4134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (22)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -4317,10 +4197,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (37)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -4386,10 +4262,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (9)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -4454,10 +4326,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (32)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -4521,10 +4389,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (13)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -4738,10 +4602,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (38)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -4805,10 +4665,6 @@ PrefabInstance:
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT (33)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -5081,10 +4937,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PATROLPOINT (30)
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
@@ -5281,14 +5133,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1036413719}
     m_Modifications:
-    - target: {fileID: 1110392529309985872, guid: c662b3bbbcb907f4cbf724dd855bee2c, type: 3}
-      propertyPath: energyRechargePerSecond
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110392529309985872, guid: c662b3bbbcb907f4cbf724dd855bee2c, type: 3}
-      propertyPath: energyConsumptionPerSecond
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1110392529309985878, guid: c662b3bbbcb907f4cbf724dd855bee2c, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -5451,17 +5295,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208109, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
       propertyPath: m_Name
       value: PATROLPOINT
-      objectReference: {fileID: 0}
-    - target: {fileID: 7686493906810208111, guid: f17b57da897cbc04b9de83a44b8e89cd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

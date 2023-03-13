@@ -6,11 +6,12 @@ public class FSM_MouseBehaviour : FiniteStateMachine {
 
     /** Blackboard */
     private MOUSE_Blackboard blackboard;
+
+    /** Variables */
     private GoToTarget goToTarget;
-    
+
     private GameObject destiny;
     private float elapsedTime;
-
 
     /** OnEnter */
     public override void OnEnter() {
@@ -18,7 +19,7 @@ public class FSM_MouseBehaviour : FiniteStateMachine {
         /** GetComponent */
         blackboard = GetComponent<MOUSE_Blackboard>();
         goToTarget = GetComponent<GoToTarget>();
-        destiny = new GameObject();
+
         transform.position = blackboard.RandomExitPoint().transform.position;
 
         /** OnEnter */
@@ -27,6 +28,10 @@ public class FSM_MouseBehaviour : FiniteStateMachine {
 
     /** OnExit */
     public override void OnExit() {
+
+        // Destroy for the desetinationHandler
+        if (destiny != null) { GameObject.Destroy(destiny); }
+
         /** DisableSteerings */
         base.DisableAllSteerings();
         /** OnExit */
@@ -37,67 +42,47 @@ public class FSM_MouseBehaviour : FiniteStateMachine {
     public override void OnConstruction() {
 
         /** States */
-        State findDestination = new State("findDestination",
-            () => { 
+        State reachDestination = new State("reachDestination",
+            () => {
+                if (destiny == null || destiny.Equals(null)) { destiny = new GameObject(); }
+                // Set destination to a RandomWalkableLocation
                 destiny.transform.position = RandomLocationGenerator.RandomWalkableLocation();
                 goToTarget.target = destiny;
-            },
-            () => { },
-            () => { }
-        );
+            }, () => { }, () => { });
 
         State poo = new State("poo",
-            () => { 
-                elapsedTime = 0.0f;
-            },
-            () => {
-                elapsedTime = elapsedTime + Time.deltaTime;
-            },
-            () => 
-            { 
-                blackboard.SpawnPoo(transform.position);
-            }
-        );
+            () => { elapsedTime = 0.0f; },
+            () => { elapsedTime = elapsedTime + Time.deltaTime; },
+            () => { blackboard.Crap(transform.position); });
 
         State findExit = new State("findExit",
             () => { goToTarget.target = blackboard.RandomExitPoint(); },
-            () => { },
-            () => { }
-        );
+            () => { }, () => { });
 
         /** Transitions */
-        
-
         Transition destinationReached = new Transition("destinationReached",
             () => { return goToTarget.routeTerminated(); },
-            () => { }
-        );
+            () => { });
 
         Transition poopDone = new Transition("poopDone",
-            () => { 
-                return elapsedTime >= 1;
-            },
-            () => { }
-        );
+            () => { return elapsedTime >= blackboard.crapTimeDuration; },
+            () => { });
 
         Transition exitReached = new Transition("exitReached",
             () => { return goToTarget.routeTerminated(); },
-            () => {
-                GameObject.Destroy(gameObject);
-            }
-        );
+            () => { GameObject.Destroy(gameObject); });
 
 
         /** FSM Set Up */
-        AddStates(findDestination, poo, findExit);
-        /** ---------------------------------------------------------------- */
-        AddTransition(findDestination, destinationReached, poo);
-        /** ------------------------------------------------------------ */
+        AddStates(reachDestination, poo, findExit);
+        /** ------------------------------------ */
+        AddTransition(reachDestination, destinationReached, poo);
+        /** -------------------------------------------------- */
         AddTransition(poo, poopDone, findExit);
         /** -------------------------------- */
-        AddTransition(findExit, exitReached, findDestination);
-        /** --------------------------------------- */
-        initialState = findDestination;
+        AddTransition(findExit, exitReached, reachDestination);
+        /** ------------------------------------------------ */
+        initialState = reachDestination;
 
     }
 }

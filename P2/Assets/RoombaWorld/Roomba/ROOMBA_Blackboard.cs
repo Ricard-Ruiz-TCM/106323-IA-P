@@ -79,7 +79,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
         else {
             int nearestIndex = 0;
             float distance = 999.0f;
-            for (int i = 0; i < memory.Count - 1; i++) {
+            for (int i = 0; i < memory.Count; i++) {
                 float tmp = SensingUtils.DistanceToTarget(roomba, memory[i]);
                 if (tmp < distance) {
                     nearestIndex = i;

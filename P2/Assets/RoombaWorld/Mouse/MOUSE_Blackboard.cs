@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
 public class MOUSE_Blackboard : MonoBehaviour {
+
     private GameObject[] exitPoints;
     public GameObject pooPrefab;
     public float roombaDetectionRadius = 50;
+    public float crapTimeDuration = 1.0f;
 
     void Awake() {
         // let's get all the exit&entry points
@@ -31,10 +33,9 @@ public class MOUSE_Blackboard : MonoBehaviour {
         return nearest;
     }
 
-    public void SpawnPoo(Vector3 transform) {
-        Instantiate(pooPrefab).transform.position = transform;
+    public void Crap(Vector3 position) {
+        GameObject poo = Instantiate(pooPrefab);
+        poo.transform.position = position;
     }
-
-
 
 }

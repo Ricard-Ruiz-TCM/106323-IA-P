@@ -60,26 +60,20 @@ public class FSM_Mouse : FiniteStateMachine {
             () => {
                 context.maxSpeed *= 2;
                 context.maxAcceleration *= 4;
+                renderer.color = Color.green;
                 // Setting the NearestExitPoint to target destination
                 goToTarget.target = blackboard.NearestExitPoint();
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-            }
-        );
-
+            });
 
         Transition exitReached = new Transition("exitReached",
             () => { return goToTarget.routeTerminated(); },
-            () => {
-                GameObject.Destroy(gameObject);
-            }
-        );
-
+            () => { GameObject.Destroy(gameObject); });
 
         /** FSM Set Up */
         AddStates(mouseBehaviour, reachExit);
-        /** ---------------------------------------------------------------- */
+        /** ------------------------------ */
         AddTransition(mouseBehaviour, roombaDetected, reachExit);
-        /** ----------------------------------------------------- */
+        /** -------------------------------------------------- */
         AddTransition(reachExit, exitReached, mouseBehaviour);
         /** ----------------------------------------------- */
         initialState = mouseBehaviour;
