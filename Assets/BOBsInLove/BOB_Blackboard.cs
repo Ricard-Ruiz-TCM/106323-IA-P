@@ -6,7 +6,7 @@ public class BOB_Blackboard : DynamicBlackboard {
     public int money;
     public int salary = 20;
     public float flowerDetectionRadius = 20;
-    public int requiredFlowersForBouquet = 25;
+    public int requiredFlowersForBouquet = 5;
     public int jewelPrice = 55;
     public int flowers = 0;
 
